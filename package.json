@@ -1,0 +1,17 @@
+{
+  "name": "utoto-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev:backend": "pnpm --filter backend dev",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "db:up": "docker-compose -f infra/docker-compose.yml up -d",
+    "db:down": "docker-compose -f infra/docker-compose.yml down"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
