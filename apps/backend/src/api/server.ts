@@ -1,31 +1,31 @@
-import Fastify from 'fastify';
-import { PrismaClient } from '@prisma/client';
-import { UserSchema, CreateUserSchema } from '@utoto/shared';
+import Fastify from "fastify";
+import { PrismaClient } from "@prisma/client";
+import { UserSchema, CreateUserSchema } from "@utoto/shared";
+import cors from "@fastify/cors";
+import envConfig, { API_URL } from "../config/config";
+import { healthRoutes } from "../routes/health.route";
 
 const fastify = Fastify({ logger: true });
 const prisma = new PrismaClient();
 
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' };
-});
-
-fastify.get('/users', async (request, reply) => {
-  const users = await prisma.user.findMany();
-  return users;
-});
-
-fastify.post('/users', async (request, reply) => {
-  const body = CreateUserSchema.parse(request.body);
-  const user = await prisma.user.create({
-    data: body,
-  });
-  return user;
-});
-
+// Run the server!
 const start = async () => {
   try {
-    await fastify.listen({ port: 3000, host: '0.0.0.0' });
+    const whitelist = ["*"];
+    fastify.register(cors, {
+      origin: whitelist, // Cho phép tất cả các domain gọi API
+      credentials: true, // Cho phép trình duyệt gửi cookie đến server
+    });
+    await fastify.listen({
+      port: envConfig.PORT,
+      host: envConfig.DOCKER ? "0.0.0.0" : "localhost",
+    });
+    await fastify.register(healthRoutes, {
+      prefix: "/health",
+    });
+    console.log(`Server đang chạy: ${API_URL}`);
   } catch (err) {
+    console.log(err);
     fastify.log.error(err);
     process.exit(1);
   }

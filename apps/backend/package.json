@@ -8,17 +8,23 @@
         "prisma:migrate": "prisma migrate dev"
     },
     "dependencies": {
+        "@fastify/cors": "^11.2.0",
+        "@prisma/adapter-pg": "^7.2.0",
+        "@prisma/client": "^7.2.0",
+        "@types/pg": "^8.16.0",
+        "@utoto/shared": "workspace:*",
+        "chalk": "^5.6.2",
+        "dotenv": "^16.6.1",
         "fastify": "^4.17.0",
         "fastify-plugin": "^4.5.0",
-        "@prisma/client": "^4.14.0",
         "kafkajs": "^2.2.4",
-        "dotenv": "^16.0.3",
-        "@utoto/shared": "workspace:*"
+        "pg": "^8.16.3",
+        "zod": "^3.25.76"
     },
     "devDependencies": {
-        "typescript": "^5.0.0",
+        "@types/node": "^18.19.130",
+        "prisma": "^7.2.0",
         "ts-node": "^10.9.1",
-        "prisma": "^4.14.0",
-        "@types/node": "^18.16.0"
+        "typescript": "^5.0.0"
     }
 }
