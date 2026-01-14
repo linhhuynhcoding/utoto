@@ -1,0 +1,802 @@
+<html lang="en" class="mdl-js">
+
+<head itemscope="" itemtype="http://schema.org/WebSite">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="cid:css-6cbf4d08-c146-453a-823e-76e69ab5e16a@mhtml.blink">
+    <link rel="stylesheet" type="text/css" href="cid:css-3b12cb47-8ad0-4e51-92c2-841a7a9fceeb@mhtml.blink">
+    <link rel="stylesheet" type="text/css" href="cid:css-7b4d8ee8-14db-4bd6-b973-16cc99200a6a@mhtml.blink">
+    <link rel="stylesheet" type="text/css" href="cid:css-931e8f82-8e05-48b8-af2a-c1b33cc7cab8@mhtml.blink">
+    <link rel="stylesheet" type="text/css" href="cid:css-6706c90c-8582-41d7-9787-1f3e7e63593e@mhtml.blink">
+    <link rel="stylesheet" type="text/css" href="cid:css-1506d5fb-6030-4616-bda1-f04a84cb4225@mhtml.blink">
+    <title>Mioto - Ứng dụng cho thuê xe tự lái &amp; có tài xế 4-7 chỗ</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="robots" content="index, follow">
+    <meta name="facebook-domain-verification" content="f8uvml9qgda7pkb6mryeta7znptu50">
+    <meta name="zalo-platform-site-verification" content="H-sx4etvEqXkqwnYaCKOLc7mj4oDZsKND3O">
+    <meta itemprop="name" content="Cho thuê xe du lịch | thuê xe tự lái">
+    <meta name="DC.title" content="cho thue xe tu lai | thue xe du lich Mioto">
+    <meta name="geo.region" content="VN-SG">
+    <meta name="geo.placename" content="Ho Chi Minh">
+    <meta name="geo.position" content="10.794782;106.666817">
+    <meta name="ICBM" content="10.794782, 106.666817">
+    <meta http-equiv="cache-control" content="max-age=0">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
+    <link rel="stylesheet" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css">
+    <link rel="canonical" href="https://www.mioto.vn/" itemprop="url">
+    <link rel="alternate" hreflang="vi-vn" href="https://www.mioto.vn/">
+    <meta name="description"
+        content="Ứng dụng cho thuê xe tự lái, du lịch, công tác có tài xế 4-7 chỗ. Hỗ trợ kết nối giữa chủ xe và khách thuê nhanh chóng. Đa dạng nhiều dòng xe, đặt xe dễ dàng&nbsp;">
+    <meta name="keywords"
+        content="Thuê xe tự lái, thue xe du lich, cho thue xe tu lai, cho thuê xe tự lái, thue xe oto, Thuê xe tự lái tphcm, thue xe cuoi, xe tự lái, Cho thuê xe 7 chỗ, thuê xe cưới, xe tu lai, Thuê xe tự lái Sài Gòn, thue xe hoi, Cho thuê xe du lịch 7 chỗ, thuê xe hơi">
+    <meta name="google-site-verification" content="bD-RnF6yWFPYQRA-WQwOIkC8kxvtXERH__NCAuOuU-w">
+    <meta property="al:ios:url" content="fb1760356927595709://">
+    <meta property="al:ios:app_store_id" content="1316420500">
+    <meta property="al:ios:app_name" content="“MIOTO" -="" car="" rental="" app”="">
+    <meta property="al:android:url" content="mioto://">
+    <meta property="al:android:package" content="com.mioto.mioto">
+    <meta property="al:android:app_name" content="MIOTO - Car rental app">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+    <link href="https://www.mioto.vn/static/css/2.904396aa.chunk.css" rel="stylesheet">
+    <link href="https://www.mioto.vn/static/css/main.bd123722.chunk.css" rel="stylesheet">
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1268.0" data-gr-ext-installed="">
+    <div canvas="container" id="root">
+        <div class="mioto-layout">
+            <section class="header line-header  
+				scroll-top">
+                <div class="m-container"><a class="logo-container" href="https://www.mioto.vn/">
+                        <div class="full-logo"><img loading="lazy"
+                                src="https://www.mioto.vn/static/media/logo-full.ea382559.png" alt="Mioto"></div>
+                        <div class="short-logo"><img loading="lazy"
+                                src="data:image/png;base64,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"
+                                alt="Mioto"></div>
+                    </a>
+                    <div class="menu-container"><a href="https://www.mioto.vn/aboutus">Về Mioto</a><a
+                            href="https://www.mioto.vn/carregistermode">Trở thành chủ xe</a><a
+                            href="https://www.mioto.vn/mytrips">Chuyến của tôi</a>
+                        <div class="vertical-line"></div>
+                        <div>
+                            <div class="notification  ">
+                                <div class="wrap-svg"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M20.22 16.62C20.22 17.47 19.53 18.16 18.68 18.16H5.32004C4.47004 18.16 3.78003 17.47 3.78003 16.62C3.78003 15.77 4.47004 15.08 5.32004 15.08H5.83002V9.94002C5.83002 6.54002 8.59003 3.77002 12 3.77002C13.7 3.77002 15.24 4.46002 16.36 5.58002C17.48 6.69002 18.17 8.23002 18.17 9.94002V15.08H18.68C19.53 15.08 20.22 15.77 20.22 16.62Z"
+                                            stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path d="M12 3.78V2.75" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path
+                                            d="M15.08 18.1699C15.08 19.8799 13.7 21.2499 12 21.2499C10.3 21.2499 8.92004 19.8699 8.92004 18.1699H15.08Z"
+                                            stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    </svg></div>
+                                <div class="dropdown-menu">
+                                    <h5 class="title-name">Thông báo</h5>
+                                    <div class="line-page"></div>
+                                    <p class="title-noti">Trước đó</p>
+                                    <div class="list-noti">
+                                        <div class="list-noti__item read">
+                                            <div class="avatar cover-ava"><img loading="lazy"
+                                                    src="https://n1-cstg.mioto.vn/v6/p/m/avatars_notify/sub/announce.png">
+                                            </div>
+                                            <div class="desc"><span class="title">Welcome to Mioto</span><span
+                                                    class="content">Chào mừng bạn tham gia cộng đồng Mioto, bấm vào đây
+                                                    để xem những kinh nghiệm thuê xe hữu ích.</span><span
+                                                    class="timer">8 ngày trước</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><a class="notification mess-i" href="https://www.mioto.vn/messages">
+                            <div class="wrap-svg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M7.89035 13.03C8.4592 13.03 8.92035 12.5688 8.92035 12C8.92035 11.4311 8.4592 10.97 7.89035 10.97C7.3215 10.97 6.86035 11.4311 6.86035 12C6.86035 12.5688 7.3215 13.03 7.89035 13.03Z"
+                                        fill="black"></path>
+                                    <path
+                                        d="M12.0007 13.03C12.5696 13.03 13.0307 12.5688 13.0307 12C13.0307 11.4311 12.5696 10.97 12.0007 10.97C11.4318 10.97 10.9707 11.4311 10.9707 12C10.9707 12.5688 11.4318 13.03 12.0007 13.03Z"
+                                        fill="black"></path>
+                                    <path
+                                        d="M16.1101 13.03C16.6789 13.03 17.1401 12.5688 17.1401 12C17.1401 11.4311 16.6789 10.97 16.1101 10.97C15.5412 10.97 15.0801 11.4311 15.0801 12C15.0801 12.5688 15.5412 13.03 16.1101 13.03Z"
+                                        fill="black"></path>
+                                    <path
+                                        d="M20.44 15.8H20.43C20.95 14.64 21.25 13.35 21.25 12C21.25 6.89 17.11 2.75 12 2.75C6.89 2.75 2.75 6.89 2.75 12C2.75 17.11 6.89 21.25 12 21.25C13.51 21.25 14.94 20.88 16.2 20.24L21.2 20.98L20.44 15.8Z"
+                                        stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                </svg></div>
+                        </a>
+                        <div class="dropdown-profile"><a class="dropdown-profile" href="https://www.mioto.vn/account">
+                                <div class="avatar avatar--s"><img loading="lazy"
+                                        src="https://n1-astg.mioto.vn/g/2026/00/03/16/Sn2hPp2JiLUvvN3HYG9vbQ.jpg"
+                                        alt="Huỳnh Vũ Nhật Linh"></div><span class="name">Huỳnh Vũ Nhật Linh</span>
+                                <div class="wrap-svg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <path
+                                            d="M16.8998 9.20039C16.4998 8.80039 15.8998 8.80039 15.4998 9.20039L11.9998 12.7004L8.4998 9.20039C8.0998 8.80039 7.4998 8.80039 7.0998 9.20039C6.6998 9.60039 6.6998 10.2004 7.0998 10.6004L11.2998 14.8004C11.4998 15.0004 11.6998 15.1004 11.9998 15.1004C12.2998 15.1004 12.4998 15.0004 12.6998 14.8004L16.8998 10.6004C17.2998 10.2004 17.2998 9.60039 16.8998 9.20039Z"
+                                            fill="black"></path>
+                                    </svg></div>
+                            </a>
+                            <div class="wrap-svg tab-menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 6H19" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                    <path d="M5 18H19" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                    <path d="M5 12H19" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                </svg></div>
+                        </div>
+                        <div class="menu-mobile open move-left">
+                            <div class="header-menu">
+                                <div class="close-menu">×</div>
+                            </div>
+                            <div class="m-container">
+                                <div class="menu-list"><a class="menu-avatar" href="https://www.mioto.vn/account">
+                                        <div class="avatar avatar--s"><img loading="lazy"
+                                                src="https://n1-astg.mioto.vn/g/2026/00/03/16/Sn2hPp2JiLUvvN3HYG9vbQ.jpg"
+                                                alt="Huỳnh Vũ Nhật Linh"></div><span class="name">Huỳnh Vũ Nhật
+                                            Linh</span>
+                                    </a>
+                                    <div class="line-page"></div><a class="menu-list__item"
+                                        href="https://www.mioto.vn/myfavs">Xe yêu thích</a>
+                                    <div class="line-page"></div><a class="menu-list__item"
+                                        href="https://www.mioto.vn/myreward">Quà tặng</a>
+                                </div>
+                                <div class="menu-list"><a class="menu-list__item" href="https://www.mioto.vn/aboutus">Về
+                                        Mioto</a>
+                                    <div class="line-page"></div><a class="menu-list__item"
+                                        href="https://www.mioto.vn/carregistermode">Trở thành chủ xe</a>
+                                    <div class="line-page"></div><a class="menu-list__item"
+                                        href="https://www.mioto.vn/mytrips">Chuyến của tôi</a>
+                                </div><a class="menu-logout text-danger">
+                                    <div class="wrap-svg"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M12 2.75005H18.12C18.9125 2.71472 19.6868 2.99475 20.2734 3.52886C20.86 4.06297 21.2111 4.80768 21.25 5.60005V18.4C21.2111 19.1924 20.86 19.9371 20.2734 20.4712C19.6868 21.0054 18.9125 21.2854 18.12 21.25H12"
+                                                stroke="#F04438" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round"></path>
+                                            <path d="M15 12H2.78003" stroke="#F04438" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <path d="M2.75 12L6.75 16" stroke="#F04438" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <path d="M2.75 12L6.75 8" stroke="#F04438" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg></div>Đăng xuất
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="body">
+                <div class="module-register">
+                    <div class="m-container">
+                        <div class="main-title"><a class="back d-flex" href="https://www.mioto.vn/carregistermode">
+                                <div class="wrap-svg"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M15.0531 16.0003L19.7731 11.2803C20.0214 11.0304 20.1608 10.6925 20.1608 10.3403C20.1608 9.98801 20.0214 9.65007 19.7731 9.40026C19.6491 9.27529 19.5017 9.17609 19.3392 9.1084C19.1767 9.04071 19.0024 9.00586 18.8264 9.00586C18.6504 9.00586 18.4761 9.04071 18.3137 9.1084C18.1512 9.17609 18.0037 9.27529 17.8798 9.40026L12.2264 15.0536C12.1015 15.1775 12.0023 15.325 11.9346 15.4875C11.8669 15.65 11.832 15.8242 11.832 16.0003C11.832 16.1763 11.8669 16.3505 11.9346 16.513C12.0023 16.6755 12.1015 16.823 12.2264 16.9469L17.8798 22.6669C18.0043 22.7905 18.1521 22.8883 18.3146 22.9546C18.477 23.021 18.651 23.0546 18.8264 23.0536C19.0019 23.0546 19.1759 23.021 19.3383 22.9546C19.5008 22.8883 19.6485 22.7905 19.7731 22.6669C20.0214 22.4171 20.1608 22.0792 20.1608 21.7269C20.1608 21.3747 20.0214 21.0367 19.7731 20.7869L15.0531 16.0003Z"
+                                            fill="black"></path>
+                                    </svg></div>
+                                <p>Quay lại</p>
+                            </a>
+                            <h4>Đăng ký xe</h4>
+                        </div>
+                    </div>
+                    <div class="register-container">
+                        <div class="content-register">
+                            <div class="stepbystep">
+                                <ul>
+                                    <li class="active"><span class="nu">1</span><span class="value">Thông tin</span>
+                                    </li>
+                                    <li class=""><span class="nu">2</span><span class="value">Cho thuê</span></li>
+                                    <li class=""><span class="nu">3</span><span class="value">Hình ảnh</span></li>
+                                </ul>
+                            </div>
+                            <div class="group form-default">
+                                <h6>Biển số xe</h6>
+                                <p class="fl"><span class="note" style="color: red;">Lưu ý: Biển số sẽ không thể thay
+                                        đổi sau khi đăng ký.</span></p>
+                                <div class="space m"></div>
+                                <div class="space m"></div>
+                                <div class="col-left">
+                                    <div class="line-form">
+                                        <div class="wrap-input"><input type="text" value=""></div>
+                                    </div>
+                                </div>
+                                <div class="space m clear"></div>
+                                <div class="clear"></div>
+                                <h6>Thông tin cơ bản</h6>
+                                <p class="fl"><span class="note" style="color: red;">Lưu ý: Các thông tin cơ bản sẽ
+                                        không thể thay đổi sau khi đăng ký.</span></p>
+                                <div class="space clear"></div>
+                                <div class="col-left">
+                                    <div class="line-form"><label class="label">Hãng xe</label><span
+                                            class="wrap-select"><select>
+                                                <option value="0">Chọn hãng xe</option>
+                                                <option value="57">Acura</option>
+                                                <option value="1">Audi</option>
+                                                <option value="27">Baic</option>
+                                                <option value="12">Bentley</option>
+                                                <option value="2">BMW</option>
+                                                <option value="44">Brilliance</option>
+                                                <option value="54">BYD</option>
+                                                <option value="55">Changan</option>
+                                                <option value="3">Chevrolet</option>
+                                                <option value="51">Chrysler</option>
+                                                <option value="17">Daewoo</option>
+                                                <option value="41">Daihatsu</option>
+                                                <option value="40">Dongfeng</option>
+                                                <option value="50">Fairy</option>
+                                                <option value="30">Fiat</option>
+                                                <option value="4">Ford</option>
+                                                <option value="59">GAC</option>
+                                                <option value="37">Geely</option>
+                                                <option value="31">Haima</option>
+                                                <option value="53">Haval</option>
+                                                <option value="10">Honda</option>
+                                                <option value="11">Hyundai</option>
+                                                <option value="24">Isuzu</option>
+                                                <option value="60">JaeCoo</option>
+                                                <option value="34">Jaguar</option>
+                                                <option value="46">Kenbo</option>
+                                                <option value="5">Kia</option>
+                                                <option value="43">Land Rover</option>
+                                                <option value="13">Lexus</option>
+                                                <option value="20">Luxgen</option>
+                                                <option value="56">Lynk &amp; Co</option>
+                                                <option value="6">Mazda</option>
+                                                <option value="7">Mercedes</option>
+                                                <option value="8">Mitsubishi</option>
+                                                <option value="39">Morris Garages</option>
+                                                <option value="14">Nissan</option>
+                                                <option value="58">Omoda</option>
+                                                <option value="25">Peugeot</option>
+                                                <option value="15">Porsche</option>
+                                                <option value="16">Renault</option>
+                                                <option value="33">Riich</option>
+                                                <option value="47">Samsung</option>
+                                                <option value="52">Skoda</option>
+                                                <option value="26">SsangYong</option>
+                                                <option value="32">Subaru</option>
+                                                <option value="19">Suzuki</option>
+                                                <option value="42">Tobe</option>
+                                                <option value="9">Toyota</option>
+                                                <option value="22">UAZ</option>
+                                                <option value="29">Vinfast</option>
+                                                <option value="18">Volkswagen</option>
+                                                <option value="45">Volvo</option>
+                                                <option value="48">Wuling</option>
+                                                <option value="23">Zotye</option>
+                                            </select></span></div>
+                                </div>
+                                <div class="col-right">
+                                    <div class="line-form"><label class="label">Mẫu xe</label><span
+                                            class="wrap-select"><select disabled="">
+                                                <option value="0">Chọn hãng xe trước</option>
+                                            </select></span></div>
+                                </div>
+                                <div class="space clear"></div>
+                                <div class="col-left">
+                                    <div class="line-form"><label class="label">Số ghế</label><span
+                                            class="wrap-select"><select>
+                                                <option value="10">10</option>
+                                                <option value="9">9</option>
+                                                <option value="8">8</option>
+                                                <option value="7">7</option>
+                                                <option value="6">6</option>
+                                                <option value="5">5</option>
+                                                <option value="4">4</option>
+                                                <option value="3">3</option>
+                                                <option value="2">2</option>
+                                            </select></span></div>
+                                </div>
+                                <div class="col-right">
+                                    <div class="line-form"><label class="label">Năm sản xuất</label><span
+                                            class="wrap-select"><select>
+                                                <option value="2026">2026</option>
+                                                <option value="2025">2025</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2020">2020</option>
+                                                <option value="2019">2019</option>
+                                                <option value="2018">2018</option>
+                                                <option value="2017">2017</option>
+                                                <option value="2016">2016</option>
+                                                <option value="2015">2015</option>
+                                                <option value="2014">2014</option>
+                                                <option value="2013">2013</option>
+                                                <option value="2012">2012</option>
+                                                <option value="2011">2011</option>
+                                                <option value="2010">2010</option>
+                                                <option value="2009">2009</option>
+                                                <option value="2008">2008</option>
+                                            </select></span></div>
+                                </div>
+                                <div class="space clear"></div>
+                                <div class="col-left">
+                                    <div class="line-form"><label class="label">Truyền động</label><span
+                                            class="wrap-select"><select>
+                                                <option value="1">Số tự động</option>
+                                                <option value="2">Số sàn</option>
+                                            </select></span></div>
+                                </div>
+                                <div class="col-right">
+                                    <div class="line-form"><label class="label">Nhiên liệu</label><span
+                                            class="wrap-select"><select>
+                                                <option value="1">Xăng</option>
+                                                <option value="2">Dầu diesel</option>
+                                                <option value="3">Điện</option>
+                                                <option value="4">Xăng &amp; điện</option>
+                                            </select></span></div>
+                                </div>
+                                <div class="space m"></div>
+                                <div class="space clear"></div>
+                                <h6>Mức tiêu thụ nhiên liệu</h6>
+                                <p class="fl"><span class="note">Số lít nhiên liệu cho quãng đường 100km.</span></p>
+                                <div class="clear"></div>
+                                <div class="col-left">
+                                    <div class="line-form"><label class="label"></label>
+                                        <div class="wrap-input"><input type="text" placeholder="" value="10"></div>
+                                    </div>
+                                </div>
+                                <div class="space clear"></div>
+                                <h6>Mô tả</h6>
+                                <div class="custom-textarea"><textarea class="textarea"
+                                        placeholder="Huyndai Elantra số tự động đăng ký tháng 06/2018. Xe gia đình mới đẹp, nội thất nguyên bản, sạch sẽ, bảo dưỡng thường xuyên, rửa xe miễn phí cho khách. Xe rộng rãi, an toàn, tiện nghi, phù hợp cho gia đình du lịch. Xe trang bị hệ thống cảm biến lùi, gạt mưa tự động, đèn pha tự động, camera hành trình, hệ thống giải trí AV cùng nhiều tiện nghi khác..."></textarea>
+                                </div>
+                                <div class="space m"></div>
+                                <h6>Tính năng</h6>
+                                <div class="car-feature__sect">
+                                    <div class="list-feature">
+                                        <div class="squaredThree have-label"><input id="mp" type="checkbox"
+                                                name="filter-car-feature" value="mp"><label class="description"
+                                                for="mp">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/map-v2.png"
+                                                        alt="Bản đồ"><span style="font-size: 0.875rem;">Bản đồ</span>
+                                                </div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="bt" type="checkbox"
+                                                name="filter-car-feature" value="bt"><label class="description"
+                                                for="bt">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/bluetooth-v2.png"
+                                                        alt="Bluetooth"><span
+                                                        style="font-size: 0.875rem;">Bluetooth</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="p360c" type="checkbox"
+                                                name="filter-car-feature" value="p360c"><label class="description"
+                                                for="p360c">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/360_camera-v2.png"
+                                                        alt="Camera 360"><span style="font-size: 0.875rem;">Camera
+                                                        360</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="pc" type="checkbox"
+                                                name="filter-car-feature" value="pc"><label class="description"
+                                                for="pc">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/parking_camera-v2.png"
+                                                        alt="Camera cập lề"><span style="font-size: 0.875rem;">Camera
+                                                        cập lề</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="dc" type="checkbox"
+                                                name="filter-car-feature" value="dc"><label class="description"
+                                                for="dc">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/dash_camera-v2.png"
+                                                        alt="Camera hành trình"><span
+                                                        style="font-size: 0.875rem;">Camera hành trình</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="sc" type="checkbox"
+                                                name="filter-car-feature" value="sc"><label class="description"
+                                                for="sc">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/reverse_camera-v2.png"
+                                                        alt="Camera lùi"><span style="font-size: 0.875rem;">Camera
+                                                        lùi</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="tpms" type="checkbox"
+                                                name="filter-car-feature" value="tpms"><label class="description"
+                                                for="tpms">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/tpms-v2.png"
+                                                        alt="Cảm biến lốp"><span style="font-size: 0.875rem;">Cảm biến
+                                                        lốp</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="is" type="checkbox"
+                                                name="filter-car-feature" value="is"><label class="description"
+                                                for="is">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/impact_sensor-v2.png"
+                                                        alt="Cảm biến va chạm"><span style="font-size: 0.875rem;">Cảm
+                                                        biến va chạm</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="hd" type="checkbox"
+                                                name="filter-car-feature" value="hd"><label class="description"
+                                                for="hd">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/head_up-v2.png"
+                                                        alt="Cảnh báo tốc độ"><span style="font-size: 0.875rem;">Cảnh
+                                                        báo tốc độ</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="sr" type="checkbox"
+                                                name="filter-car-feature" value="sr"><label class="description"
+                                                for="sr">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/sunroof-v2.png"
+                                                        alt="Cửa sổ trời"><span style="font-size: 0.875rem;">Cửa sổ
+                                                        trời</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="gp" type="checkbox"
+                                                name="filter-car-feature" value="gp"><label class="description"
+                                                for="gp">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/gps-v2.png"
+                                                        alt="Định vị GPS"><span style="font-size: 0.875rem;">Định vị
+                                                        GPS</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="bs" type="checkbox"
+                                                name="filter-car-feature" value="bs"><label class="description"
+                                                for="bs">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/babyseat-v2.png"
+                                                        alt="Ghế trẻ em"><span style="font-size: 0.875rem;">Ghế trẻ
+                                                        em</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="us" type="checkbox"
+                                                name="filter-car-feature" value="us"><label class="description"
+                                                for="us">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/usb-v2.png"
+                                                        alt="Khe cắm USB"><span style="font-size: 0.875rem;">Khe cắm
+                                                        USB</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="st" type="checkbox"
+                                                name="filter-car-feature" value="st"><label class="description"
+                                                for="st">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/spare_tire-v2.png"
+                                                        alt="Lốp dự phòng"><span style="font-size: 0.875rem;">Lốp dự
+                                                        phòng</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="dvd" type="checkbox"
+                                                name="filter-car-feature" value="dvd"><label class="description"
+                                                for="dvd">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/dvd-v2.png"
+                                                        alt="Màn hình DVD"><span style="font-size: 0.875rem;">Màn hình
+                                                        DVD</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="bn" type="checkbox"
+                                                name="filter-car-feature" value="bn"><label class="description"
+                                                for="bn">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/bonnet-v2.png"
+                                                        alt="Nắp thùng xe bán tải"><span
+                                                        style="font-size: 0.875rem;">Nắp thùng xe bán tải</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="ep" type="checkbox"
+                                                name="filter-car-feature" value="ep"><label class="description"
+                                                for="ep">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/etc-v2.png"
+                                                        alt="ETC"><span style="font-size: 0.875rem;">ETC</span></div>
+                                            </label></div>
+                                        <div class="squaredThree have-label"><input id="ab" type="checkbox"
+                                                name="filter-car-feature" value="ab"><label class="description"
+                                                for="ab">
+                                                <div class="thumbnail"><img loading="lazy" class="img-fluid"
+                                                        src="https://n1-cstg.mioto.vn/v4/p/m/icons/features/airbags-v2.png"
+                                                        alt="Túi khí an toàn"><span style="font-size: 0.875rem;">Túi khí
+                                                        an toàn</span></div>
+                                            </label></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrap-btn has-2btn">
+                        <div class="wr-btn"><a class="btn btn-secondary btn--m" disabled="">Quay lại</a></div>
+                        <div class="wr-btn"><a class="btn btn-primary btn--m">Kế tiếp</a></div>
+                    </div>
+                </div>
+            </section>
+            <section class="footer">
+                <div class="m-container">
+                    <div class="footer-about">
+                        <div class="footer-info"><a href="https://www.mioto.vn/" class="wrap-svg logo"><img
+                                    loading="lazy" src="https://www.mioto.vn/static/media/logo-full.ea382559.png"></a>
+                            <div class="phone-mail"><a class="item" href="tel:19009217">
+                                    <p class="main">1900 9217</p>
+                                    <p>Tổng đài hỗ trợ: 7AM - 10PM</p>
+                                </a><a class="item" href="mailto:contact@mioto.vn">
+                                    <p class="main">contact@mioto.vn</p>
+                                    <p>Gửi mail cho Mioto</p>
+                                </a></div>
+                            <div class="footer-contact"><a class="wrap-svg" target="_blank"
+                                    href="https://www.facebook.com/mioto.vn"><svg width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M11.94 21.2501V14.1601H9.5V11.4301H11.94V9.43012C11.94 8.31012 12.22 7.47012 12.86 6.83012C13.5 6.19012 14.34 5.87012 15.42 5.87012C16.22 5.87012 16.94 5.91012 17.5 5.99012V8.39012H16.06C15.54 8.39012 15.18 8.51012 14.98 8.75012C14.82 8.99012 14.74 9.31012 14.74 9.71012V11.4301H17.51L17.15 14.1601H14.75V21.2501"
+                                            stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path
+                                            d="M17.14 21.25H6.86C4.59 21.25 2.75 19.41 2.75 17.14V6.86C2.75 4.59 4.59 2.75 6.86 2.75H17.14C19.41 2.75 21.25 4.59 21.25 6.86V17.14C21.25 19.41 19.41 21.25 17.14 21.25Z"
+                                            stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    </svg></a><a class="wrap-svg" target="_blank"
+                                    href="https://www.tiktok.com/@miotovn"><svg width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M9.75999 12.69C8.27999 12.69 7.04999 13.92 7.04999 15.4C7.04999 16.88 8.27999 18.11 9.75999 18.11C11.24 18.11 12.47 16.88 12.47 15.4V2.75H15.65C15.65 2.79 15.65 2.79 15.65 2.82C15.65 3.07 15.65 3.33 15.72 3.58C15.94 4.77 16.66 5.82 17.67 6.47C18.36 6.94 19.19 7.19 20.05 7.19C20.05 7.19 20.05 7.19 20.09 7.19V10.33H20.05C18.39 10.33 16.87 9.82 15.64 8.92V15.39C15.64 18.64 13 21.24 9.74999 21.24C6.49999 21.24 3.89999 18.64 3.89999 15.39C3.89999 12.14 6.49999 9.5 9.74999 9.5V12.69H9.75999Z"
+                                            stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    </svg></a><a class="wrap-svg" target="_blank"
+                                    href="https://zalo.me/1377158618768832739"><svg width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <mask id="path-1-outside-1_6394_301594" maskUnits="userSpaceOnUse" x="0.919998"
+                                            y="0.919922" width="22" height="22" fill="black">
+                                            <rect fill="white" x="0.919998" y="0.919922" width="22" height="22"></rect>
+                                            <path
+                                                d="M4.32 1.91992C3.00023 1.91992 1.92 3.00015 1.92 4.31992V19.6799C1.92 20.9997 3.00023 22.0799 4.32 22.0799H19.68C20.999822.0799 22.08 20.9997 22.08 19.6799V4.31992C22.08 3.00015 20.9998 1.91992 19.68 1.91992H4.32ZM4.32 2.87992H7.47656C5.81666 4.60701 4.8 6.87526 4.8 9.35992C4.8 11.9334 5.88871 14.2792 7.65562 16.0265C7.5914 15.9653 7.67454 16.0717 7.68281 16.2599C7.69134 16.4542 7.66209 16.7212 7.58344 16.9855C7.42613 17.5143 7.09711 18.0017 6.56812 18.178C6.46765 18.2115 6.38107 18.2773 6.32187 18.3651C6.26266 18.4529 6.23416 18.5578 6.24079 18.6635C6.24742 18.7692 6.28882 18.8698 6.35854 18.9495C6.42826 19.0292 6.52238 19.0836 6.62625 19.1043C7.95091 19.3692 8.8879 18.9704 9.57844 18.6534C10.269 18.3363 10.6421 18.123 11.34 18.4049L11.3456 18.4068C12.6523 18.9176 14.091 19.1999 15.6 19.1999C17.6147 19.1999 19.503 18.6965 21.12 17.819V19.6799C21.12 20.4808 20.4809 21.1199 19.68 21.1199H4.32C3.51913 21.1199 2.88 20.4808 2.88 19.6799V4.31992C2.88 3.51905 3.51913 2.87992 4.32 2.87992ZM8.87812 2.87992H19.68C20.4809 2.87992 21.12 3.51905 21.12 4.31992V16.7062C19.5489 17.67 17.6518 18.2399 15.6 18.2399C14.2129 18.2399 12.8945 17.9804 11.7 17.5143C10.6857 17.1046 9.85955 17.4677 9.17812 17.7805C8.80908 17.95 8.44498 18.0908 8.03344 18.1687C8.23704 17.8784 8.4112 17.5683 8.50312 17.2593C8.61173 16.8942 8.65588 16.5367 8.64187 16.2177C8.62791 15.8998 8.60013 15.6087 8.33156 15.3449L8.33062 15.344C6.72812 13.7593 5.76 11.6633 5.76 9.35992C5.76 6.80508 6.95336 4.50598 8.87812 2.87992ZM15.8325 7.19336C15.7054 7.19535 15.5842 7.2477 15.4956 7.33892C15.407 7.43014 15.3583 7.55278 15.36 7.67992V11.9999C15.3591 12.0635 15.3708 12.1267 15.3946 12.1857C15.4183 12.2447 15.4535 12.2984 15.4982 12.3437C15.5428 12.389 15.596 12.425 15.6547 12.4496C15.7134 12.4741 15.7764 12.4868 15.84 12.4868C15.9036 12.4868 15.9666 12.4741 16.0253 12.4496C16.084 12.425 16.1372 12.389 16.1818 12.3437C16.2265 12.2984 16.2617 12.2447 16.2854 12.1857C16.3091 12.1267 16.3209 12.0635 16.32 11.9999V7.67992C16.3209 7.6157 16.3089 7.55196 16.2847 7.49247C16.2605 7.43298 16.2246 7.37895 16.1791 7.33358C16.1337 7.28821 16.0796 7.25242 16.02 7.22833C15.9605 7.20425 15.8967 7.19236 15.8325 7.19336ZM8.64 7.67992C8.57639 7.67902 8.51324 7.69077 8.45422 7.71449C8.39519 7.73821 8.34147 7.77342 8.29617 7.81808C8.25088 7.86275 8.21491 7.91597 8.19036 7.97465C8.1658 8.03333 8.15316 8.09631 8.15316 8.15992C8.15316 8.22353 8.1658 8.28651 8.19036 8.3452C8.21491 8.40388 8.25088 8.4571 8.29617 8.50176C8.34147 8.54642 8.39519 8.58163 8.45422 8.60535C8.51324 8.62907 8.57639 8.64082 8.64 8.63992H10.1747L8.23312 11.7459C8.18782 11.8185 8.16277 11.9019 8.16057 11.9875C8.15837 12.0731 8.17909 12.1577 8.22059 12.2326C8.2621 12.3075 8.32287 12.3699 8.39661 12.4134C8.47036 12.4569 8.55439 12.4798 8.64 12.4799H11.04C11.1036 12.4808 11.1668 12.4691 11.2258 12.4454C11.2848 12.4216 11.3385 12.3864 11.3838 12.3418C11.4291 12.2971 11.4651 12.2439 11.4896 12.1852C11.5142 12.1265 11.5268 12.0635 11.5268 11.9999C11.5268 11.9363 11.5142 11.8733 11.4896 11.8146C11.4651 11.756 11.4291 11.7027 11.3838 11.6581C11.3385 11.6134 11.2848 11.5782 11.2258 11.5545C11.1668 11.5308 11.1036 11.519 11.04 11.5199H9.50531L11.4469 8.41398C11.4922 8.34134 11.5172 8.25791 11.5194 8.17232C11.5216 8.08674 11.5009 8.00213 11.4594 7.92725C11.4179 7.85237 11.3571 7.78995 11.2834 7.74647C11.2096 7.70298 11.1256 7.68 11.04 7.67992H8.64ZM14.3925 9.11336C14.3138 9.11475 14.2366 9.13549 14.1677 9.17374C14.0989 9.212 14.0406 9.2666 13.9978 9.33273C13.759 9.20158 13.4897 9.11992 13.2 9.11992C12.2778 9.11992 11.52 9.87777 11.52 10.7999C11.52 11.7221 12.2778 12.4799 13.2 12.4799C13.4894 12.4799 13.7582 12.398 13.9969 12.2671C14.0534 12.3546 14.1369 12.4213 14.2347 12.4572C14.3325 12.493 14.4393 12.4961 14.539 12.4659C14.6387 12.4358 14.7259 12.374 14.7874 12.2899C14.8489 12.2059 14.8814 12.1041 14.88 11.9999V10.7999V9.59992C14.8809 9.5357 14.8689 9.47196 14.8447 9.41247C14.8205 9.35298 14.7846 9.29895 14.7391 9.25358C14.6937 9.20821 14.6396 9.17242 14.58 9.14833C14.5205 9.12425 14.4567 9.11236 14.3925 9.11336ZM18.48 9.11992C17.5578 9.11992 16.8 9.87777 16.8 10.7999C16.8 11.7221 17.5578 12.4799 18.48 12.4799C19.4022 12.4799 20.16 11.7221 20.16 10.7999C20.16 9.87777 19.4022 9.11992 18.48 9.11992ZM13.2 10.0799C13.6033 10.0799 13.92 10.3966 13.92 10.7999C13.92 11.2033 13.6033 11.5199 13.2 11.5199C12.7967 11.5199 12.48 11.2033 12.48 10.7999C12.48 10.3966 12.7967 10.0799 13.2 10.0799ZM18.48 10.0799C18.8833 10.0799 19.2 10.3966 19.2 10.7999C19.2 11.2033 18.8833 11.5199 18.48 11.5199C18.0767 11.5199 17.76 11.2033 17.76 10.7999C17.76 10.3966 18.0767 10.0799 18.48 10.0799Z">
+                                            </path>
+                                        </mask>
+                                        <path
+                                            d="M4.32 1.91992C3.00023 1.91992 1.92 3.00015 1.92 4.31992V19.6799C1.92 20.9997 3.00023 22.0799 4.32 22.0799H19.68C20.9998 22.0799 22.08 20.9997 22.08 19.6799V4.31992C22.08 3.00015 20.9998 1.91992 19.68 1.91992H4.32ZM4.32 2.87992H7.47656C5.81666 4.60701 4.8 6.87526 4.8 9.35992C4.8 11.9334 5.88871 14.2792 7.65562 16.0265C7.5914 15.9653 7.67454 16.0717 7.68281 16.2599C7.69134 16.4542 7.66209 16.7212 7.58344 16.9855C7.42613 17.5143 7.09711 18.0017 6.56812 18.178C6.46765 18.2115 6.38107 18.2773 6.32187 18.3651C6.26266 18.4529 6.23416 18.5578 6.24079 18.6635C6.24742 18.7692 6.28882 18.8698 6.35854 18.9495C6.42826 19.0292 6.52238 19.0836 6.62625 19.1043C7.95091 19.3692 8.8879 18.9704 9.57844 18.6534C10.269 18.3363 10.6421 18.123 11.34 18.4049L11.3456 18.4068C12.6523 18.9176 14.091 19.1999 15.6 19.1999C17.6147 19.1999 19.503 18.6965 21.12 17.819V19.6799C21.12 20.4808 20.4809 21.1199 19.68 21.1199H4.32C3.51913 21.1199 2.88 20.4808 2.88 19.6799V4.31992C2.88 3.51905 3.51913 2.87992 4.32 2.87992ZM8.87812 2.87992H19.68C20.4809 2.87992 21.12 3.51905 21.12 4.31992V16.7062C19.5489 17.67 17.6518 18.2399 15.6 18.2399C14.2129 18.2399 12.8945 17.9804 11.7 17.5143C10.6857 17.1046 9.85955 17.4677 9.17812 17.7805C8.80908 17.95 8.44498 18.0908 8.03344 18.1687C8.23704 17.8784 8.4112 17.5683 8.50312 17.2593C8.61173 16.8942 8.65588 16.5367 8.64187 16.2177C8.62791 15.8998 8.60013 15.6087 8.33156 15.3449L8.33062 15.344C6.72812 13.7593 5.76 11.6633 5.76 9.35992C5.76 6.80508 6.95336 4.50598 8.87812 2.87992ZM15.8325 7.19336C15.7054 7.19535 15.5842 7.2477 15.4956 7.33892C15.407 7.43014 15.3583 7.55278 15.36 7.67992V11.9999C15.3591 12.0635 15.3708 12.1267 15.3946 12.1857C15.4183 12.2447 15.4535 12.2984 15.4982 12.3437C15.5428 12.389 15.596 12.425 15.6547 12.4496C15.7134 12.4741 15.7764 12.4868 15.84 12.4868C15.9036 12.4868 15.9666 12.4741 16.0253 12.4496C16.084 12.425 16.1372 12.389 16.1818 12.3437C16.2265 12.2984 16.2617 12.2447 16.2854 12.1857C16.3091 12.1267 16.3209 12.0635 16.32 11.9999V7.67992C16.3209 7.6157 16.3089 7.55196 16.2847 7.49247C16.2605 7.43298 16.2246 7.37895 16.1791 7.33358C16.1337 7.28821 16.0796 7.25242 16.02 7.22833C15.9605 7.20425 15.8967 7.19236 15.8325 7.19336ZM8.64 7.67992C8.57639 7.67902 8.51324 7.69077 8.45422 7.71449C8.39519 7.73821 8.34147 7.77342 8.29617 7.81808C8.25088 7.86275 8.21491 7.91597 8.19036 7.97465C8.1658 8.03333 8.15316 8.09631 8.15316 8.15992C8.15316 8.22353 8.1658 8.28651 8.19036 8.3452C8.21491 8.40388 8.25088 8.4571 8.29617 8.50176C8.34147 8.54642 8.39519 8.58163 8.45422 8.60535C8.51324 8.62907 8.57639 8.64082 8.64 8.63992H10.1747L8.23312 11.7459C8.18782 11.8185 8.16277 11.9019 8.16057 11.9875C8.15837 12.0731 8.17909 12.1577 8.22059 12.2326C8.2621 12.3075 8.32287 12.3699 8.39661 12.4134C8.47036 12.4569 8.55439 12.4798 8.64 12.4799H11.04C11.1036 12.4808 11.1668 12.4691 11.2258 12.4454C11.2848 12.4216 11.3385 12.3864 11.3838 12.3418C11.4291 12.2971 11.4651 12.2439 11.4896 12.1852C11.5142 12.1265 11.5268 12.0635 11.5268 11.9999C11.5268 11.9363 11.5142 11.8733 11.4896 11.8146C11.4651 11.756 11.4291 11.7027 11.3838 11.6581C11.3385 11.6134 11.2848 11.5782 11.2258 11.5545C11.1668 11.5308 11.1036 11.519 11.04 11.5199H9.50531L11.4469 8.41398C11.4922 8.34134 11.5172 8.25791 11.5194 8.17232C11.5216 8.08674 11.5009 8.00213 11.4594 7.92725C11.4179 7.85237 11.3571 7.78995 11.2834 7.74647C11.2096 7.70298 11.1256 7.68 11.04 7.67992H8.64ZM14.3925 9.11336C14.3138 9.11475 14.2366 9.13549 14.1677 9.17374C14.0989 9.212 14.0406 9.2666 13.9978 9.33273C13.759 9.20158 13.4897 9.11992 13.2 9.11992C12.2778 9.11992 11.52 9.87777 11.52 10.7999C11.52 11.7221 12.2778 12.4799 13.2 12.4799C13.4894 12.4799 13.7582 12.398 13.9969 12.2671C14.0534 12.3546 14.1369 12.4213 14.2347 12.4572C14.3325 12.493 14.4393 12.4961 14.539 12.4659C14.6387 12.4358 14.7259 12.374 14.7874 12.2899C14.8489 12.2059 14.8814 12.1041 14.88 11.9999V10.7999V9.59992C14.8809 9.5357 14.8689 9.47196 14.8447 9.41247C14.8205 9.35298 14.7846 9.29895 14.7391 9.25358C14.6937 9.20821 14.6396 9.17242 14.58 9.14833C14.5205 9.12425 14.4567 9.11236 14.3925 9.11336ZM18.48 9.11992C17.5578 9.11992 16.8 9.87777 16.8 10.7999C16.8 11.7221 17.5578 12.4799 18.48 12.4799C19.4022 12.4799 20.16 11.7221 20.16 10.7999C20.16 9.87777 19.4022 9.11992 18.48 9.11992ZM13.2 10.0799C13.6033 10.0799 13.92 10.3966 13.92 10.7999C13.92 11.2033 13.6033 11.5199 13.2 11.5199C12.7967 11.5199 12.48 11.2033 12.48 10.7999C12.48 10.3966 12.7967 10.0799 13.2 10.0799ZM18.48 10.0799C18.8833 10.0799 19.2 10.3966 19.2 10.7999C19.2 11.2033 18.8833 11.5199 18.48 11.5199C18.0767 11.5199 17.76 11.2033 17.76 10.7999C17.76 10.3966 18.0767 10.0799 18.48 10.0799Z"
+                                            fill="black"></path>
+                                        <path
+                                            d="M4.32 1.91992C3.00023 1.91992 1.92 3.00015 1.92 4.31992V19.6799C1.92 20.9997 3.00023 22.0799 4.32 22.0799H19.68C20.9998 22.0799 22.08 20.9997 22.08 19.6799V4.31992C22.08 3.00015 20.9998 1.91992 19.68 1.91992H4.32ZM4.32 2.87992H7.47656C5.81666 4.60701 4.8 6.87526 4.8 9.35992C4.8 11.9334 5.88871 14.2792 7.65562 16.0265C7.5914 15.9653 7.67454 16.0717 7.68281 16.2599C7.69134 16.4542 7.66209 16.7212 7.58344 16.9855C7.42613 17.5143 7.09711 18.0017 6.56812 18.178C6.46765 18.2115 6.38107 18.2773 6.32187 18.3651C6.26266 18.4529 6.23416 18.5578 6.24079 18.6635C6.24742 18.7692 6.28882 18.8698 6.35854 18.9495C6.42826 19.0292 6.52238 19.0836 6.62625 19.1043C7.95091 19.3692 8.8879 18.9704 9.57844 18.6534C10.269 18.3363 10.6421 18.123 11.34 18.4049L11.3456 18.4068C12.6523 18.9176 14.091 19.1999 15.6 19.1999C17.6147 19.1999 19.503 18.6965 21.12 17.819V19.6799C21.12 20.4808 20.4809 21.1199 19.68 21.1199H4.32C3.51913 21.1199 2.88 20.4808 2.88 19.6799V4.31992C2.88 3.51905 3.51913 2.87992 4.32 2.87992ZM8.87812 2.87992H19.68C20.4809 2.87992 21.12 3.51905 21.12 4.31992V16.7062C19.5489 17.67 17.6518 18.2399 15.6 18.2399C14.2129 18.2399 12.8945 17.9804 11.7 17.5143C10.6857 17.1046 9.85955 17.4677 9.17812 17.7805C8.80908 17.95 8.44498 18.0908 8.03344 18.1687C8.23704 17.8784 8.4112 17.5683 8.50312 17.2593C8.61173 16.8942 8.65588 16.5367 8.64187 16.2177C8.62791 15.8998 8.60013 15.6087 8.33156 15.3449L8.33062 15.344C6.72812 13.7593 5.76 11.6633 5.76 9.35992C5.76 6.80508 6.95336 4.50598 8.87812 2.87992ZM15.8325 7.19336C15.7054 7.19535 15.5842 7.2477 15.4956 7.33892C15.407 7.43014 15.3583 7.55278 15.36 7.67992V11.9999C15.3591 12.0635 15.3708 12.1267 15.3946 12.1857C15.4183 12.2447 15.4535 12.2984 15.4982 12.3437C15.5428 12.389 15.596 12.425 15.6547 12.4496C15.7134 12.4741 15.7764 12.4868 15.84 12.4868C15.9036 12.4868 15.9666 12.4741 16.0253 12.4496C16.084 12.425 16.1372 12.389 16.1818 12.3437C16.2265 12.2984 16.2617 12.2447 16.2854 12.1857C16.3091 12.1267 16.3209 12.0635 16.32 11.9999V7.67992C16.3209 7.6157 16.3089 7.55196 16.2847 7.49247C16.2605 7.43298 16.2246 7.37895 16.1791 7.33358C16.1337 7.28821 16.0796 7.25242 16.02 7.22833C15.9605 7.20425 15.8967 7.19236 15.8325 7.19336ZM8.64 7.67992C8.57639 7.67902 8.51324 7.69077 8.45422 7.71449C8.39519 7.73821 8.34147 7.77342 8.29617 7.81808C8.25088 7.86275 8.21491 7.91597 8.19036 7.97465C8.1658 8.03333 8.15316 8.09631 8.15316 8.15992C8.15316 8.22353 8.1658 8.28651 8.19036 8.3452C8.21491 8.40388 8.25088 8.4571 8.29617 8.50176C8.34147 8.54642 8.39519 8.58163 8.45422 8.60535C8.51324 8.62907 8.57639 8.64082 8.64 8.63992H10.1747L8.23312 11.7459C8.18782 11.8185 8.16277 11.9019 8.16057 11.9875C8.15837 12.0731 8.17909 12.1577 8.22059 12.2326C8.2621 12.3075 8.32287 12.3699 8.39661 12.4134C8.47036 12.4569 8.55439 12.4798 8.64 12.4799H11.04C11.1036 12.4808 11.1668 12.4691 11.2258 12.4454C11.2848 12.4216 11.3385 12.3864 11.3838 12.3418C11.4291 12.2971 11.4651 12.2439 11.4896 12.1852C11.5142 12.1265 11.5268 12.0635 11.5268 11.9999C11.5268 11.9363 11.5142 11.8733 11.4896 11.8146C11.4651 11.756 11.4291 11.7027 11.3838 11.6581C11.3385 11.6134 11.2848 11.5782 11.2258 11.5545C11.1668 11.5308 11.1036 11.519 11.04 11.5199H9.50531L11.4469 8.41398C11.4922 8.34134 11.5172 8.25791 11.5194 8.17232C11.5216 8.08674 11.5009 8.00213 11.4594 7.92725C11.4179 7.85237 11.3571 7.78995 11.2834 7.74647C11.2096 7.70298 11.1256 7.68 11.04 7.67992H8.64ZM14.3925 9.11336C14.3138 9.11475 14.2366 9.13549 14.1677 9.17374C14.0989 9.212 14.0406 9.2666 13.9978 9.33273C13.759 9.20158 13.4897 9.11992 13.2 9.11992C12.2778 9.11992 11.52 9.87777 11.52 10.7999C11.52 11.7221 12.2778 12.4799 13.2 12.4799C13.4894 12.4799 13.7582 12.398 13.9969 12.2671C14.0534 12.3546 14.1369 12.4213 14.2347 12.4572C14.3325 12.493 14.4393 12.4961 14.539 12.4659C14.6387 12.4358 14.7259 12.374 14.7874 12.2899C14.8489 12.2059 14.8814 12.1041 14.88 11.9999V10.7999V9.59992C14.8809 9.5357 14.8689 9.47196 14.8447 9.41247C14.8205 9.35298 14.7846 9.29895 14.7391 9.25358C14.6937 9.20821 14.6396 9.17242 14.58 9.14833C14.5205 9.12425 14.4567 9.11236 14.3925 9.11336ZM18.48 9.11992C17.5578 9.11992 16.8 9.87777 16.8 10.7999C16.8 11.7221 17.5578 12.4799 18.48 12.4799C19.4022 12.4799 20.16 11.7221 20.16 10.7999C20.16 9.87777 19.4022 9.11992 18.48 9.11992ZM13.2 10.0799C13.6033 10.0799 13.92 10.3966 13.92 10.7999C13.92 11.2033 13.6033 11.5199 13.2 11.5199C12.7967 11.5199 12.48 11.2033 12.48 10.7999C12.48 10.3966 12.7967 10.0799 13.2 10.0799ZM18.48 10.0799C18.8833 10.0799 19.2 10.3966 19.2 10.7999C19.2 11.2033 18.8833 11.5199 18.48 11.5199C18.0767 11.5199 17.76 11.2033 17.76 10.7999C17.76 10.3966 18.0767 10.0799 18.48 10.0799Z"
+                                            stroke="black" stroke-width="0.2" mask="url(#path-1-outside-1_6394_301594)">
+                                        </path>
+                                    </svg></a></div>
+                        </div>
+                        <div class="footer-path four-item">
+                            <div class="item">
+                                <p class="main">Chính Sách</p>
+                                <div class="item-sub"><a href="https://www.mioto.vn/privacy">Chính sách &amp;
+                                        quy&nbsp;định</a><a href="https://www.mioto.vn/regu">Quy chế
+                                        hoạt&nbsp;động</a><a href="https://www.mioto.vn/personalinfo">Chính sách
+                                        bảo&nbsp;mật</a><a href="https://www.mioto.vn/resolveconflic">Giải quyết
+                                        khiếu&nbsp;nại</a></div>
+                            </div>
+                            <div class="item">
+                                <p class="main">Tìm Hiểu Thêm</p>
+                                <div class="item-sub"><a href="https://www.mioto.vn/howitwork">Hướng dẫn chung</a><a
+                                        href="https://www.mioto.vn/bookinghowto">Hướng dẫn đặt&nbsp;xe</a><a
+                                        href="https://www.mioto.vn/paymenthowto">Hướng dẫn thanh&nbsp;toán</a><a
+                                        href="https://www.mioto.vn/faqs">Hỏi và trả&nbsp;lời</a></div>
+                            </div>
+                            <div class="item">
+                                <p class="main empty">&nbsp;</p>
+                                <div class="item-sub"><a href="https://www.mioto.vn/aboutus">Về Mioto</a><a
+                                        href="https://www.mioto.vn/blogs">Mioto Blog</a><a
+                                        href="https://www.mioto.vn/career">Tuyển dụng</a></div>
+                            </div>
+                            <div class="item unset">
+                                <p class="main">Đối Tác</p>
+                                <div class="item-sub"><a href="https://www.mioto.vn/owner/register">Đăng ký chủ&nbsp;xe
+                                        Mioto</a><a href="https://www.mioto.vn/registergps">Đăng ký GPS
+                                        MITRACK&nbsp;4G</a><a href="https://www.mioto.vn/micarro/register">Đăng ký cho
+                                        thuê xe dài&nbsp;hạn MICARRO</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="line"> </div>
+                <div class="m-container">
+                    <div class="footer-about">
+                        <div class="footer-info">
+                            <div class="phone-mail">
+                                <p class="item">© Công ty Cổ phần Mioto Asia</p>
+                            </div>
+                        </div>
+                        <div class="footer-path three-item">
+                            <div class="item">
+                                <div class="item-sub">
+                                    <p>Số GCNĐKKD: 0317307544</p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-sub">
+                                    <p>Ngày cấp: 24-05-22</p>
+                                </div>
+                            </div>
+                            <div class="item width-50">
+                                <div class="item-sub">
+                                    <p>Nơi cấp: Sở Kế hoạch và Đầu tư TPHCM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="line"> </div>
+                <div class="m-container">
+                    <div class="footer-about">
+                        <div class="footer-info">
+                            <div class="phone-mail address">
+                                <p class="item">Địa chỉ: Văn phòng 01, Tầng 09, Tòa nhà Pearl Plaza, Số 561A Điện
+                                    Biên Phủ, Phường Thạnh Mỹ Tây, Thành phố Hồ Chí Minh, Việt Nam.</p>
+                            </div>
+                        </div>
+                        <div class="footer-path three-item">
+                            <div class="item">
+                                <div class="item-sub">
+                                    <p>Tên TK: CT CP MIOTO ASIA</p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-sub">
+                                    <p>Số TK: 102-989-1989</p>
+                                </div>
+                            </div>
+                            <div class="item width-50">
+                                <div class="item-sub">
+                                    <p>Ngân hàng Vietcombank - CN Tân Định</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="line line-white"></div>
+                <div class="m-container">
+                    <div class="footer-about">
+                        <div class="footer-info empty">
+                            <div class="phone-mail"><a class="logo-government" target="_blank"
+                                    href="http://online.gov.vn/Home/WebDetails/98465"><img loading="lazy"
+                                        src="https://www.mioto.vn/static/media/bocongthuong.40599f29.png"></a></div>
+                        </div>
+                        <div class="footer-path d-flex-align-center two-item payment-list">
+                            <div class="item">
+                                <div class="item-sub">
+                                    <p>Phương thức thanh toán</p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="payment">
+                                    <div class="payment inner d-flex-align-center"><img loading="lazy"
+                                            src="data:image/png;base64,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"><img
+                                            loading="lazy"
+                                            src="https://www.mioto.vn/static/media/vnpay.780689d6.png"><img
+                                            loading="lazy" src="https://www.mioto.vn/static/media/alepay.bb769e5d.png">
+                                    </div>
+                                    <div class="payment inner d-flex-align-center"><img loading="lazy"
+                                            src="data:image/png;base64,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"><img
+                                            loading="lazy"
+                                            src="data:image/png;base64,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"><img
+                                            loading="lazy" src="https://www.mioto.vn/static/media/vtmoney.d7ef81b9.png"
+                                            style="width: 72px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div><iframe height="0" width="0" style="display: none; visibility: hidden;"></iframe>
+    <div id="gridmanWrapper" style="position: fixed; height: 0px; width: 0px; z-index: 99999; top: 0px; left: 0px;">
+    </div><img
+        src="https://track.omguk.com/e/qi/?action=Content&amp;mid=2054257&amp;pid=37337&amp;ref=https%3A%2F%2Fwww.mioto.vn%2F&amp;"
+        width="1" height="1" style="display: none;"><grammarly-desktop-integration
+        data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+    <div id="eJOY__extension_ai_adv_root" class="eJOY__extension_ai_adv_root_class">
+        <div class="wrapperAiAssEjoy ">
+            <div class="containerSumEjoyIcon containerSumEjoyIconShow">
+                <div class="viewIconEjoy gl-tooltip-ejoy gl-tooltip-ejoy-left" tooltip-data="eJOY AI Assistant">
+                    <div class="viewIconEjoyItem"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="26"
+                            viewBox="0 0 24 26" fill="none">
+                            <mask id="mask0_427_34" maskUnits="userSpaceOnUse" x="16" y="3" width="8" height="8"
+                                style="mask-type: luminance;">
+                                <path d="M24 3H16V11H24V3Z" fill="white"></path>
+                            </mask>
+                            <g mask="url(#mask0_427_34)">
+                                <path
+                                    d="M23.8012 7.00309L21.0136 8.01539L20.0012 10.8031L18.9889 8.01539L16.2012 7.00309L18.9889 5.9908L20.0012 3.20309L21.0136 5.9908L23.8012 7.00309Z"
+                                    fill="url(#paint0_linear_427_34)"></path>
+                            </g>
+                            <mask id="mask1_427_34" maskUnits="userSpaceOnUse" x="0" y="10" width="6" height="6"
+                                style="mask-type: luminance;">
+                                <path d="M6 10H0V16H6V10Z" fill="white"></path>
+                            </mask>
+                            <g mask="url(#mask1_427_34)">
+                                <path
+                                    d="M5.8494 13.0023L3.7587 13.7616L2.9994 15.8523L2.2402 13.7616L0.149399 13.0023L2.2402 12.2431L2.9994 10.1523L3.7587 12.2431L5.8494 13.0023Z"
+                                    fill="url(#paint1_linear_427_34)"></path>
+                            </g>
+                            <mask id="mask2_427_34" maskUnits="userSpaceOnUse" x="16" y="20" width="4" height="4"
+                                style="mask-type: luminance;">
+                                <path d="M20 20H16V24H20V20Z" fill="white"></path>
+                            </mask>
+                            <g mask="url(#mask2_427_34)">
+                                <path
+                                    d="M19.8996 22.0016L18.5058 22.5077L17.9996 23.9016L17.4934 22.5077L16.0996 22.0016L17.4934 21.4954L17.9996 20.1016L18.5058 21.4954L19.8996 22.0016Z"
+                                    fill="url(#paint2_linear_427_34)"></path>
+                            </g>
+                            <g filter="url(#filter0_d_427_34)">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M11.8671 20.3327C14.8098 20.2537 16.4674 18.0538 16.368 15.5257C15.9553 11.8147 11.5502 10.6201 13.3135 5.666C9.7712 8.7188 7.228 12.6272 7.3363 15.408C7.3847 18.1053 8.9455 20.3327 11.8671 20.3327ZM14.5512 16.5696C15.0045 16.5696 15.3306 16.2001 15.3719 15.7489C15.4799 15.431 15.3719 13.9738 14.2947 13.0395C14.4695 14.2529 13.6329 15.261 13.7305 15.7489C13.7305 16.2022 14.0979 16.5696 14.5512 16.5696Z"
+                                    fill="#1DA1F2"></path>
+                            </g>
+                            <defs>
+                                <filter id="filter0_d_427_34" x="2.47583" y="0.80886" width="18.7535" height="24.381"
+                                    filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                                    <feColorMatrix in="SourceAlpha" type="matrix"
+                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha">
+                                    </feColorMatrix>
+                                    <feOffset></feOffset>
+                                    <feGaussianBlur stdDeviation="2.42857"></feGaussianBlur>
+                                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0">
+                                    </feColorMatrix>
+                                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_427_34">
+                                    </feBlend>
+                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_427_34"
+                                        result="shape"></feBlend>
+                                </filter>
+                                <linearGradient id="paint0_linear_427_34" x1="20.0012" y1="3.20309" x2="20.0012"
+                                    y2="10.8031" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#1DA1F2"></stop>
+                                    <stop offset="1" stop-color="#6CD2FF"></stop>
+                                </linearGradient>
+                                <linearGradient id="paint1_linear_427_34" x1="2.9994" y1="10.1523" x2="2.9994"
+                                    y2="15.8523" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#1DA1F2"></stop>
+                                    <stop offset="1" stop-color="#6CD2FF"></stop>
+                                </linearGradient>
+                                <linearGradient id="paint2_linear_427_34" x1="17.9996" y1="20.1016" x2="17.9996"
+                                    y2="23.9016" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#1DA1F2"></stop>
+                                    <stop offset="1" stop-color="#6CD2FF"></stop>
+                                </linearGradient>
+                            </defs>
+                        </svg></div>
+                    <div class="moveIconEjoyAi"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            viewBox="0 0 16 16" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M5.45139 0.667969C4.64931 0.667969 4 1.31727 4 2.11936C4 2.92144 4.64931 3.57075 5.45139 3.57075C6.25347 3.57075 6.90278 2.92144 6.90278 2.11936C6.90278 1.31727 6.25347 0.667969 5.45139 0.667969ZM4 8.00868C4 7.2066 4.64931 6.55729 5.45139 6.55729C6.25347 6.55729 6.90278 7.2066 6.90278 8.00868C6.90278 8.81076 6.25347 9.46007 5.45139 9.46007C4.64931 9.46007 4 8.81076 4 8.00868ZM4 13.8837C4 13.0816 4.64931 12.4323 5.45139 12.4323C6.25347 12.4323 6.90278 13.0816 6.90278 13.8837C6.90278 14.6858 6.25347 15.3351 5.45139 15.3351C4.64931 15.3351 4 14.6858 4 13.8837Z"
+                                fill="#666666"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M10.7854 0.667969C9.98329 0.667969 9.33398 1.31727 9.33398 2.11936C9.33398 2.92144 9.98329 3.57075 10.7854 3.57075C11.5875 3.57075 12.2368 2.92144 12.2368 2.11936C12.2368 1.31727 11.5875 0.667969 10.7854 0.667969ZM9.33398 8.00868C9.33398 7.2066 9.98329 6.55729 10.7854 6.55729C11.5875 6.55729 12.2368 7.2066 12.2368 8.00868C12.2368 8.81076 11.5875 9.46007 10.7854 9.46007C9.98329 9.46007 9.33398 8.81076 9.33398 8.00868ZM9.33398 13.8837C9.33398 13.0816 9.98329 12.4323 10.7854 12.4323C11.5875 12.4323 12.2368 13.0816 12.2368 13.8837C12.2368 14.6858 11.5875 15.3351 10.7854 15.3351C9.98329 15.3351 9.33398 14.6858 9.33398 13.8837Z"
+                                fill="#666666"></path>
+                        </svg></div>
+                </div>
+                <div class="viewCloseIconEjoy"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                        viewBox="0 0 12 12" fill="none">
+                        <circle cx="6" cy="6" r="6" fill="black" fill-opacity="0.25"></circle>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M8.71289 3.58672C8.87135 3.74518 8.87135 4.00209 8.71289 4.16054L6.72363 6.14981L8.71289 8.13907C8.87135 8.29752 8.87135 8.55444 8.71289 8.71289C8.55444 8.87135 8.29752 8.87135 8.13907 8.71289L6.14981 6.72363L4.16054 8.71289C4.00209 8.87135 3.74518 8.87135 3.58672 8.71289C3.42826 8.55443 3.42826 8.29752 3.58672 8.13907L5.57598 6.14981L3.58672 4.16054C3.42826 4.00209 3.42826 3.74518 3.58672 3.58672C3.74518 3.42826 4.00209 3.42826 4.16054 3.58672L6.14981 5.57598L8.13907 3.58672C8.29752 3.42826 8.55444 3.42826 8.71289 3.58672Z"
+                            fill="white"></path>
+                    </svg></div>
+            </div>
+            <div class="eJOY__container eJOY__container_scroll  ">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-left: 12px;">
+                    <div>
+                        <div
+                            style="border-radius: 3px; padding: 4px 8px; color: rgb(255, 255, 255); font-size: 12px; font-style: normal; font-weight: 400; line-height: 12px; background: rgba(29, 161, 242, 0.65);">
+                            Beta</div>
+                    </div>
+                    <div style="display: flex; justify-content: center; padding-right: 12px; flex-direction: column;">
+                        <span
+                            style="color: rgb(229, 56, 56); font-size: 10px; font-style: normal; font-weight: 600; line-height: 12px; padding-bottom: 1px;">0
+                            / 0</span><span
+                            style="color: rgb(140, 140, 140); font-size: 8px; font-style: normal; font-weight: 400; line-height: 10px;">used
+                            queries</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="eJOY__extension_root" class="eJOY__extension_root_class" style="all: unset;"></div>
+</body>
+
+</html>
