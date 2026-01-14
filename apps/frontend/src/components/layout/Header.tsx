@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import { Bell, MessageCircle, Menu, LogOut, Heart, Gift } from "lucide-react"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -36,13 +37,13 @@ export default function Header() {
                         <Button variant="ghost" size="icon">
                             <MessageCircle className="h-5 w-5" />
                         </Button>
-                        <div className="flex items-center gap-2 cursor-pointer">
+                        <Link to="/account" className="flex items-center gap-2 cursor-pointer hover:bg-slate-100 p-1 rounded-full transition-colors">
                             <Avatar className="h-8 w-8">
                                 <AvatarImage src="https://n1-astg.mioto.vn/g/2026/00/03/16/Sn2hPp2JiLUvvN3HYG9vbQ.jpg" />
                                 <AvatarFallback>L</AvatarFallback>
                             </Avatar>
                             <span className="text-sm font-medium">Linh Huỳnh</span>
-                        </div>
+                        </Link>
                     </div>
                 </nav>
 
@@ -64,13 +65,13 @@ export default function Header() {
                             </Button>
                         </div>
                         <div className="flex flex-col gap-4 p-4">
-                            <div className="flex items-center gap-4 mb-4">
+                            <Link to="/account" className="flex items-center gap-4 mb-4" onClick={() => setMobileMenuOpen(false)}>
                                 <Avatar className="h-12 w-12">
                                     <AvatarImage src="https://n1-astg.mioto.vn/g/2026/00/03/16/Sn2hPp2JiLUvvN3HYG9vbQ.jpg" />
                                     <AvatarFallback>L</AvatarFallback>
                                 </Avatar>
                                 <span className="text-lg font-bold">Linh Huỳnh</span>
-                            </div>
+                            </Link>
                             <Separator />
                             <a href="#" className="flex items-center gap-2 py-2 text-lg"><Heart className="h-5 w-5" /> Xe yêu thích</a>
                             <a href="#" className="flex items-center gap-2 py-2 text-lg"><Gift className="h-5 w-5" /> Quà tặng</a>
