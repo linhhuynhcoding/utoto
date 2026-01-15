@@ -1,12 +1,9 @@
 import Fastify from "fastify";
-import { PrismaClient } from "@prisma/client";
-import { UserSchema, CreateUserSchema } from "@utoto/shared";
 import cors from "@fastify/cors";
-import envConfig, { API_URL } from "../config/config";
+import envConfig, { API_URL } from "../config";
 import { healthRoutes } from "../routes/health.route";
 
 const fastify = Fastify({ logger: true });
-const prisma = new PrismaClient();
 
 // Run the server!
 const start = async () => {
