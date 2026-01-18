@@ -24,7 +24,7 @@ const configSchema = z.object({
 
   // REFRESH_TOKEN_SECRET: z.string(),
   // REFRESH_TOKEN_EXPIRES_IN: z.string(),
-  // UPLOAD_FOLDER: z.string(),
+  UPLOAD_FOLDER: z.string(),
   // CLIENT_URL: z.string(),
   // GOOGLE_REDIRECT_CLIENT_URL: z.string(),
   // GOOGLE_CLIENT_ID: z.string(),
@@ -44,7 +44,7 @@ if (!configServer.success) {
 const envConfig = configServer.data;
 export const API_URL = envConfig.PRODUCTION
   ? envConfig.PRODUCTION_URL
-  : `localhost:${envConfig.PORT}`;
+  : `http://localhost:${envConfig.PORT}`;
 export default envConfig;
 
 declare global {

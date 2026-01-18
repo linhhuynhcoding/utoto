@@ -2,13 +2,21 @@ import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { healthRoutes } from "../routes/health.route";
 import { authRoutes } from "../routes/auth.route";
+import { carRoutes } from "../routes/car.route";
+import { locationRoutes } from "../routes/location.route";
 import envConfig, { API_URL } from "@/config";
+import mediaRoutes from "@/routes/media.route";
+import staticRoutes from "@/routes/static.route";
+import path from "path";
+import { createFolder } from "@/utils/helpers";
+import fastifyHelmet from "@fastify/helmet";
 
 const fastify = Fastify({ logger: true });
 
 // Run the server!
 const start = async () => {
   try {
+    createFolder(path.resolve(envConfig.UPLOAD_FOLDER));
     const whitelist = ["*"];
     fastify.register(cors, {
       origin: whitelist, // Cho phép tất cả các domain gọi API
@@ -16,6 +24,23 @@ const start = async () => {
     });
     await fastify.register(authRoutes, {
       prefix: "/auth",
+    });
+    fastify.register(fastifyHelmet, {
+      crossOriginResourcePolicy: {
+        policy: 'cross-origin'
+      },
+    })
+    await fastify.register(carRoutes, {
+      prefix: "/car",
+    });
+    await fastify.register(locationRoutes, {
+      prefix: "/location",
+    });
+    fastify.register(mediaRoutes, {
+      prefix: "/media",
+    });
+    fastify.register(staticRoutes, {
+      prefix: "/static",
     });
     await fastify.register(healthRoutes, {
       prefix: "/health",

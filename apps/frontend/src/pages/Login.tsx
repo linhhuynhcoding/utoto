@@ -86,8 +86,6 @@ export default function Login() {
                             size="large"
                             width="100%"
                             login_uri='http://localhost:4000/auth/google/callback'
-
-
                         />
                     </div>
 

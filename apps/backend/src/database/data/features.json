@@ -1,0 +1,92 @@
+[
+    {
+        "id": "mp",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/map-v2.png",
+        "name": "Bản đồ"
+    },
+    {
+        "id": "bt",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/bluetooth-v2.png",
+        "name": "Bluetooth"
+    },
+    {
+        "id": "p360c",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/360_camera-v2.png",
+        "name": "Camera 360"
+    },
+    {
+        "id": "pc",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/parking_camera-v2.png",
+        "name": "Camera cập lề"
+    },
+    {
+        "id": "dc",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/dash_camera-v2.png",
+        "name": "Camera hành trình"
+    },
+    {
+        "id": "sc",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/reverse_camera-v2.png",
+        "name": "Camera lùi"
+    },
+    {
+        "id": "tpms",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/tpms-v2.png",
+        "name": "Cảm biến lốp"
+    },
+    {
+        "id": "is",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/impact_sensor-v2.png",
+        "name": "Cảm biến va chạm"
+    },
+    {
+        "id": "hd",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/head_up-v2.png",
+        "name": "Cảnh báo tốc độ"
+    },
+    {
+        "id": "sr",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/sunroof-v2.png",
+        "name": "Cửa sổ trời"
+    },
+    {
+        "id": "gp",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/gps-v2.png",
+        "name": "Định vị GPS"
+    },
+    {
+        "id": "bs",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/babyseat-v2.png",
+        "name": "Ghế trẻ em"
+    },
+    {
+        "id": "us",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/usb-v2.png",
+        "name": "Khe cắm USB"
+    },
+    {
+        "id": "st",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/spare_tire-v2.png",
+        "name": "Lốp dự phòng"
+    },
+    {
+        "id": "dvd",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/dvd-v2.png",
+        "name": "Màn hình DVD"
+    },
+    {
+        "id": "bn",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/bonnet-v2.png",
+        "name": "Nắp thùng xe bán tải"
+    },
+    {
+        "id": "ep",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/etc-v2.png",
+        "name": "ETC"
+    },
+    {
+        "id": "ab",
+        "logo": "https://n1-cstg.mioto.vn/v4/p/m/icons/features/airbags-v2.png",
+        "name": "Túi khí an toàn"
+    }
+]
