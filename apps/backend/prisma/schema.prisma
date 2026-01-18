@@ -120,7 +120,6 @@ model images {
   height     Int
   desc       String?
   car_images car_images[]
-  users      users[]
 }
 
 model locations {
@@ -194,7 +193,6 @@ model users {
   cars                cars[]
   trips               trips[]
   locations           locations? @relation(fields: [address_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  images              images?    @relation(fields: [avatar], references: [url], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model wards {

@@ -2,12 +2,22 @@ import { User, Heart, Gift, MapPin, Key, Trash, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 import { motion } from "framer-motion"
+import { useAuth } from "@/contexts"
+import { useNavigate } from "react-router-dom"
 
 interface ProfileSidebarProps {
     className?: string
 }
 
 export function ProfileSidebar({ className }: ProfileSidebarProps) {
+    const { user, logout } = useAuth()
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        logout()
+        navigate('/login')
+    }
+
     const menuItems = [
         { icon: User, label: "Tài khoản của tôi", active: true, href: "/account" },
         { icon: User, label: "Quản lý cho thuê", active: false, href: "/mycars" },
@@ -27,7 +37,7 @@ export function ProfileSidebar({ className }: ProfileSidebarProps) {
         <div className={cn("w-full md:w-[360px] flex-shrink-0", className)}>
             <div className="bg-white rounded-lg border shadow-sm sticky top-24">
                 <div className="p-6 pb-2">
-                    <h4 className="text-xl font-bold">Xin chào bạn!</h4>
+                    <h4 className="text-xl font-bold">Xin chào {user?.name || 'bạn'}!</h4>
                 </div>
 
                 <div className="py-2">
@@ -67,7 +77,10 @@ export function ProfileSidebar({ className }: ProfileSidebarProps) {
                                 <span>{item.label}</span>
                             </a>
                         ))}
-                        <button className="flex w-full items-center gap-3 px-6 py-3 text-sm font-medium text-destructive transition-colors hover:bg-destructive/5">
+                        <button
+                            onClick={handleLogout}
+                            className="flex w-full items-center gap-3 px-6 py-3 text-sm font-medium text-destructive transition-colors hover:bg-destructive/5"
+                        >
                             <LogOut className="h-5 w-5" />
                             <span>Đăng xuất</span>
                         </button>

@@ -2,8 +2,16 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Pencil, CheckCircle2, AlertCircle, XCircle, Plus } from "lucide-react"
+import { useAuth } from "@/contexts"
 
 export function AccountInfo() {
+    const { user } = useAuth()
+
+    const getUserInitials = () => {
+        if (!user?.name) return 'U'
+        return user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    }
+
     return (
         <div className="space-y-6">
             {/* Account Header */}
@@ -24,17 +32,17 @@ export function AccountInfo() {
             <div className="flex flex-col items-center justify-center p-8 bg-white rounded-lg border shadow-sm text-center">
                 <div className="relative mb-4">
                     <Avatar className="h-24 w-24 border-4 border-white shadow-sm">
-                        <AvatarImage src="https://n1-astg.mioto.vn/g/2026/00/03/16/Sn2hPp2JiLUvvN3HYG9vbQ.jpg" />
-                        <AvatarFallback className="text-2xl">LH</AvatarFallback>
+                        <AvatarImage src={user?.avatar} />
+                        <AvatarFallback className="text-2xl">{getUserInitials()}</AvatarFallback>
                     </Avatar>
                     <Button size="icon" variant="secondary" className="absolute bottom-0 right-0 h-8 w-8 rounded-full shadow-md">
                         <Pencil className="h-3.5 w-3.5" />
                     </Button>
                 </div>
-                <h2 className="text-xl font-bold mb-1">Huỳnh Vũ Nhật Linh</h2>
-                <p className="text-sm text-muted-foreground mb-4">Tham gia: 03/01/2026</p>
+                <h2 className="text-xl font-bold mb-1">{user?.name || 'User'}</h2>
+                <p className="text-sm text-muted-foreground mb-4">Tham gia: {user?.joinedDate || '--/--/----'}</p>
                 <div className="flex items-center gap-2 px-4 py-2 bg-yellow-50 text-yellow-700 rounded-full text-sm font-medium">
-                    <span>0 điểm</span>
+                    <span>{user?.points || 0} điểm</span>
                 </div>
             </div>
 
@@ -42,11 +50,11 @@ export function AccountInfo() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="p-4 bg-white rounded-lg border shadow-sm">
                     <p className="text-sm text-muted-foreground mb-1">Ngày sinh</p>
-                    <p className="font-medium">--/--/----</p>
+                    <p className="font-medium">{user?.dateOfBirth || '--/--/----'}</p>
                 </div>
                 <div className="p-4 bg-white rounded-lg border shadow-sm">
                     <p className="text-sm text-muted-foreground mb-1">Giới tính</p>
-                    <p className="font-medium">Nam</p>
+                    <p className="font-medium">{user?.gender || 'Chưa cập nhật'}</p>
                 </div>
             </div>
 
@@ -57,12 +65,14 @@ export function AccountInfo() {
                     <div>
                         <p className="text-sm text-muted-foreground mb-1 flex items-center gap-2">
                             Số điện thoại
-                            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 gap-1 font-normal">
-                                <CheckCircle2 className="h-3 w-3" /> Đã xác thực
-                            </Badge>
+                            {user?.verified?.phone && (
+                                <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 gap-1 font-normal">
+                                    <CheckCircle2 className="h-3 w-3" /> Đã xác thực
+                                </Badge>
+                            )}
                         </p>
                         <div className="flex items-center gap-2">
-                            <p className="font-medium">+84938997680</p>
+                            <p className="font-medium">{user?.phone || 'Chưa cập nhật'}</p>
                             <Button variant="ghost" size="icon" className="h-6 w-6">
                                 <Pencil className="h-3 w-3" />
                             </Button>
@@ -75,12 +85,14 @@ export function AccountInfo() {
                     <div>
                         <p className="text-sm text-muted-foreground mb-1 flex items-center gap-2">
                             Email
-                            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 gap-1 font-normal">
-                                <CheckCircle2 className="h-3 w-3" /> Đã xác thực
-                            </Badge>
+                            {user?.verified?.email && (
+                                <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 gap-1 font-normal">
+                                    <CheckCircle2 className="h-3 w-3" /> Đã xác thực
+                                </Badge>
+                            )}
                         </p>
                         <div className="flex items-center gap-2">
-                            <p className="font-medium">nhatlinh.6449@gmail.com</p>
+                            <p className="font-medium">{user?.email || 'Chưa cập nhật'}</p>
                             <Button variant="ghost" size="icon" className="h-6 w-6">
                                 <Pencil className="h-3 w-3" />
                             </Button>
@@ -103,7 +115,7 @@ export function AccountInfo() {
                     <div className="flex-1">
                         <p className="text-sm text-muted-foreground mb-1">Google</p>
                         <div className="flex items-center gap-2">
-                            <p className="font-medium">Huỳnh Vũ Nhật Linh</p>
+                            <p className="font-medium">{user?.name || 'Chưa liên kết'}</p>
                             <Button variant="ghost" size="icon" className="h-6 w-6">
                                 <XCircle className="h-4 w-4 text-muted-foreground" />
                             </Button>
@@ -118,9 +130,15 @@ export function AccountInfo() {
                     <div>
                         <h6 className="font-bold flex items-center gap-2">
                             Giấy phép lái xe
-                            <Badge variant="destructive" className="font-normal gap-1">
-                                <AlertCircle className="h-3 w-3" /> Chưa xác thực
-                            </Badge>
+                            {user?.verified?.driverLicense ? (
+                                <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 gap-1 font-normal">
+                                    <CheckCircle2 className="h-3 w-3" /> Đã xác thực
+                                </Badge>
+                            ) : (
+                                <Badge variant="destructive" className="font-normal gap-1">
+                                    <AlertCircle className="h-3 w-3" /> Chưa xác thực
+                                </Badge>
+                            )}
                         </h6>
                     </div>
                     <Button size="sm" variant="outline">Chỉnh sửa</Button>

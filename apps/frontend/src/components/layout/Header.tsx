@@ -3,10 +3,23 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import { Bell, MessageCircle, Menu, LogOut, Heart, Gift } from "lucide-react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "@/contexts"
 
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const { user, isAuthenticated, logout } = useAuth()
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        logout()
+        navigate('/login')
+    }
+
+    const getUserInitials = () => {
+        if (!user?.name) return 'U'
+        return user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    }
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -31,19 +44,27 @@ export default function Header() {
                     <a href="/register-car" className="text-sm font-medium hover:text-primary">Trở thành chủ xe</a>
                     <div className="h-4 w-px bg-border" />
                     <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="icon" className="relative">
-                            <Bell className="h-5 w-5" />
-                        </Button>
-                        <Button variant="ghost" size="icon">
-                            <MessageCircle className="h-5 w-5" />
-                        </Button>
-                        <Link to="/account" className="flex items-center gap-2 cursor-pointer hover:bg-slate-100 p-1 rounded-full transition-colors">
-                            <Avatar className="h-8 w-8">
-                                <AvatarImage src="https://n1-astg.mioto.vn/g/2026/00/03/16/Sn2hPp2JiLUvvN3HYG9vbQ.jpg" />
-                                <AvatarFallback>L</AvatarFallback>
-                            </Avatar>
-                            <span className="text-sm font-medium">Linh Huỳnh</span>
-                        </Link>
+                        {isAuthenticated ? (
+                            <>
+                                <Button variant="ghost" size="icon" className="relative">
+                                    <Bell className="h-5 w-5" />
+                                </Button>
+                                <Button variant="ghost" size="icon">
+                                    <MessageCircle className="h-5 w-5" />
+                                </Button>
+                                <Link to="/account" className="flex items-center gap-2 cursor-pointer hover:bg-slate-100 p-1 rounded-full transition-colors">
+                                    <Avatar className="h-8 w-8">
+                                        <AvatarImage src={user?.avatar} />
+                                        <AvatarFallback>{getUserInitials()}</AvatarFallback>
+                                    </Avatar>
+                                    <span className="text-sm font-medium">{user?.name}</span>
+                                </Link>
+                            </>
+                        ) : (
+                            <Link to="/login">
+                                <Button>Đăng nhập</Button>
+                            </Link>
+                        )}
                     </div>
                 </nav>
 
@@ -65,24 +86,35 @@ export default function Header() {
                             </Button>
                         </div>
                         <div className="flex flex-col gap-4 p-4">
-                            <Link to="/account" className="flex items-center gap-4 mb-4" onClick={() => setMobileMenuOpen(false)}>
-                                <Avatar className="h-12 w-12">
-                                    <AvatarImage src="https://n1-astg.mioto.vn/g/2026/00/03/16/Sn2hPp2JiLUvvN3HYG9vbQ.jpg" />
-                                    <AvatarFallback>L</AvatarFallback>
-                                </Avatar>
-                                <span className="text-lg font-bold">Linh Huỳnh</span>
-                            </Link>
-                            <Separator />
-                            <a href="#" className="flex items-center gap-2 py-2 text-lg"><Heart className="h-5 w-5" /> Xe yêu thích</a>
-                            <a href="#" className="flex items-center gap-2 py-2 text-lg"><Gift className="h-5 w-5" /> Quà tặng</a>
-                            <Separator />
-                            <a href="#" className="py-2 text-lg">Về Mioto</a>
-                            <a href="#" className="py-2 text-lg">Trở thành chủ xe</a>
-                            <a href="#" className="py-2 text-lg">Chuyến của tôi</a>
-                            <Separator />
-                            <button className="flex items-center gap-2 py-2 text-lg text-destructive">
-                                <LogOut className="h-5 w-5" /> Đăng xuất
-                            </button>
+                            {isAuthenticated ? (
+                                <>
+                                    <Link to="/account" className="flex items-center gap-4 mb-4" onClick={() => setMobileMenuOpen(false)}>
+                                        <Avatar className="h-12 w-12">
+                                            <AvatarImage src={user?.avatar} />
+                                            <AvatarFallback>{getUserInitials()}</AvatarFallback>
+                                        </Avatar>
+                                        <span className="text-lg font-bold">{user?.name}</span>
+                                    </Link>
+                                    <Separator />
+                                    <a href="#" className="flex items-center gap-2 py-2 text-lg"><Heart className="h-5 w-5" /> Xe yêu thích</a>
+                                    <a href="#" className="flex items-center gap-2 py-2 text-lg"><Gift className="h-5 w-5" /> Quà tặng</a>
+                                    <Separator />
+                                    <a href="#" className="py-2 text-lg">Về Mioto</a>
+                                    <a href="#" className="py-2 text-lg">Trở thành chủ xe</a>
+                                    <a href="#" className="py-2 text-lg">Chuyến của tôi</a>
+                                    <Separator />
+                                    <button
+                                        onClick={handleLogout}
+                                        className="flex items-center gap-2 py-2 text-lg text-destructive"
+                                    >
+                                        <LogOut className="h-5 w-5" /> Đăng xuất
+                                    </button>
+                                </>
+                            ) : (
+                                <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+                                    <Button className="w-full">Đăng nhập</Button>
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>
