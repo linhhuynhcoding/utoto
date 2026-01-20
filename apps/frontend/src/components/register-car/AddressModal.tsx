@@ -10,8 +10,8 @@ import { Province, District, Ward } from "@utoto/shared"
 interface AddressModalProps {
     isOpen: boolean
     onClose: () => void
-    onSave: (address: string) => void
-    initialAddress?: string
+    onSave: (address: any) => void
+    initialAddress?: any
 }
 
 export function AddressModal({ isOpen, onClose, onSave }: AddressModalProps) {
@@ -59,8 +59,13 @@ export function AddressModal({ isOpen, onClose, onSave }: AddressModalProps) {
         const districtName = districts.find(d => d.code === addressData.district)?.name || ""
         const wardName = wards.find(w => w.code === addressData.ward)?.name || ""
 
-        const fullAddress = `${addressData.street}, ${wardName}, ${districtName}, ${provinceName}`.replace(/^, /, "").replace(/, ,/g, ",")
-        onSave(fullAddress || "Hồ Chí Minh")
+        // const fullAddress = `${addressData.street}, ${wardName}, ${districtName}, ${provinceName}`.replace(/^, /, "").replace(/, ,/g, ",")
+        onSave({
+            ...addressData,
+            province_name: provinceName,
+            district_name: districtName,
+            ward_name: wardName
+        })
         onClose()
     }
 

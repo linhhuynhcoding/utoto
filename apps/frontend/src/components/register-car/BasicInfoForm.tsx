@@ -46,8 +46,8 @@ export function BasicInfoForm({ data, updateData }: BasicInfoFormProps) {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
         // Reset model if brand changes
-        if (name === "make") {
-            updateData({ ...data, [name]: value, model: "" })
+        if (name === "brand_id") {
+            updateData({ ...data, [name]: value, model_id: "" })
         } else {
             updateData({ ...data, [name]: value })
         }
@@ -61,7 +61,7 @@ export function BasicInfoForm({ data, updateData }: BasicInfoFormProps) {
         updateData({ ...data, features: newFeatures })
     }
 
-    const selectedBrand = brands.find((b: CarBrand) => b.name === data.make)
+    const selectedBrand = brands.find((b: CarBrand) => b.id === data.brand_id)
     const models = selectedBrand?.models || []
 
     if (isLoading) {
@@ -101,19 +101,19 @@ export function BasicInfoForm({ data, updateData }: BasicInfoFormProps) {
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div className="space-y-2">
                         <Label>Hãng xe</Label>
-                        <Select name="make" value={data.make || ""} onChange={handleChange}>
+                        <Select name="brand_id" value={data.brand_id || ""} onChange={handleChange}>
                             <option value="">Chọn hãng xe</option>
                             {brands.map(brand => (
-                                <option key={brand.id} value={brand.name}>{brand.name}</option>
+                                <option key={brand.id} value={brand.id}>{brand.name}</option>
                             ))}
                         </Select>
                     </div>
                     <div className="space-y-2">
                         <Label>Mẫu xe</Label>
-                        <Select name="model" value={data.model || ""} onChange={handleChange} disabled={!data.make}>
+                        <Select name="model_id" value={data.model_id || ""} onChange={handleChange} disabled={!data.brand_id}>
                             <option value="">Chọn mẫu xe</option>
                             {models.map(model => (
-                                <option key={model.id} value={model.name}>{model.name}</option>
+                                <option key={model.id} value={model.id}>{model.name}</option>
                             ))}
                         </Select>
                     </div>
@@ -139,17 +139,17 @@ export function BasicInfoForm({ data, updateData }: BasicInfoFormProps) {
                         <Label>Truyền động</Label>
                         <Select name="transmission" value={data.transmission || ""} onChange={handleChange}>
                             <option value="">Chọn truyền động</option>
-                            <option value="manual">Số sàn</option>
-                            <option value="automatic">Số tự động</option>
+                            <option value="MANUAL">Số sàn</option>
+                            <option value="AUTOMATIC">Số tự động</option>
                         </Select>
                     </div>
                     <div className="space-y-2">
                         <Label>Nhiên liệu</Label>
                         <Select name="fuel" value={data.fuel || ""} onChange={handleChange}>
                             <option value="">Chọn nhiên liệu</option>
-                            <option value="gasoline">Xăng</option>
-                            <option value="diesel">Dầu</option>
-                            <option value="electric">Điện</option>
+                            <option value="GASOLINE">Xăng</option>
+                            <option value="DIESEL">Dầu</option>
+                            <option value="ELECTRIC">Điện</option>
                         </Select>
                     </div>
                 </div>

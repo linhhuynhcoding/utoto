@@ -1,10 +1,8 @@
-import envConfig from "@/config";
+import apiClient from "@/lib/axios";
 import { CarSettingsResponse } from "@utoto/shared";
 
 export const fetchCarSettings = async (): Promise<CarSettingsResponse> => {
-  const response = await fetch(`${envConfig.API_URL}/car/car-settings`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch car settings");
-  }
-  return response.json();
+  const response =
+    await apiClient.get<CarSettingsResponse>("/car/car-settings");
+  return response.data;
 };

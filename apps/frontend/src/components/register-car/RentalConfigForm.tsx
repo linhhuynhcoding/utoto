@@ -91,7 +91,7 @@ export function RentalConfigForm({ data, updateData }: RentalConfigFormProps) {
                 <div className="flex gap-2">
                     <div className="relative flex-1">
                         <Input
-                            value={data.address || ""}
+                            value={data.address ? `${data.address.street}, ${data.address.ward_name || '...'}, ${data.address.district_name || '...'}, ${data.address.province_name || '...'}` : ""}
                             readOnly
                             placeholder="Chưa có địa chỉ"
                             className="pl-10"

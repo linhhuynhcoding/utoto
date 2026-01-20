@@ -7,19 +7,22 @@ import { StepIndicator } from "@/components/register-car/StepIndicator"
 import { BasicInfoForm } from "@/components/register-car/BasicInfoForm"
 import { RentalConfigForm } from "@/components/register-car/RentalConfigForm"
 import { ImageUploadForm } from "@/components/register-car/ImageUploadForm"
+import { useRegisterCar } from "@/hooks/useCars"
 
 export default function RegisterCar() {
     const navigate = useNavigate()
     const [currentStep, setCurrentStep] = useState(1)
     const [formData, setFormData] = useState({
         // Step 1
+        brand_id: "",
+        model_id: "",
         licensePlate: "",
-        make: "",
-        model: "",
-        seats: "",
-        year: "",
-        transmission: "",
-        fuel: "",
+        // make: "", // Removed in favor of brand_id
+        // model: "", // Removed in favor of model_id
+        seats: 4,
+        year: new Date().getFullYear(),
+        transmission: "MANUAL",
+        fuel: "GASOLINE",
         consumption: "",
         description: "",
         features: [],
@@ -30,13 +33,15 @@ export default function RegisterCar() {
         hasDelivery: true,
         maxDeliveryDistance: 15,
         deliveryFee: 15,
-        address: "",
+        address: null as any,
         hasLimit: true,
         maxKmPerDay: 400,
         terms: "",
         // Step 3
         images: []
     })
+
+    const { mutate, isPending } = useRegisterCar()
 
     const updateData = (newData: any) => {
         setFormData((prev) => ({ ...prev, ...newData }))
@@ -47,10 +52,43 @@ export default function RegisterCar() {
             setCurrentStep(currentStep + 1)
             window.scrollTo(0, 0)
         } else {
-            // Submit
-            console.log("Submitting forms:", formData)
-            alert("Đăng ký xe thành công! (Dữ liệu đã được log ra console)")
-            navigate("/")
+            // Prepare payload
+            const payload = {
+                name: formData.licensePlate, // Using license plate as name
+                desc: formData.description,
+                model_id: formData.model_id,
+                transmission: formData.transmission as "MANUAL" | "AUTOMATIC",
+                seat: parseInt(String(formData.seats)),
+                engine_type: formData.fuel as "GASOLINE" | "DIESEL" | "ELECTRIC" | "HYBRID",
+                price: Number(formData.price),
+                deliveryFee: Number(formData.deliveryFee),
+                deliveryRadius: Number(formData.maxDeliveryDistance),
+                feature_ids: formData.features,
+                image_urls: formData.images,
+                address: formData.address ? {
+                    province: formData.address.province,
+                    district: formData.address.district,
+                    ward: formData.address.ward,
+                    street: formData.address.street
+                } : undefined,
+                // Map other optional pricing fields if they exist in form or use defaults
+                hasLimit: formData.hasLimit,
+                maxKmPerDay: Number(formData.maxKmPerDay),
+                terms: formData.terms
+            }
+
+            console.log("Submitting payload:", payload)
+
+            mutate(payload as any, {
+                onSuccess: () => {
+                    alert("Đăng ký xe thành công!")
+                    navigate("/")
+                },
+                onError: (error) => {
+                    console.error(error)
+                    alert(`Đăng ký thất bại: ${error.message}`)
+                }
+            })
         }
     }
 
@@ -99,8 +137,9 @@ export default function RegisterCar() {
                             <Button
                                 onClick={handleNext}
                                 className="min-w-[120px] bg-green-600 hover:bg-green-700"
+                                disabled={isPending}
                             >
-                                {currentStep === 3 ? "Đăng ký" : "Kế tiếp"}
+                                {isPending ? "Đang xử lý..." : (currentStep === 3 ? "Đăng ký" : "Kế tiếp")}
                             </Button>
                         </div>
                     </div>

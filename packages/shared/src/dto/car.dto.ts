@@ -64,6 +64,14 @@ export const CarBaseSchema = z.object({
 export const CreateCarSchema = CarBaseSchema.extend({
   feature_ids: z.array(z.string()).optional(),
   image_urls: z.array(z.string()).optional(),
+  address: z
+    .object({
+      province: z.string(),
+      district: z.string(),
+      ward: z.string(),
+      street: z.string(),
+    })
+    .optional(),
 });
 
 export const UpdateCarSchema = CarBaseSchema.partial().extend({

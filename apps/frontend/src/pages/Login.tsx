@@ -37,7 +37,8 @@ export default function Login() {
 
             if (response.data.success) {
                 // Use AuthContext to store user info
-                login(response.data.data);
+                const { user, accessToken } = response.data.data;
+                login(user, accessToken);
                 navigate('/')
             }
         } catch (error) {

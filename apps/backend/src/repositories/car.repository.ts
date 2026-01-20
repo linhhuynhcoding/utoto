@@ -77,7 +77,32 @@ export class CarRepository {
   }
 
   async create(ownerId: string, data: CreateCar): Promise<CarResponse> {
-    const { feature_ids, image_urls, ...carData } = data;
+    const { feature_ids, image_urls, address, ...carData } = data;
+
+    let locationId = carData.location_id ? BigInt(carData.location_id) : null;
+
+    if (address) {
+      const location = await prisma.locations.create({
+        data: {
+          street: address.street,
+          province_id: parseInt(address.province),
+          district_id: parseInt(address.district),
+          ward_id: parseInt(address.ward),
+        },
+      });
+      locationId = location.id;
+    }
+
+    if (image_urls && image_urls.length > 0) {
+      await prisma.images.createMany({
+        data: image_urls.map((url) => ({
+          url,
+          width: 0,
+          height: 0,
+        })),
+        skipDuplicates: true,
+      });
+    }
 
     const car = await prisma.cars.create({
       data: {
@@ -85,7 +110,7 @@ export class CarRepository {
         id: generateId(20),
         owner: ownerId,
         model_id: BigInt(carData.model_id),
-        location_id: carData.location_id ? BigInt(carData.location_id) : null,
+        location_id: locationId,
         price: new Prisma.Decimal(carData.price),
         priceWithPlatformFee: new Prisma.Decimal(carData.price * 1.1), // Example platform fee
         deliveryFee: new Prisma.Decimal(carData.deliveryFee || 0),
@@ -141,7 +166,16 @@ export class CarRepository {
       };
     }
 
-    if (image_urls) {
+    if (image_urls && image_urls.length > 0) {
+      await prisma.images.createMany({
+        data: image_urls.map((url) => ({
+          url,
+          width: 0,
+          height: 0,
+        })),
+        skipDuplicates: true,
+      });
+
       updateData.car_images = {
         deleteMany: {},
         create: image_urls.map((url) => ({ image_url: url })),

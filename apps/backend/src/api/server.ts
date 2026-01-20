@@ -1,9 +1,9 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
-import { healthRoutes } from "../routes/health.route";
 import { authRoutes } from "../routes/auth.route";
 import { carRoutes } from "../routes/car.route";
 import { locationRoutes } from "../routes/location.route";
+import { healthRoutes } from "../routes/health.route";
 import envConfig, { API_URL } from "@/config";
 import mediaRoutes from "@/routes/media.route";
 import staticRoutes from "@/routes/static.route";
@@ -22,14 +22,15 @@ const start = async () => {
       origin: whitelist, // Cho phép tất cả các domain gọi API
       credentials: true, // Cho phép trình duyệt gửi cookie đến server
     });
+
     await fastify.register(authRoutes, {
       prefix: "/auth",
     });
     fastify.register(fastifyHelmet, {
       crossOriginResourcePolicy: {
-        policy: 'cross-origin'
+        policy: "cross-origin",
       },
-    })
+    });
     await fastify.register(carRoutes, {
       prefix: "/car",
     });

@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyPluginOptions } from "fastify";
 import fastifyMultipart from "@fastify/multipart";
 import { UploadImageResType } from "@utoto/shared";
+import { authenticate } from "@/middleware/auth.middleware";
 import { uploadImage } from "@/controllers/media.controller";
 
 export default async function mediaRoutes(
@@ -18,6 +19,7 @@ export default async function mediaRoutes(
   fastify.post<{ Reply: UploadImageResType }>(
     "/upload",
     {
+      preHandler: [authenticate],
       schema: {
         response: {
           200: {
@@ -34,7 +36,9 @@ export default async function mediaRoutes(
     async (request, reply) => {
       const data = await request.file(); // đọc file từ multipart
       if (!data) {
-        return reply.status(400).send({ message: "Không tìm thấy file", data: "" });
+        return reply
+          .status(400)
+          .send({ message: "Không tìm thấy file", data: "" });
       }
 
       const url = await uploadImage(data);

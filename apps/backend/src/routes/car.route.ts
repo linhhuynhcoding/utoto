@@ -8,11 +8,21 @@ import {
   searchCars,
 } from "@/controllers/car.controller";
 
+import { authenticate } from "@/middleware/auth.middleware";
+
 export async function carRoutes(fastify: FastifyInstance) {
   fastify.get("/car-settings", getCarSettings);
-  fastify.post("/", createCar);
+  fastify.post("/", { preHandler: [authenticate] }, createCar);
   fastify.get("/search", searchCars);
-  fastify.get("/:id", getCarById);
-  fastify.put("/:id", updateCar);
-  fastify.delete("/:id", deleteCar);
+  fastify.get<{ Params: { id: string } }>("/:id", getCarById);
+  fastify.put<{ Params: { id: string } }>(
+    "/:id",
+    { preHandler: [authenticate] },
+    updateCar,
+  );
+  fastify.delete<{ Params: { id: string } }>(
+    "/:id",
+    { preHandler: [authenticate] },
+    deleteCar,
+  );
 }
