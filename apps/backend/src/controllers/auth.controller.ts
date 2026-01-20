@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import prisma from "@/database";
 import { generateId } from "@/utils/id.util";
+import jwt from "jsonwebtoken";
 
 const GoogleCallbackSchema = z.object({
   email: z.string().email(),
@@ -11,7 +12,7 @@ const GoogleCallbackSchema = z.object({
 
 export const googleCallback = async (
   request: FastifyRequest,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) => {
   try {
     const { email, name, avatar } = GoogleCallbackSchema.parse(request.body);
@@ -39,9 +40,19 @@ export const googleCallback = async (
       request.log.info({ email }, "Existing user logged in via Google OAuth");
     }
 
+    // Generate JWT token
+    const accessToken = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET || "fallback_secret",
+      { expiresIn: "7d" },
+    );
+
     return reply.status(200).send({
       success: true,
-      data: user,
+      data: {
+        user,
+        accessToken,
+      },
     });
   } catch (error) {
     if (error instanceof z.ZodError) {

@@ -22,7 +22,7 @@ export interface User {
 interface AuthContextType {
     user: User | null
     loading: boolean
-    login: (userData: User) => void
+    login: (userData: User, token: string) => void
     logout: () => void
     updateUser: (userData: Partial<User>) => void
     isAuthenticated: boolean
@@ -44,9 +44,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setLoading(false)
     }, [])
 
-    const login = (userData: User) => {
+    const login = (userData: User, token: string) => {
         setUser(userData)
         storage.setItem(StorageKeys.USER, userData)
+        storage.setItem(StorageKeys.AUTH_TOKEN, token)
     }
 
     const logout = () => {

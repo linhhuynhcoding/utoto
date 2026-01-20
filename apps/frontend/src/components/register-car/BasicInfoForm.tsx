@@ -6,39 +6,51 @@ import { cn } from "@/lib/utils"
 import {
     Map, Bluetooth, Camera, Video, EyeOff, Sidebar, Disc, Activity,
     Gauge, Sun, Navigation, Layers, LifeBuoy, MonitorPlay, Truck,
-    CreditCard, ShieldCheck, Usb
+    CreditCard, ShieldCheck, Usb, Loader2
 } from "lucide-react"
+import { CarBrand } from "@utoto/shared"
+import { useCarSettings } from "@/hooks/useCarSettings"
 
 interface BasicInfoFormProps {
     data: any
     updateData: (data: any) => void
 }
 
-const FEATURES = [
-    { id: "map", label: "Bản đồ", icon: Map },
-    { id: "bluetooth", label: "Bluetooth", icon: Bluetooth },
-    { id: "camera_360", label: "Camera 360", icon: Camera },
-    { id: "dash_cam", label: "Camera hành trình", icon: Video },
-    { id: "reverse_cam", label: "Camera lùi", icon: EyeOff },
-    { id: "sidebar_cam", label: "Camera cập lề", icon: Sidebar },
-    { id: "tire_sensor", label: "Cảm biến lốp", icon: Disc },
-    { id: "collision_sensor", label: "Cảm biến va chạm", icon: Activity },
-    { id: "speed_warning", label: "Cảnh báo tốc độ", icon: Gauge },
-    { id: "sunroof", label: "Cửa sổ trời", icon: Sun },
-    { id: "gps", label: "Định vị GPS", icon: Navigation },
-    { id: "head_up", label: "Head Up Display", icon: Layers },
-    { id: "spare_tire", label: "Lốp dự phòng", icon: LifeBuoy },
-    { id: "dvd", label: "Màn hình DVD", icon: MonitorPlay },
-    { id: "trunk_lid", label: "Nắp thùng xe bán tải", icon: Truck },
-    { id: "etc", label: "Thu phí không dừng", icon: CreditCard },
-    { id: "airbag", label: "Túi khí an toàn", icon: ShieldCheck },
-    { id: "usb", label: "USB", icon: Usb },
-]
+const FEATURE_ICONS: Record<string, any> = {
+    "map": Map,
+    "bluetooth": Bluetooth,
+    "camera_360": Camera,
+    "dash_cam": Video,
+    "reverse_cam": EyeOff,
+    "sidebar_cam": Sidebar,
+    "tire_sensor": Disc,
+    "collision_sensor": Activity,
+    "speed_warning": Gauge,
+    "sunroof": Sun,
+    "gps": Navigation,
+    "head_up": Layers,
+    "spare_tire": LifeBuoy,
+    "dvd": MonitorPlay,
+    "trunk_lid": Truck,
+    "etc": CreditCard,
+    "airbag": ShieldCheck,
+    "usb": Usb,
+}
 
 export function BasicInfoForm({ data, updateData }: BasicInfoFormProps) {
+    const { data: settingsResponse, isLoading } = useCarSettings()
+
+    const brands = settingsResponse?.data.brands || []
+    const availableFeatures = settingsResponse?.data.features || []
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
-        updateData({ ...data, [name]: value })
+        // Reset model if brand changes
+        if (name === "brand_id") {
+            updateData({ ...data, [name]: value, model_id: "" })
+        } else {
+            updateData({ ...data, [name]: value })
+        }
     }
 
     const handleFeatureToggle = (featureId: string) => {
@@ -47,6 +59,17 @@ export function BasicInfoForm({ data, updateData }: BasicInfoFormProps) {
             ? currentFeatures.filter((id: string) => id !== featureId)
             : [...currentFeatures, featureId]
         updateData({ ...data, features: newFeatures })
+    }
+
+    const selectedBrand = brands.find((b: CarBrand) => b.id === data.brand_id)
+    const models = selectedBrand?.models || []
+
+    if (isLoading) {
+        return (
+            <div className="flex h-64 items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-orange-500" />
+            </div>
+        )
     }
 
     return (
@@ -78,24 +101,20 @@ export function BasicInfoForm({ data, updateData }: BasicInfoFormProps) {
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div className="space-y-2">
                         <Label>Hãng xe</Label>
-                        <Select name="make" value={data.make || ""} onChange={handleChange}>
+                        <Select name="brand_id" value={data.brand_id || ""} onChange={handleChange}>
                             <option value="">Chọn hãng xe</option>
-                            <option value="Toyota">Toyota</option>
-                            <option value="Honda">Honda</option>
-                            <option value="Hyundai">Hyundai</option>
-                            <option value="VinFast">VinFast</option>
-                            <option value="Mazda">Mazda</option>
+                            {brands.map(brand => (
+                                <option key={brand.id} value={brand.id}>{brand.name}</option>
+                            ))}
                         </Select>
                     </div>
                     <div className="space-y-2">
                         <Label>Mẫu xe</Label>
-                        <Select name="model" value={data.model || ""} onChange={handleChange} disabled={!data.make}>
+                        <Select name="model_id" value={data.model_id || ""} onChange={handleChange} disabled={!data.brand_id}>
                             <option value="">Chọn mẫu xe</option>
-                            <option value="Vios">Vios</option>
-                            <option value="City">City</option>
-                            <option value="Accent">Accent</option>
-                            <option value="Lux A2.0">Lux A2.0</option>
-                            <option value="CX-5">CX-5</option>
+                            {models.map(model => (
+                                <option key={model.id} value={model.id}>{model.name}</option>
+                            ))}
                         </Select>
                     </div>
                     <div className="space-y-2">
@@ -120,17 +139,17 @@ export function BasicInfoForm({ data, updateData }: BasicInfoFormProps) {
                         <Label>Truyền động</Label>
                         <Select name="transmission" value={data.transmission || ""} onChange={handleChange}>
                             <option value="">Chọn truyền động</option>
-                            <option value="manual">Số sàn</option>
-                            <option value="automatic">Số tự động</option>
+                            <option value="MANUAL">Số sàn</option>
+                            <option value="AUTOMATIC">Số tự động</option>
                         </Select>
                     </div>
                     <div className="space-y-2">
                         <Label>Nhiên liệu</Label>
                         <Select name="fuel" value={data.fuel || ""} onChange={handleChange}>
                             <option value="">Chọn nhiên liệu</option>
-                            <option value="gasoline">Xăng</option>
-                            <option value="diesel">Dầu</option>
-                            <option value="electric">Điện</option>
+                            <option value="GASOLINE">Xăng</option>
+                            <option value="DIESEL">Dầu</option>
+                            <option value="ELECTRIC">Điện</option>
                         </Select>
                     </div>
                 </div>
@@ -164,8 +183,8 @@ export function BasicInfoForm({ data, updateData }: BasicInfoFormProps) {
             <div className="space-y-4">
                 <h3 className="text-lg font-semibold">Tính năng</h3>
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-                    {FEATURES.map((feature) => {
-                        const Icon = feature.icon
+                    {availableFeatures.map((feature) => {
+                        const Icon = FEATURE_ICONS[feature.id] || Map
                         const isChecked = (data.features || []).includes(feature.id)
                         return (
                             <div
@@ -180,7 +199,7 @@ export function BasicInfoForm({ data, updateData }: BasicInfoFormProps) {
                             >
                                 <Icon className={cn("h-8 w-8", isChecked ? "text-green-600" : "text-gray-400")} />
                                 <span className={cn("text-sm font-medium text-center", isChecked && "font-bold")}>
-                                    {feature.label}
+                                    {feature.name || feature.id}
                                 </span>
                             </div>
                         )

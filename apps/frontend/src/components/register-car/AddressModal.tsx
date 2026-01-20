@@ -4,12 +4,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select } from "@/components/ui/select"
 import { X, MapPin } from "lucide-react"
+import { fetchProvinces, fetchDistricts, fetchWards } from "@/api/location"
+import { Province, District, Ward } from "@utoto/shared"
 
 interface AddressModalProps {
     isOpen: boolean
     onClose: () => void
-    onSave: (address: string) => void
-    initialAddress?: string
+    onSave: (address: any) => void
+    initialAddress?: any
 }
 
 export function AddressModal({ isOpen, onClose, onSave }: AddressModalProps) {
@@ -20,12 +22,50 @@ export function AddressModal({ isOpen, onClose, onSave }: AddressModalProps) {
         street: "",
     })
 
+    const [provinces, setProvinces] = React.useState<Province[]>([])
+    const [districts, setDistricts] = React.useState<District[]>([])
+    const [wards, setWards] = React.useState<Ward[]>([])
+
+    React.useEffect(() => {
+        if (isOpen) {
+            fetchProvinces().then(setProvinces).catch(console.error)
+        }
+    }, [isOpen])
+
+    React.useEffect(() => {
+        if (addressData.province) {
+            fetchDistricts(addressData.province).then(setDistricts).catch(console.error)
+            setAddressData(prev => ({ ...prev, district: "", ward: "" }))
+            setWards([])
+        } else {
+            setDistricts([])
+            setWards([])
+        }
+    }, [addressData.province])
+
+    React.useEffect(() => {
+        if (addressData.district) {
+            fetchWards(addressData.district).then(setWards).catch(console.error)
+            setAddressData(prev => ({ ...prev, ward: "" }))
+        } else {
+            setWards([])
+        }
+    }, [addressData.district])
+
     if (!isOpen) return null
 
     const handleSave = () => {
-        // Mock address combination
-        const fullAddress = `${addressData.street}, ${addressData.ward}, ${addressData.district}, ${addressData.province}`.replace(/^, /, "").replace(/, ,/g, ",")
-        onSave(fullAddress || "Hồ Chí Minh")
+        const provinceName = provinces.find(p => p.code === addressData.province)?.name || ""
+        const districtName = districts.find(d => d.code === addressData.district)?.name || ""
+        const wardName = wards.find(w => w.code === addressData.ward)?.name || ""
+
+        // const fullAddress = `${addressData.street}, ${wardName}, ${districtName}, ${provinceName}`.replace(/^, /, "").replace(/, ,/g, ",")
+        onSave({
+            ...addressData,
+            province_name: provinceName,
+            district_name: districtName,
+            ward_name: wardName
+        })
         onClose()
     }
 
@@ -48,9 +88,9 @@ export function AddressModal({ isOpen, onClose, onSave }: AddressModalProps) {
                                 onChange={(e) => setAddressData({ ...addressData, province: e.target.value })}
                             >
                                 <option value="">Chọn Tỉnh/ TP</option>
-                                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
-                                <option value="Hà Nội">Hà Nội</option>
-                                <option value="Đà Nẵng">Đà Nẵng</option>
+                                {provinces.map(p => (
+                                    <option key={p.code} value={p.code}>{p.name}</option>
+                                ))}
                             </Select>
                         </div>
                         <div className="space-y-2">
@@ -58,12 +98,12 @@ export function AddressModal({ isOpen, onClose, onSave }: AddressModalProps) {
                             <Select
                                 value={addressData.district}
                                 onChange={(e) => setAddressData({ ...addressData, district: e.target.value })}
+                                disabled={!addressData.province}
                             >
                                 <option value="">Chọn Quận/ Huyện</option>
-                                <option value="Quận 1">Quận 1</option>
-                                <option value="Quận 2">Quận 2</option>
-                                <option value="Quận 3">Quận 3</option>
-                                <option value="Thủ Đức">Thủ Đức</option>
+                                {districts.map(d => (
+                                    <option key={d.code} value={d.code}>{d.name}</option>
+                                ))}
                             </Select>
                         </div>
                         <div className="space-y-2">
@@ -71,11 +111,12 @@ export function AddressModal({ isOpen, onClose, onSave }: AddressModalProps) {
                             <Select
                                 value={addressData.ward}
                                 onChange={(e) => setAddressData({ ...addressData, ward: e.target.value })}
+                                disabled={!addressData.district}
                             >
                                 <option value="">Chọn Phường/ Xã</option>
-                                <option value="Phường 1">Phường 1</option>
-                                <option value="Phường 2">Phường 2</option>
-                                <option value="Thảo Điền">Thảo Điền</option>
+                                {wards.map(w => (
+                                    <option key={w.code} value={w.code}>{w.name}</option>
+                                ))}
                             </Select>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 import * as React from "react"
-import { Upload, ImageIcon, X } from "lucide-react"
+import { Upload, ImageIcon, X, Loader2 } from "lucide-react"
+import { uploadImage } from "@/api/media"
 
 interface ImageUploadFormProps {
     data: any
@@ -7,17 +8,24 @@ interface ImageUploadFormProps {
 }
 
 export function ImageUploadForm({ data, updateData }: ImageUploadFormProps) {
-    const [images, setImages] = React.useState<string[]>([])
+    const [images, setImages] = React.useState<string[]>(data.images || [])
+    const [uploading, setUploading] = React.useState(false)
 
-    // Simple mock image upload
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
-            // Mock: Creating a fake URL for the uploaded file
-            // In a real app, this would be uploaded to a server or converted to base64
-            const newImage = URL.createObjectURL(e.target.files[0])
-            const updatedImages = [...images, newImage]
-            setImages(updatedImages)
-            updateData({ ...data, images: updatedImages })
+            const file = e.target.files[0]
+            try {
+                setUploading(true)
+                const imageUrl = await uploadImage(file)
+                const updatedImages = [...images, imageUrl]
+                setImages(updatedImages)
+                updateData({ ...data, images: updatedImages })
+            } catch (error) {
+                console.error("Upload failed", error)
+                // In a real app, maybe show a toast notification here
+            } finally {
+                setUploading(false)
+            }
         }
     }
 
@@ -38,32 +46,38 @@ export function ImageUploadForm({ data, updateData }: ImageUploadFormProps) {
 
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                 {/* Upload Button */}
-                <div className="relative flex aspect-square flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:bg-gray-100">
-                    <input
-                        type="file"
-                        accept="image/*"
-                        className="absolute inset-0 cursor-pointer opacity-0"
-                        onChange={handleFileChange}
-                    />
-                    <Upload className="mb-2 h-8 w-8 text-gray-400" />
-                    <span className="text-sm font-medium text-gray-500">Thêm ảnh</span>
+                <div className={`relative flex aspect-square flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 transition-colors ${uploading ? 'opacity-50' : 'hover:bg-gray-100'}`}>
+                    {uploading ? (
+                        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+                    ) : (
+                        <>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="absolute inset-0 cursor-pointer opacity-0"
+                                onChange={handleFileChange}
+                                disabled={uploading}
+                            />
+                            <Upload className="mb-2 h-8 w-8 text-gray-400" />
+                            <span className="text-sm font-medium text-gray-500">Thêm ảnh</span>
+                        </>
+                    )}
                 </div>
 
-                {/* List placeholder images (Mocked from previous HTML context if needed, or just allow adding new ones) */}
                 {images.map((img, idx) => (
                     <div key={idx} className="group relative aspect-square overflow-hidden rounded-lg border bg-white">
                         <img src={img} alt={`Car ${idx}`} className="h-full w-full object-cover" />
                         <button
                             onClick={() => removeImage(idx)}
                             className="absolute right-2 top-2 rounded-full bg-black/50 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100 hover:bg-black/70"
-                        >
+                        >   
                             <X className="h-4 w-4" />
                         </button>
                     </div>
                 ))}
 
                 {/* If empty, show some placeholders to look good */}
-                {images.length === 0 && (
+                {images.length === 0 && !uploading && (
                     <>
                         <div className="flex aspect-square items-center justify-center rounded-lg border bg-gray-50">
                             <ImageIcon className="h-8 w-8 text-gray-200" />

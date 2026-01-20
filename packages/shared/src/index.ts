@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const UserSchema = z.object({
   id: z.string().uuid(),
@@ -10,3 +10,7 @@ export type User = z.infer<typeof UserSchema>;
 
 export const CreateUserSchema = UserSchema.omit({ id: true });
 export type CreateUser = z.infer<typeof CreateUserSchema>;
+
+export * from "./dto/car.dto";
+export * from "./dto/location.dto";
+export * from "./dto/media.dto";

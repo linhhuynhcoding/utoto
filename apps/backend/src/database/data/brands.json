@@ -1,0 +1,272 @@
+[
+    {
+        "brand_id": "57",
+        "brand_name": "Acura",
+        "logo": "https://n1-cstg-org.mioto.vn/m/vehicle-makes/Acura.png"
+    },
+    {
+        "brand_id": "1",
+        "brand_name": "Audi",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Audi.png"
+    },
+    {
+        "brand_id": "27",
+        "brand_name": "Baic",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Baic.png"
+    },
+    {
+        "brand_id": "12",
+        "brand_name": "Bentley",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Bentley.png"
+    },
+    {
+        "brand_id": "2",
+        "brand_name": "BMW",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/BMW.png"
+    },
+    {
+        "brand_id": "44",
+        "brand_name": "Brilliance",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Brilliance.png"
+    },
+    {
+        "brand_id": "54",
+        "brand_name": "BYD",
+        "logo": "https://n1-cstg-org.mioto.vn/m/vehicle-makes/BYD.png"
+    },
+    {
+        "brand_id": "55",
+        "brand_name": "Changan",
+        "logo": "https://n1-cstg-org.mioto.vn/m/vehicle-makes/Changan.png"
+    },
+    {
+        "brand_id": "3",
+        "brand_name": "Chevrolet",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Chevrolet.png"
+    },
+    {
+        "brand_id": "51",
+        "brand_name": "Chrysler",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Chrysler.png"
+    },
+    {
+        "brand_id": "17",
+        "brand_name": "Daewoo",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Daewoo.png"
+    },
+    {
+        "brand_id": "41",
+        "brand_name": "Daihatsu",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Daihatsu.png"
+    },
+    {
+        "brand_id": "40",
+        "brand_name": "Dongfeng",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Dongfeng.png"
+    },
+    {
+        "brand_id": "50",
+        "brand_name": "Fairy",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Fairy.png"
+    },
+    {
+        "brand_id": "30",
+        "brand_name": "Fiat",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Fiat.png"
+    },
+    {
+        "brand_id": "4",
+        "brand_name": "Ford",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Ford.png"
+    },
+    {
+        "brand_id": "59",
+        "brand_name": "GAC",
+        "logo": "https://n1-cstg-org.mioto.vn/m/vehicle-makes/GAC.png"
+    },
+    {
+        "brand_id": "37",
+        "brand_name": "Geely",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Geely.png"
+    },
+    {
+        "brand_id": "31",
+        "brand_name": "Haima",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Haima.png"
+    },
+    {
+        "brand_id": "53",
+        "brand_name": "Haval",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Haval.png"
+    },
+    {
+        "brand_id": "10",
+        "brand_name": "Honda",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Honda.png"
+    },
+    {
+        "brand_id": "11",
+        "brand_name": "Hyundai",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Hyundai.png"
+    },
+    {
+        "brand_id": "24",
+        "brand_name": "Isuzu",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Isuzu.png"
+    },
+    {
+        "brand_id": "60",
+        "brand_name": "JaeCoo",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Jaecoo.png"
+    },
+    {
+        "brand_id": "34",
+        "brand_name": "Jaguar",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Jaguar.png"
+    },
+    {
+        "brand_id": "46",
+        "brand_name": "Kenbo",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Kenbo.png"
+    },
+    {
+        "brand_id": "5",
+        "brand_name": "Kia",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Kia.png"
+    },
+    {
+        "brand_id": "43",
+        "brand_name": "Land Rover",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Land-Rover.png"
+    },
+    {
+        "brand_id": "13",
+        "brand_name": "Lexus",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Lexus.png"
+    },
+    {
+        "brand_id": "20",
+        "brand_name": "Luxgen",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Luxgen.png"
+    },
+    {
+        "brand_id": "56",
+        "brand_name": "Lynk & Co",
+        "logo": "https://n1-cstg-org.mioto.vn/m/vehicle-makes/LinkCo.png"
+    },
+    {
+        "brand_id": "6",
+        "brand_name": "Mazda",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Mazda.png"
+    },
+    {
+        "brand_id": "7",
+        "brand_name": "Mercedes",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Mercedes.png"
+    },
+    {
+        "brand_id": "8",
+        "brand_name": "Mitsubishi",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Mitsubishi.png"
+    },
+    {
+        "brand_id": "39",
+        "brand_name": "Morris Garages",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Morris-Garages.png"
+    },
+    {
+        "brand_id": "14",
+        "brand_name": "Nissan",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Nissan.png"
+    },
+    {
+        "brand_id": "58",
+        "brand_name": "Omoda",
+        "logo": "https://n1-cstg-org.mioto.vn/m/vehicle-makes/Omoda.png"
+    },
+    {
+        "brand_id": "25",
+        "brand_name": "Peugeot",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Peugeot.png"
+    },
+    {
+        "brand_id": "15",
+        "brand_name": "Porsche",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Porsche.png"
+    },
+    {
+        "brand_id": "16",
+        "brand_name": "Renault",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Renault.png"
+    },
+    {
+        "brand_id": "33",
+        "brand_name": "Riich",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Riich.png"
+    },
+    {
+        "brand_id": "47",
+        "brand_name": "Samsung",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Samsung.png"
+    },
+    {
+        "brand_id": "52",
+        "brand_name": "Skoda",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Skoda-Kodiaq.png"
+    },
+    {
+        "brand_id": "26",
+        "brand_name": "SsangYong",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Ssangyong.png"
+    },
+    {
+        "brand_id": "32",
+        "brand_name": "Subaru",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Subaru.png"
+    },
+    {
+        "brand_id": "19",
+        "brand_name": "Suzuki",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Suzuki.png"
+    },
+    {
+        "brand_id": "42",
+        "brand_name": "Tobe",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Tobe.png"
+    },
+    {
+        "brand_id": "9",
+        "brand_name": "Toyota",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Toyota.png"
+    },
+    {
+        "brand_id": "22",
+        "brand_name": "UAZ",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/UAZ.png"
+    },
+    {
+        "brand_id": "29",
+        "brand_name": "Vinfast",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Vinfast.png"
+    },
+    {
+        "brand_id": "18",
+        "brand_name": "Volkswagen",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Volkswagen.png"
+    },
+    {
+        "brand_id": "45",
+        "brand_name": "Volvo",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Volvo.png"
+    },
+    {
+        "brand_id": "48",
+        "brand_name": "Wuling",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Wuling.png"
+    },
+    {
+        "brand_id": "23",
+        "brand_name": "Zotye",
+        "logo": "https://n1-cstg.mioto.vn/m/vehicle-makes/Zotye.png"
+    }
+]

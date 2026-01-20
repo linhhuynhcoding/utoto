@@ -37,7 +37,8 @@ export default function Login() {
 
             if (response.data.success) {
                 // Use AuthContext to store user info
-                login(response.data.data);
+                const { user, accessToken } = response.data.data;
+                login(user, accessToken);
                 navigate('/')
             }
         } catch (error) {
@@ -86,8 +87,6 @@ export default function Login() {
                             size="large"
                             width="100%"
                             login_uri='http://localhost:4000/auth/google/callback'
-
-
                         />
                     </div>
 
