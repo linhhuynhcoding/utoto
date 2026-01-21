@@ -247,6 +247,7 @@ async function seedCars() {
   // Clear existing car data to ensure a fresh "redistribution"
   console.log("Clearing existing car data...");
   await prisma.car_images.deleteMany({});
+  await prisma.car_features.deleteMany({});
   await prisma.trips.deleteMany({});
   await prisma.cars.deleteMany({});
   // We don't delete locations here as they are created per car, 
