@@ -26,11 +26,13 @@ export class LocationRepository {
     const provinces = await prisma.provinces.findMany({
       orderBy: { name: "asc" },
     });
-    return provinces.map((p) => ({
-      code: p.code,
-      name: p.name,
-      full_name: p.full_name,
-    }));
+    return provinces
+      .map((p) => ({
+        code: p.code,
+        name: p.name,
+        full_name: p.full_name,
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name, "vi"));
   }
 
   async findDistrictsByProvince(provinceCode: string): Promise<District[]> {

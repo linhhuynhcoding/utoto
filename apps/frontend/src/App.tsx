@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AppProviders } from '@/contexts'
 import Home from '@/pages/Home'
+import Search from '@/pages/Search'
 import Profile from '@/pages/Profile'
 import CarDetail from '@/pages/CarDetail'
 import RegisterCar from '@/pages/RegisterCar'
@@ -12,6 +13,7 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/search" element={<Search />} />
                     <Route path="/account" element={<Profile />} />
                     <Route path="/car/:id" element={<CarDetail />} />
                     <Route path="/register-car" element={<RegisterCar />} />

@@ -3,6 +3,7 @@ import { CreateCar, UpdateCar, CarFilter, CarResponse } from "@utoto/shared";
 import { Prisma } from "@/prisma/client";
 import { generateId } from "@/utils/id.util";
 
+
 export class CarRepository {
   private static includeAll = {
     car_models: {
@@ -18,8 +19,9 @@ export class CarRepository {
     car_images: true,
     locations: {
       include: {
-        // We might want to join with provinces, districts, wards if needed
-        // but for now let's keep it simple as per DTO
+        provinces: true,
+        districts: true,
+        wards: true,
       },
     },
   };
@@ -46,7 +48,10 @@ export class CarRepository {
       deodorisePrice: Number(car.deodorisePrice || 0),
       washingPrice: Number(car.washingPrice || 0),
       overTimePrice: Number(car.overTimePrice || 0),
-      maxOverTimeHour: car.maxOverTimeHour || 0,
+      maxOverTimeHour: car.maxOverTimeHour,
+      is_self_driving: car.is_self_driving,
+      is_with_driver: car.is_with_driver,
+      is_long_term: car.is_long_term,
       brand: {
         id: car.car_models.brands.brand_id.toString(),
         name: car.car_models.brands.brand_name,
@@ -64,14 +69,14 @@ export class CarRepository {
       images: car.car_images.map((ci: any) => ci.image_url),
       location: car.locations
         ? {
-            id: car.locations.id.toString(),
-            lat: car.locations.lat,
-            lon: car.locations.lon,
-            street: car.locations.street,
-            province: car.locations.province_id.toString(), // Simplified for now
-            district: car.locations.district_id.toString(),
-            ward: car.locations.ward_id.toString(),
-          }
+          id: car.locations.id.toString(),
+          lat: car.locations.lat,
+          lon: car.locations.lon,
+          street: car.locations.street,
+          province: car.locations.provinces?.name || "Unknown Province",
+          district: car.locations.districts?.name || "Unknown District",
+          ward: car.locations.wards?.name || "Unknown Ward",
+        }
         : null,
     };
   }
@@ -85,9 +90,9 @@ export class CarRepository {
       const location = await prisma.locations.create({
         data: {
           street: address.street,
-          province_id: parseInt(address.province),
-          district_id: parseInt(address.district),
-          ward_id: parseInt(address.ward),
+          province_id: address.province,
+          district_id: address.district,
+          ward_id: address.ward,
         },
       });
       locationId = location.id;
@@ -224,6 +229,19 @@ export class CarRepository {
     }
     if (filters.location_id) {
       where.location_id = BigInt(filters.location_id);
+    }
+
+    if (filters.province || filters.district || filters.ward) {
+      where.locations = {}; // Initialize if not already exists
+      if (filters.province) where.locations.province_id = filters.province;
+      if (filters.district) where.locations.district_id = filters.district;
+      if (filters.ward) where.locations.ward_id = filters.ward;
+    }
+
+    if (filters.type) {
+      if (filters.type === "self-driving") where.is_self_driving = true;
+      if (filters.type === "with-driver") where.is_with_driver = true;
+      if (filters.type === "long-term") where.is_long_term = true;
     }
 
     if (filters.min_price !== undefined || filters.max_price !== undefined) {

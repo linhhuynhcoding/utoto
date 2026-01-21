@@ -219,13 +219,159 @@ async function seedModels() {
   }
 }
 
+async function seedUsers() {
+  await prisma.users.upsert({
+    where: { id: "USER_1" },
+    update: {},
+    create: {
+      id: "USER_1",
+      name: "Test User",
+      email: "test@utoto.com",
+      phone_number: "0912345678",
+      phone_code: "+84",
+      isVerified: true,
+    },
+  });
+}
+
+async function seedCars() {
+  const brands = await prisma.brands.findMany({
+    include: { car_models: true },
+  });
+
+  if (brands.length === 0) {
+    console.log("No brands found, skipping car seed");
+    return;
+  }
+
+  // Clear existing car data to ensure a fresh "redistribution"
+  console.log("Clearing existing car data...");
+  await prisma.car_images.deleteMany({});
+  await prisma.trips.deleteMany({});
+  await prisma.cars.deleteMany({});
+  // We don't delete locations here as they are created per car, 
+  // and deleting cars might leave orphaned locations if not handled by DB.
+  // Actually, better to delete locations too to keep DB clean.
+  await prisma.locations.deleteMany({});
+
+  const getCarImage = (brand: string, model: string, index: number) => {
+    // We use LoremFlickr for dynamic, keyword-based car images
+    // Brand and model are used as tags to get the most relevant image
+    const keywords = `car,${brand.replace(/\s+/g, '')},${model.replace(/\s+/g, '')}`;
+    return `https://loremflickr.com/800/600/${keywords}/all?lock=${index}`;
+  };
+
+  const transmissionTypes = ["AUTOMATIC", "MANUAL"];
+  const fuelTypes = ["GASOLINE", "DIESEL", "ELECTRIC"];
+
+  // Fetch more districts for better location coverage
+  const availableDistricts = await prisma.districts.findMany({
+    include: { wards: true },
+  });
+
+  const brandsWithModels = brands.filter(b => b.car_models.length > 0);
+
+  console.log("Generating 200 random cars...");
+
+  for (let i = 1; i <= 200; i++) {
+    // Random brand and model from brands that actually have models
+    const randomBrand = brandsWithModels[Math.floor(Math.random() * brandsWithModels.length)];
+
+    const randomModel =
+      randomBrand.car_models[
+      Math.floor(Math.random() * randomBrand.car_models.length)
+      ];
+    const randomImage = getCarImage(randomBrand.brand_name, randomModel.model_name, i);
+    const transmission =
+      transmissionTypes[Math.floor(Math.random() * transmissionTypes.length)];
+    const fuel = fuelTypes[Math.floor(Math.random() * fuelTypes.length)];
+
+    const carId = `CAR_${i}`;
+    const price = 500000 + Math.floor(Math.random() * 100) * 10000; // 500k - 1.5m
+
+    // Random rental types - ensure at least one is true
+    const is_self_driving = Math.random() > 0.3;
+    const is_with_driver = Math.random() > 0.7;
+    const is_long_term = Math.random() > 0.8;
+
+    // Pick a random location
+    let locationId: bigint | null = null;
+    if (availableDistricts.length > 0) {
+      const randomDistrict =
+        availableDistricts[
+        Math.floor(Math.random() * availableDistricts.length)
+        ];
+      const randomWard =
+        randomDistrict.wards[
+        Math.floor(Math.random() * randomDistrict.wards.length)
+        ];
+
+      if (randomWard) {
+        const location = await prisma.locations.create({
+          data: {
+            province_id: randomDistrict.province_code || "0",
+            district_id: randomDistrict.code,
+            ward_id: randomWard.code,
+            street: `${Math.floor(Math.random() * 200) + 1} Đường số ${Math.floor(Math.random() * 50) + 1}`,
+          },
+        });
+        locationId = location.id;
+      }
+    }
+
+    await prisma.cars.upsert({
+      where: { id: carId },
+      update: {
+        location_id: locationId,
+        is_self_driving: is_self_driving || (!is_with_driver && !is_long_term),
+        is_with_driver: is_with_driver,
+        is_long_term: is_long_term,
+      },
+      create: {
+        id: carId,
+        owner: "USER_1",
+        name: `${randomBrand.brand_name.toUpperCase()} ${randomModel.model_name.toUpperCase()} 202${Math.floor(Math.random() * 4) + 1}`,
+        desc: "Xe chất lượng cao, bảo dưỡng định kỳ, sạch sẽ thoáng mát.",
+        model_id: randomModel.model_id,
+        transmission: transmission,
+        seat: Math.random() > 0.8 ? 7 : 4,
+        engine_type: fuel,
+        price: price,
+        priceWithPlatformFee: price + 100000,
+        location_id: locationId,
+        is_self_driving: is_self_driving || (!is_with_driver && !is_long_term),
+        is_with_driver: is_with_driver,
+        is_long_term: is_long_term,
+      },
+    });
+
+    // Seed image for this car
+    await prisma.images.upsert({
+      where: { url: randomImage },
+      update: {},
+      create: {
+        url: randomImage,
+        width: 800,
+        height: 600,
+      }
+    });
+
+    await prisma.car_images.createMany({
+      data: [{ car_id: carId, image_url: randomImage }],
+      skipDuplicates: true
+    });
+  }
+}
+
 async function main() {
   console.log("🌱 Seeding data...");
 
   await seedFeatures();
   await seedBrands();
   await seedModels();
+  await seedUsers();
   await runSql(path.join(__dirname, "./data/IMPORT_DATA_VN_UNITS.sql"));
+  await seedCars();
 
   console.log("✅ Seed completed");
 }
