@@ -6,6 +6,7 @@ import Profile from '@/pages/Profile'
 import CarDetail from '@/pages/CarDetail'
 import RegisterCar from '@/pages/RegisterCar'
 import Login from '@/pages/Login'
+import MyCars from '@/pages/MyCars'
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/account" element={<Profile />} />
+                    <Route path="/mycars" element={<MyCars />} />
                     <Route path="/car/:id" element={<CarDetail />} />
                     <Route path="/register-car" element={<RegisterCar />} />
                     <Route path="/login" element={<Login />} />

@@ -242,6 +242,9 @@ export class CarRepository {
     if (filters.location_id) {
       where.location_id = BigInt(filters.location_id);
     }
+    if (filters.owner_id) {
+      where.owner = filters.owner_id;
+    }
 
     if (filters.province || filters.district || filters.ward) {
       where.locations = {}; // Initialize if not already exists

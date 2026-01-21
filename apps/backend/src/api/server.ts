@@ -12,6 +12,12 @@ import path from "path";
 import { createFolder } from "@/utils/helpers";
 import fastifyHelmet from "@fastify/helmet";
 
+// Serialize BigInt
+// @ts-ignore
+BigInt.prototype.toJSON = function () {
+  return this.toString();
+};
+
 const fastify = Fastify({ logger: true });
 
 // Run the server!

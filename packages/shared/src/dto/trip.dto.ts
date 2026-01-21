@@ -30,6 +30,7 @@ export const UpdateTripSchema = z.object({
 export const TripFilterSchema = z.object({
   renter_id: z.string().optional(),
   car_id: z.string().optional(),
+  owner_id: z.string().optional(),
   status: TripStatusSchema.optional(),
   from_date_start: z.string().datetime().optional(),
   from_date_end: z.string().datetime().optional(),

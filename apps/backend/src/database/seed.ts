@@ -220,18 +220,32 @@ async function seedModels() {
 }
 
 async function seedUsers() {
-  await prisma.users.upsert({
-    where: { id: "USER_1" },
-    update: {},
-    create: {
+  const users = [
+    {
       id: "USER_1",
-      name: "Test User",
-      email: "test@utoto.com",
-      phone_number: "0912345678",
+      name: "Owner User",
+      email: "owner@example.com",
+      phone_number: "0901234567",
       phone_code: "+84",
       isVerified: true,
     },
-  });
+    {
+      id: "USER_2",
+      name: "Renter User",
+      email: "renter@example.com",
+      phone_number: "0901234568",
+      phone_code: "+84",
+      isVerified: true,
+    },
+  ];
+
+  for (const user of users) {
+    await prisma.users.upsert({
+      where: { id: user.id },
+      update: {},
+      create: user,
+    });
+  }
 }
 
 async function seedCars() {
@@ -364,6 +378,41 @@ async function seedCars() {
   }
 }
 
+async function seedTrips() {
+  const trips = [
+    {
+      trip_id: "TRIP_1",
+      renter_id: "USER_2",
+      car_id: "CAR_1",
+      status: "PENDING",
+      from_date: new Date("2024-02-01T10:00:00Z"),
+      to_date: new Date("2024-02-03T10:00:00Z"),
+      ship_method: 1,
+      ship_fee: 50000,
+      rent_amount: 1500000, // 3 days * 500k approx
+    },
+    {
+      trip_id: "TRIP_2",
+      renter_id: "USER_2",
+      car_id: "CAR_1",
+      status: "COMPLETED",
+      from_date: new Date("2024-01-01T10:00:00Z"),
+      to_date: new Date("2024-01-02T10:00:00Z"),
+      ship_method: 1,
+      ship_fee: 50000,
+      rent_amount: 500000,
+    },
+  ];
+
+  for (const trip of trips) {
+    await prisma.trips.upsert({
+      where: { trip_id: trip.trip_id },
+      update: {},
+      create: trip,
+    });
+  }
+}
+
 async function main() {
   console.log("🌱 Seeding data...");
 
@@ -373,6 +422,10 @@ async function main() {
   await seedUsers();
   await runSql(path.join(__dirname, "./data/IMPORT_DATA_VN_UNITS.sql"));
   await seedCars();
+
+  await seedUsers();
+  await seedCars();
+  await seedTrips();
 
   console.log("✅ Seed completed");
 }

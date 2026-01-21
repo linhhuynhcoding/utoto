@@ -1,6 +1,6 @@
 import prisma from "@/database";
+import { Prisma } from "@/prisma/client";
 import { CreateTrip, TripFilter, UpdateTrip } from "@utoto/shared";
-import { Prisma } from "@prisma/client";
 
 export class TripRepository {
   async findById(id: string) {
@@ -61,6 +61,11 @@ export class TripRepository {
     if (filter.renter_id) where.renter_id = filter.renter_id;
     if (filter.car_id) where.car_id = filter.car_id;
     if (filter.status) where.status = filter.status;
+    if (filter.owner_id) {
+      where.cars = {
+        owner: filter.owner_id,
+      };
+    }
     if (filter.from_date_start || filter.from_date_end) {
       where.from_date = {
         gte: filter.from_date_start
