@@ -41,6 +41,7 @@ export default function CarDetail() {
                     {/* Left Main Content */}
                     <div className="lg:col-span-2 space-y-2">
                         <CarBasicInfo
+                            id={car.id}
                             name={car.name}
                             rating={5.0} // Mocked for now as not in schema
                             trips={15} // Mocked for now as not in schema

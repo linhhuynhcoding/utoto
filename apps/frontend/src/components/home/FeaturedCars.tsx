@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import CarCard from "./CarCard"
 import { getFeaturedCars } from "@/api/cars"
 import { CarResponse } from "@utoto/shared"
+import { useStorage, StorageKeys } from "@/contexts/StorageContext"
 
 export default function FeaturedCars() {
     const { data: carsData, isLoading } = useQuery({
@@ -33,7 +34,14 @@ export default function FeaturedCars() {
         }
     }
 
-    const cars = carsData?.map(mapCarToCard) || []
+    const { getItem } = useStorage()
+    const favorites = getItem<string[]>(StorageKeys.FAVORITES) || []
+
+    const cars = (carsData?.map(mapCarToCard) || []).sort((a, b) => {
+        const aFav = favorites.includes(a.id) ? 1 : 0
+        const bFav = favorites.includes(b.id) ? 1 : 0
+        return bFav - aFav
+    })
 
     if (isLoading) {
         return (

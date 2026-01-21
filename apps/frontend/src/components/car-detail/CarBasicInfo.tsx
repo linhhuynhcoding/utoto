@@ -4,8 +4,10 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
+import { useStorage, StorageKeys } from "@/contexts/StorageContext"
 
 interface CarBasicInfoProps {
+    id: string
     name: string
     rating: number
     trips: number
@@ -13,8 +15,10 @@ interface CarBasicInfoProps {
     tags?: string[]
 }
 
-export function CarBasicInfo({ name, rating, trips, location, tags = [] }: CarBasicInfoProps) {
-    const [isFavorite, setIsFavorite] = useState(false)
+export function CarBasicInfo({ id, name, rating, trips, location, tags = [] }: CarBasicInfoProps) {
+    const { getItem, setItem } = useStorage()
+    const favorites = getItem<string[]>(StorageKeys.FAVORITES) || []
+    const [isFavorite, setIsFavorite] = useState(favorites.includes(id))
 
     const handleShare = () => {
         navigator.clipboard.writeText(window.location.href)
@@ -22,10 +26,18 @@ export function CarBasicInfo({ name, rating, trips, location, tags = [] }: CarBa
     }
 
     const toggleFavorite = () => {
-        setIsFavorite(!isFavorite)
-        if (!isFavorite) {
+        const currentFavorites = getItem<string[]>(StorageKeys.FAVORITES) || []
+        let newFavorites: string[]
+
+        if (isFavorite) {
+            newFavorites = currentFavorites.filter(favId => favId !== id)
+        } else {
+            newFavorites = [...currentFavorites, id]
             toast.success("Đã thêm vào mục yêu thích!")
         }
+
+        setItem(StorageKeys.FAVORITES, newFavorites)
+        setIsFavorite(!isFavorite)
     }
 
     return (
