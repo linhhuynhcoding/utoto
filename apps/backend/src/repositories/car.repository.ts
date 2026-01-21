@@ -19,17 +19,29 @@ export class CarRepository {
     car_images: true,
     locations: {
       include: {
-        provinces: true,
-        districts: true,
-        wards: true,
+        provinces: {
+          include: { administrative_units: true }
+        },
+        districts: {
+          include: { administrative_units: true }
+        },
+        wards: {
+          include: { administrative_units: true }
+        },
       },
     },
+    users: true,
   };
 
   private mapToResponse(car: any): CarResponse {
     return {
       id: car.id,
-      owner: car.owner,
+      owner_id: car.owner,
+      owner_info: car.users ? {
+        name: car.users.name,
+        avatar: car.users.avatar,
+        isVerified: car.users.isVerified,
+      } : undefined,
       name: car.name,
       desc: car.desc,
       model_id: car.model_id.toString(),
@@ -73,9 +85,9 @@ export class CarRepository {
           lat: car.locations.lat,
           lon: car.locations.lon,
           street: car.locations.street,
-          province: car.locations.provinces?.name || "Unknown Province",
-          district: car.locations.districts?.name || "Unknown District",
-          ward: car.locations.wards?.name || "Unknown Ward",
+          province: this.formatLocationName(car.locations.provinces),
+          district: this.formatLocationName(car.locations.districts),
+          ward: this.formatLocationName(car.locations.wards),
         }
         : null,
     };
@@ -283,5 +295,26 @@ export class CarRepository {
       items: items.map((car) => this.mapToResponse(car)),
       total,
     };
+  }
+
+  private formatLocationName(entity: any): string {
+    if (!entity) return "Unknown";
+
+    const name = entity.name || "";
+    const fullName = entity.full_name || "";
+    const unitPrefix = entity.administrative_units?.full_name || entity.administrative_units?.short_name || "";
+
+    // If fullName already includes the prefix (common in good datasets)
+    // and it's longer than just the numeric name
+    if (fullName && fullName.length > name.length && fullName.includes(name)) {
+      return fullName;
+    }
+
+    // If name is numeric, we MUST add the unit prefix
+    if (/^\d+$/.test(name) && unitPrefix) {
+      return `${unitPrefix} ${name}`;
+    }
+
+    return fullName || name || "Unknown";
   }
 }

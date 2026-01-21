@@ -24,11 +24,12 @@ export default function FeaturedCars() {
             originalPrice: undefined, // API doesn't have original price yet
             rating: 5.0, // Default
             trips: 0, // Default
-            location: car.location ? `${car.location.district}, ${car.location.province}` : "Hồ Chí Minh",
+            location: car.location ? car.location.province : "Hồ Chí Minh",
             transmission: car.transmission === "AUTOMATIC" ? "Tự động" as const : "Số sàn" as const,
             fuel: fuelMap[car.engine_type] || "Xăng",
             seats: car.seat,
-            tags: car.features?.slice(0, 1).map(f => f.name || "") || []
+            tags: car.features?.slice(0, 1).map(f => f.name || "") || [],
+            id: car.id,
         }
     }
 
