@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Star, MapPin, Zap, Gauge, User } from "lucide-react"
 
 interface CarProps {
+    id: string
     name: string
     image: string
     price: string
@@ -17,8 +19,13 @@ interface CarProps {
 }
 
 export default function CarCard({ car }: { car: CarProps }) {
+    const navigate = useNavigate()
+
     return (
-        <Card className="overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow">
+        <Card
+            className="overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow"
+            onClick={() => navigate(`/car/${car.id}`)}
+        >
             <div className="relative aspect-[4/3] overflow-hidden">
                 <img
                     src={car.image}

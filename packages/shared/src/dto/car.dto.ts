@@ -107,7 +107,12 @@ export type CarFilter = z.infer<typeof CarFilterSchema>;
 // Detailed Car Response
 export const CarResponseSchema = CarBaseSchema.extend({
   id: z.string(),
-  owner: z.string(),
+  owner_id: z.string(),
+  owner_info: z.object({
+    name: z.string(),
+    avatar: z.string().nullable().optional(),
+    isVerified: z.boolean().optional(),
+  }).optional(),
   priceWithPlatformFee: z.number(),
   brand: CarBrandSchema.omit({ models: true }),
   model: CarModelSchema,

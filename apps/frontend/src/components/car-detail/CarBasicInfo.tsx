@@ -1,8 +1,13 @@
+import { useState } from "react"
 import { Star, MapPin, Share2, Heart, ShieldCheck } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
+import { cn } from "@/lib/utils"
+import { useStorage, StorageKeys } from "@/contexts/StorageContext"
 
 interface CarBasicInfoProps {
+    id: string
     name: string
     rating: number
     trips: number
@@ -10,7 +15,31 @@ interface CarBasicInfoProps {
     tags?: string[]
 }
 
-export function CarBasicInfo({ name, rating, trips, location, tags = [] }: CarBasicInfoProps) {
+export function CarBasicInfo({ id, name, rating, trips, location, tags = [] }: CarBasicInfoProps) {
+    const { getItem, setItem } = useStorage()
+    const favorites = getItem<string[]>(StorageKeys.FAVORITES) || []
+    const [isFavorite, setIsFavorite] = useState(favorites.includes(id))
+
+    const handleShare = () => {
+        navigator.clipboard.writeText(window.location.href)
+        toast.success("Đã sao chép liên kết!")
+    }
+
+    const toggleFavorite = () => {
+        const currentFavorites = getItem<string[]>(StorageKeys.FAVORITES) || []
+        let newFavorites: string[]
+
+        if (isFavorite) {
+            newFavorites = currentFavorites.filter(favId => favId !== id)
+        } else {
+            newFavorites = [...currentFavorites, id]
+            toast.success("Đã thêm vào mục yêu thích!")
+        }
+
+        setItem(StorageKeys.FAVORITES, newFavorites)
+        setIsFavorite(!isFavorite)
+    }
+
     return (
         <div className="space-y-4">
             <div className="flex justify-between items-start">
@@ -43,11 +72,19 @@ export function CarBasicInfo({ name, rating, trips, location, tags = [] }: CarBa
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Button variant="outline" size="icon" className="rounded-full">
+                    <Button variant="outline" size="icon" className="rounded-full" onClick={handleShare}>
                         <Share2 className="h-4 w-4" />
                     </Button>
-                    <Button variant="outline" size="icon" className="rounded-full text-red-500 hover:text-red-600 hover:bg-red-50 border-red-100">
-                        <Heart className="h-4 w-4" />
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className={cn(
+                            "rounded-full transition-colors",
+                            isFavorite ? "text-red-500 bg-red-50 border-red-200" : "text-gray-500 hover:text-red-500 hover:bg-red-50"
+                        )}
+                        onClick={toggleFavorite}
+                    >
+                        <Heart className={cn("h-4 w-4", isFavorite && "fill-current")} />
                     </Button>
                 </div>
             </div>

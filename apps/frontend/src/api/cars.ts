@@ -33,3 +33,8 @@ export const searchCars = async (params: Record<string, any>): Promise<{ items: 
     total: response.data.total
   };
 };
+
+export const getCarById = async (id: string): Promise<CarResponse | null> => {
+  const response = await apiClient.get<{ success: boolean; data: CarResponse }>(`/car/${id}`);
+  return response.data.data;
+};
