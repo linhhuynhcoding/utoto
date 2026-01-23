@@ -1,8 +1,8 @@
 import { FastifyInstance, FastifyPluginOptions } from "fastify";
 import fastifyMultipart from "@fastify/multipart";
-import { UploadImageResType } from "@utoto/shared";
+import { UploadImageResType, UploadAvatarResType } from "@utoto/shared";
 import { authenticate } from "@/middleware/auth.middleware";
-import { uploadImage } from "@/controllers/media.controller";
+import { uploadImage, uploadAvatar } from "@/controllers/media.controller";
 
 export default async function mediaRoutes(
   fastify: FastifyInstance,
@@ -15,6 +15,7 @@ export default async function mediaRoutes(
       fields: 1,
     },
   });
+
 
   fastify.post<{ Reply: UploadImageResType }>(
     "/upload",
@@ -43,6 +44,44 @@ export default async function mediaRoutes(
 
       const url = await uploadImage(data);
       return reply.send({ message: "Upload ảnh thành công", data: url });
+    },
+  );
+
+  // Upload avatar (with specific validation)
+  fastify.post<{ Reply: UploadAvatarResType }>(
+    "/upload-avatar",
+    {
+      preHandler: [authenticate],
+    },
+    async (request, reply) => {
+      try {
+        const data = await request.file();
+        if (!data) {
+          return reply.status(400).send({
+            success: false,
+            message: "Không tìm thấy file",
+            data: { url: "", filename: "" },
+          });
+        }
+
+        const result = await uploadAvatar(data);
+        return reply.send({
+          success: true,
+          message: "Upload avatar thành công",
+          data: result,
+        });
+      } catch (error) {
+        request.log.error(error);
+        const message =
+          error instanceof Error
+            ? error.message
+            : "Upload avatar thất bại";
+        return reply.status(400).send({
+          success: false,
+          message,
+          data: { url: "", filename: "" },
+        });
+      }
     },
   );
 }
