@@ -1,13 +1,12 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Info, ShieldCheck } from "lucide-react"
 
-interface RentBoxProps {
-    price: number
-}
 
-export function RentBox({ price }: RentBoxProps) {
+export function RentBox({ price, carId }: { price: number, carId: string }) {
+    const navigate = useNavigate()
     const [hasInsurance, setHasInsurance] = useState(true)
 
     const platformFee = Math.round(price * 0.1) // 10% platform fee
@@ -91,7 +90,10 @@ export function RentBox({ price }: RentBoxProps) {
                 </div>
             </div>
 
-            <Button className="w-full mt-6 text-lg py-6 font-bold uppercase tracking-wide bg-primary hover:bg-primary/90 text-black">
+            <Button
+                className="w-full mt-6 text-lg py-6 font-bold uppercase tracking-wide bg-primary hover:bg-primary/90 text-black"
+                onClick={() => navigate(`/rent/${carId}`)}
+            >
                 Chọn thuê
             </Button>
         </div>

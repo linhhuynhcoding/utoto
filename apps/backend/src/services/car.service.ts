@@ -31,4 +31,8 @@ export class CarService {
   ): Promise<{ items: CarResponse[]; total: number }> {
     return await this.repository.findMany(filter);
   }
+
+  async getCarCalendar(carId: string) {
+    return await this.repository.getCalendar(carId);
+  }
 }

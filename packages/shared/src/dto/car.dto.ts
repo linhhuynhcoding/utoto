@@ -83,6 +83,7 @@ export const UpdateCarSchema = CarBaseSchema.partial().extend({
 });
 
 export const CarFilterSchema = z.object({
+  owner_id: z.string().optional(),
   brand_id: z.string().optional(),
   model_id: z.string().optional(),
   min_price: z.coerce.number().optional(),
@@ -108,11 +109,13 @@ export type CarFilter = z.infer<typeof CarFilterSchema>;
 export const CarResponseSchema = CarBaseSchema.extend({
   id: z.string(),
   owner_id: z.string(),
-  owner_info: z.object({
-    name: z.string(),
-    avatar: z.string().nullable().optional(),
-    isVerified: z.boolean().optional(),
-  }).optional(),
+  owner_info: z
+    .object({
+      name: z.string(),
+      avatar: z.string().nullable().optional(),
+      isVerified: z.boolean().optional(),
+    })
+    .optional(),
   priceWithPlatformFee: z.number(),
   brand: CarBrandSchema.omit({ models: true }),
   model: CarModelSchema,
@@ -127,8 +130,25 @@ export const CarResponseSchema = CarBaseSchema.extend({
       province: z.string(),
       district: z.string(),
       ward: z.string(),
+      province_id: z.string().optional(),
+      district_id: z.string().optional(),
+      ward_id: z.string().optional(),
     })
     .nullable(),
 });
 
 export type CarResponse = z.infer<typeof CarResponseSchema>;
+
+// Car Calendar
+export const CarCalendarSchema = z.object({
+  from_date: z.coerce.date(),
+  to_date: z.coerce.date(),
+  status: z.string(),
+});
+export type CarCalendar = z.infer<typeof CarCalendarSchema>;
+
+export const CarCalendarResponseSchema = z.object({
+  success: z.boolean(),
+  data: z.array(CarCalendarSchema),
+});
+export type CarCalendarResponse = z.infer<typeof CarCalendarResponseSchema>;

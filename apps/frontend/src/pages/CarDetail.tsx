@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { CarDetailLayout } from "@/components/car-detail/CarDetailLayout"
 import { CarGallery } from "@/components/car-detail/CarGallery"
 import { RentBox } from "@/components/car-detail/RentBox"
@@ -13,6 +13,7 @@ import { useCarDetail } from "@/hooks/useCarDetail"
 
 export default function CarDetail() {
     const { id } = useParams()
+    const navigate = useNavigate()
     const { data: car, isLoading, error } = useCarDetail(id)
 
     if (isLoading) {
@@ -107,7 +108,7 @@ export default function CarDetail() {
 
                     {/* Right Sticky Sidebar */}
                     <div className="hidden lg:block">
-                        <RentBox price={car.price} />
+                        <RentBox price={car.price} carId={car.id} />
                     </div>
                 </div>
             </div>
@@ -120,7 +121,10 @@ export default function CarDetail() {
                         <span className="text-sm text-gray-500 mb-1">/ngày</span>
                     </div>
                 </div>
-                <button className="bg-primary text-black font-bold px-8 py-3 rounded-lg">
+                <button
+                    className="bg-primary text-black font-bold px-8 py-3 rounded-lg"
+                    onClick={() => navigate(`/rent/${car.id}`)}
+                >
                     CHỌN THUÊ
                 </button>
             </div>

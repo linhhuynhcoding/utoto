@@ -1,7 +1,7 @@
 
 import { useSearchParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
-import { searchCars } from "@/api/cars"
+import { searchCars } from "@/services/car.service"
 import { CarResponse } from "@utoto/shared"
 import CarCard from "@/components/home/CarCard"
 import Header from "@/components/layout/Header"

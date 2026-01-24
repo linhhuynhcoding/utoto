@@ -1,11 +1,11 @@
 import { UploadImageResType } from "@utoto/shared";
-import apiClient from "@/lib/axios";
+import api from "./api";
 
 export const uploadImage = async (file: File): Promise<string> => {
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await apiClient.post<UploadImageResType>(
+  const response = await api.post<UploadImageResType>(
     "/media/upload",
     formData,
     {
@@ -15,5 +15,5 @@ export const uploadImage = async (file: File): Promise<string> => {
     },
   );
 
-  return response.data.data; // URL of the uploaded image
+  return (response as any).data; // URL of the uploaded image
 };

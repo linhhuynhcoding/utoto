@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import CarCard from "./CarCard"
-import { getFeaturedCars } from "@/api/cars"
+import { getFeaturedCars } from "@/services/car.service"
 import { CarResponse } from "@utoto/shared"
 import { useStorage, StorageKeys } from "@/contexts/StorageContext"
 
