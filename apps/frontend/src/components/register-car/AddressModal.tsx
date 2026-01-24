@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select } from "@/components/ui/select"
 import { X, MapPin } from "lucide-react"
-import { fetchProvinces, fetchDistricts, fetchWards } from "@/api/location"
+import { fetchProvinces, fetchDistricts, fetchWards } from "@/services/location.service"
 import { Province, District, Ward } from "@utoto/shared"
 
 interface AddressModalProps {
@@ -14,13 +14,25 @@ interface AddressModalProps {
     initialAddress?: any
 }
 
-export function AddressModal({ isOpen, onClose, onSave }: AddressModalProps) {
+export function AddressModal({ isOpen, onClose, onSave, initialAddress }: AddressModalProps) {
     const [addressData, setAddressData] = React.useState({
-        province: "",
-        district: "",
-        ward: "",
-        street: "",
+        province: initialAddress?.province || "",
+        district: initialAddress?.district || "",
+        ward: initialAddress?.ward || "",
+        street: initialAddress?.street || "",
     })
+
+    // Reset when initialAddress changes or modal opens
+    React.useEffect(() => {
+        if (isOpen && initialAddress) {
+            setAddressData({
+                province: initialAddress.province || "",
+                district: initialAddress.district || "",
+                ward: initialAddress.ward || "",
+                street: initialAddress.street || "",
+            })
+        }
+    }, [isOpen, initialAddress])
 
     const [provinces, setProvinces] = React.useState<Province[]>([])
     const [districts, setDistricts] = React.useState<District[]>([])

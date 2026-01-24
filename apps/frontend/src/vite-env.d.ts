@@ -3,6 +3,8 @@
 interface ImportMetaEnv {
   readonly VITE_GOOGLE_CLIENT_ID: string;
   readonly VITE_GOOGLE_AUTHORIZED_REDIRECT_URI: string;
+  readonly VITE_API_URL: string;
+
   // Add more env variables here as needed
 }
 

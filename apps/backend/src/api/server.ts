@@ -24,19 +24,18 @@ const fastify = Fastify({ logger: true });
 const start = async () => {
   try {
     createFolder(path.resolve(envConfig.UPLOAD_FOLDER));
-    const whitelist = ["*"];
+    const whitelist = [envConfig.CLIENT_URL];
     fastify.register(cors, {
       origin: whitelist, // Cho phép tất cả các domain gọi API
       credentials: true, // Cho phép trình duyệt gửi cookie đến server
-    });
-
-    await fastify.register(authRoutes, {
-      prefix: "/auth",
     });
     fastify.register(fastifyHelmet, {
       crossOriginResourcePolicy: {
         policy: "cross-origin",
       },
+    });
+    await fastify.register(authRoutes, {
+      prefix: "/auth",
     });
     await fastify.register(carRoutes, {
       prefix: "/car",

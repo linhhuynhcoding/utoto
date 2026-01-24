@@ -3,8 +3,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { useAuth } from "@/contexts"
-import { getMyLendingTrips } from "@/services/trip.service"
-import { TripResponse } from "@utoto/shared"
+import { getMyLendingTrips, updateTrip } from "@/services/trip.service"
+import { toast } from "sonner"
+import { Check, X } from "lucide-react"
 
 const STATUS_MAP: Record<string, { label: string, color: string }> = {
     PENDING: { label: "Chờ duyệt", color: "bg-yellow-500 hover:bg-yellow-600" },
@@ -30,15 +31,31 @@ export default function LendingTripList() {
     const [trips, setTrips] = useState<any[]>([]) // Using any for joined data convenience
     const [loading, setLoading] = useState(false)
 
+    const handleUpdateStatus = async (tripId: string, status: string) => {
+        try {
+            const res = await updateTrip(tripId, { status: status as any })
+            if (res.success) {
+                toast.success(status === "APPROVED" ? "Đã duyệt chuyến xe" : "Đã từ chối chuyến xe")
+                // Refresh list
+                const refreshed = await getMyLendingTrips(user?.id || "")
+                if (refreshed.trips) {
+                    setTrips(refreshed.trips)
+                }
+            }
+        } catch (error) {
+            console.error("Failed to update status", error)
+            toast.error("Có lỗi xảy ra khi cập nhật trạng thái")
+        }
+    }
+
     useEffect(() => {
         const fetchTrips = async () => {
-            // Fallback to USER_1 for dev testing if not logged in
-            const userId = user?.id || "USER_1";
+            if (!user) return;
             setLoading(true)
             try {
-                const res = await getMyLendingTrips(userId)
-                if (res.success) {
-                    setTrips(res.trips || [])
+                const res = await getMyLendingTrips(user.id)
+                if (res.trips) {
+                    setTrips(res.trips)
                 }
             } catch (error) {
                 console.error("Failed to fetch trips", error)
@@ -49,7 +66,13 @@ export default function LendingTripList() {
         fetchTrips()
     }, [user])
 
-    if (loading) return <div>Đang tải...</div>
+    if (loading) {
+        return (
+            <div className="flex justify-center py-20">
+                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+        )
+    }
 
     return (
         <div className="space-y-4">
@@ -90,15 +113,36 @@ export default function LendingTripList() {
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-3 pt-4 border-t">
-                                        <Avatar className="h-8 w-8">
-                                            <AvatarImage src={renterAvatar} />
-                                            <AvatarFallback>{renterName[0]}</AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <p className="text-sm font-medium">{renterName}</p>
-                                            <p className="text-xs text-muted-foreground">Người thuê</p>
+                                    <div className="flex items-center justify-between pt-4 border-t">
+                                        <div className="flex items-center gap-3">
+                                            <Avatar className="h-8 w-8">
+                                                <AvatarImage src={renterAvatar} />
+                                                <AvatarFallback>{renterName[0]}</AvatarFallback>
+                                            </Avatar>
+                                            <div>
+                                                <p className="text-sm font-medium">{renterName}</p>
+                                                <p className="text-xs text-muted-foreground">Người thuê</p>
+                                            </div>
                                         </div>
+
+                                        {trip.status === "PENDING" && (
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() => handleUpdateStatus(trip.trip_id, "REJECTED")}
+                                                    className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-200"
+                                                >
+                                                    <X className="h-3 w-3" />
+                                                    Từ chối
+                                                </button>
+                                                <button
+                                                    onClick={() => handleUpdateStatus(trip.trip_id, "APPROVED")}
+                                                    className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors shadow-sm"
+                                                >
+                                                    <Check className="h-3 w-3" />
+                                                    Duyệt
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>

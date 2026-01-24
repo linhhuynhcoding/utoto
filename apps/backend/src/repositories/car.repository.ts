@@ -3,7 +3,6 @@ import { CreateCar, UpdateCar, CarFilter, CarResponse } from "@utoto/shared";
 import { Prisma } from "@/prisma/client";
 import { generateId } from "@/utils/id.util";
 
-
 export class CarRepository {
   private static includeAll = {
     car_models: {
@@ -20,13 +19,13 @@ export class CarRepository {
     locations: {
       include: {
         provinces: {
-          include: { administrative_units: true }
+          include: { administrative_units: true },
         },
         districts: {
-          include: { administrative_units: true }
+          include: { administrative_units: true },
         },
         wards: {
-          include: { administrative_units: true }
+          include: { administrative_units: true },
         },
       },
     },
@@ -37,11 +36,13 @@ export class CarRepository {
     return {
       id: car.id,
       owner_id: car.owner,
-      owner_info: car.users ? {
-        name: car.users.name,
-        avatar: car.users.avatar,
-        isVerified: car.users.isVerified,
-      } : undefined,
+      owner_info: car.users
+        ? {
+            name: car.users.name,
+            avatar: car.users.avatar,
+            isVerified: car.users.isVerified,
+          }
+        : undefined,
       name: car.name,
       desc: car.desc,
       model_id: car.model_id.toString(),
@@ -81,14 +82,17 @@ export class CarRepository {
       images: car.car_images.map((ci: any) => ci.image_url),
       location: car.locations
         ? {
-          id: car.locations.id.toString(),
-          lat: car.locations.lat,
-          lon: car.locations.lon,
-          street: car.locations.street,
-          province: this.formatLocationName(car.locations.provinces),
-          district: this.formatLocationName(car.locations.districts),
-          ward: this.formatLocationName(car.locations.wards),
-        }
+            id: car.locations.id.toString(),
+            lat: car.locations.lat,
+            lon: car.locations.lon,
+            street: car.locations.street,
+            province: this.formatLocationName(car.locations.provinces),
+            district: this.formatLocationName(car.locations.districts),
+            ward: this.formatLocationName(car.locations.wards),
+            province_id: car.locations.province_id,
+            district_id: car.locations.district_id,
+            ward_id: car.locations.ward_id,
+          }
         : null,
     };
   }
@@ -300,12 +304,36 @@ export class CarRepository {
     };
   }
 
+  async getCalendar(carId: string) {
+    const trips = await prisma.trips.findMany({
+      where: {
+        car_id: carId,
+        status: {
+          notIn: ["CANCELLED", "REJECTED"], // Only show active/completed/pending bookings
+        },
+      },
+      select: {
+        from_date: true,
+        to_date: true,
+        status: true,
+      },
+      orderBy: {
+        from_date: "asc",
+      },
+    });
+
+    return trips;
+  }
+
   private formatLocationName(entity: any): string {
     if (!entity) return "Unknown";
 
     const name = entity.name || "";
     const fullName = entity.full_name || "";
-    const unitPrefix = entity.administrative_units?.full_name || entity.administrative_units?.short_name || "";
+    const unitPrefix =
+      entity.administrative_units?.full_name ||
+      entity.administrative_units?.short_name ||
+      "";
 
     // If fullName already includes the prefix (common in good datasets)
     // and it's longer than just the numeric name

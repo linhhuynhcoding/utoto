@@ -73,12 +73,10 @@ export const createCar = async (
     return reply.status(201).send({ success: true, data: car });
   } catch (error) {
     request.log.error(error);
-    return reply
-      .status(400)
-      .send({
-        success: false,
-        message: error instanceof Error ? error.message : "Bad Request",
-      });
+    return reply.status(400).send({
+      success: false,
+      message: error instanceof Error ? error.message : "Bad Request",
+    });
   }
 };
 
@@ -111,12 +109,10 @@ export const updateCar = async (
     return reply.send({ success: true, data: car });
   } catch (error) {
     request.log.error(error);
-    return reply
-      .status(400)
-      .send({
-        success: false,
-        message: error instanceof Error ? error.message : "Bad Request",
-      });
+    return reply.status(400).send({
+      success: false,
+      message: error instanceof Error ? error.message : "Bad Request",
+    });
   }
 };
 
@@ -145,11 +141,24 @@ export const searchCars = async (
     return reply.send({ success: true, ...result });
   } catch (error) {
     request.log.error(error);
+    return reply.status(400).send({
+      success: false,
+      message: error instanceof Error ? error.message : "Bad Request",
+    });
+  }
+};
+
+export const getCarCalendar = async (
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply,
+) => {
+  try {
+    const calendar = await carService.getCarCalendar(request.params.id);
+    return reply.send({ success: true, data: calendar });
+  } catch (error) {
+    request.log.error(error);
     return reply
-      .status(400)
-      .send({
-        success: false,
-        message: error instanceof Error ? error.message : "Bad Request",
-      });
+      .status(500)
+      .send({ success: false, message: "Internal server error" });
   }
 };

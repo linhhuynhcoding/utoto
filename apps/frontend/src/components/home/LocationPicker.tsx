@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { ChevronDown, MapPin, X } from "lucide-react"
-import { fetchProvinces, fetchDistricts, fetchWards } from "@/api/location"
+import { fetchProvinces, fetchDistricts, fetchWards } from "@/services/location.service"
 import { Select } from "@/components/ui/select"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"

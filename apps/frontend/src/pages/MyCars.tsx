@@ -19,18 +19,18 @@ export default function MyCars() {
 
                     {/* Main Content */}
                     <div className="flex-1 w-full">
-                        <div className="bg-white rounded-lg p-6 shadow-sm min-h-[500px]">
-                            <h1 className="text-2xl font-bold mb-6">Quản lý cho thuê</h1>
+                        <div className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border min-h-[600px]">
+                            <h1 className="text-3xl font-black mb-8 tracking-tight">Quản lý cho thuê</h1>
 
                             <div className="w-full">
-                                <div className="grid w-full grid-cols-2 mb-8 bg-slate-100 p-1 rounded-lg">
+                                <div className="grid w-full grid-cols-2 mb-10 bg-slate-100/50 p-1.5 rounded-[1.25rem] border">
                                     <button
                                         onClick={() => setActiveTab("my-cars")}
                                         className={cn(
-                                            "py-2 text-sm font-medium rounded-md transition-all duration-200",
+                                            "py-3 text-sm font-bold rounded-xl transition-all duration-300",
                                             activeTab === "my-cars"
-                                                ? "bg-white text-primary shadow-sm"
-                                                : "text-muted-foreground hover:text-primary/60"
+                                                ? "bg-white text-primary shadow-lg scale-[1.02]"
+                                                : "text-muted-foreground hover:text-foreground hover:bg-white/50"
                                         )}
                                     >
                                         Xe của tôi
@@ -38,10 +38,10 @@ export default function MyCars() {
                                     <button
                                         onClick={() => setActiveTab("lending-history")}
                                         className={cn(
-                                            "py-2 text-sm font-medium rounded-md transition-all duration-200",
+                                            "py-3 text-sm font-bold rounded-xl transition-all duration-300",
                                             activeTab === "lending-history"
-                                                ? "bg-white text-primary shadow-sm"
-                                                : "text-muted-foreground hover:text-primary/60"
+                                                ? "bg-white text-primary shadow-lg scale-[1.02]"
+                                                : "text-muted-foreground hover:text-foreground hover:bg-white/50"
                                         )}
                                     >
                                         Lịch sử cho thuê

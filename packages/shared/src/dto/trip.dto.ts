@@ -49,6 +49,8 @@ export const TripResponseSchema = z.object({
   ship_fee: z.string().nullable().optional(), // Decimal handles as string in serialized JSON usually or number
   rent_amount: z.string(), // Decimal
   payment_id: z.string().nullable().optional(), // BigInt
+  cars: z.any().optional(),
+  users: z.any().optional(),
 });
 
 export type TripStatus = z.infer<typeof TripStatusSchema>;

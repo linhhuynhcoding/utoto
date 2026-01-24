@@ -1,17 +1,20 @@
 import { useState, useRef, useEffect, useMemo } from "react"
-import { ChevronDown, Clock, ChevronLeft, ChevronRight, X } from "lucide-react"
+import { ChevronDown, Clock, ChevronLeft, ChevronRight, X, Calendar as CalendarIcon } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { createPortal } from "react-dom"
 
 interface RentalTimePickerProps {
     onChange?: (value: { startDate: string; endDate: string }) => void
+    disabledDates?: { from: Date; to: Date }[]
+    initialStart?: Date
+    initialEnd?: Date
 }
 
 const HOURS = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'))
 const MINUTES = ["00", "30"]
 
-export default function RentalTimePicker({ onChange }: RentalTimePickerProps) {
+export default function RentalTimePicker({ onChange, disabledDates, initialStart, initialEnd }: RentalTimePickerProps) {
     const [isOpen, setIsOpen] = useState(false)
     const pickerRef = useRef<HTMLDivElement>(null)
 
@@ -30,8 +33,8 @@ export default function RentalTimePicker({ onChange }: RentalTimePickerProps) {
         return d
     }
 
-    const [startDate, setStartDate] = useState(getDefaultStart())
-    const [endDate, setEndDate] = useState(getDefaultEnd())
+    const [startDate, setStartDate] = useState(initialStart || getDefaultStart())
+    const [endDate, setEndDate] = useState(initialEnd || getDefaultEnd())
     const [viewDate, setViewDate] = useState(new Date()) // Month being viewed in calendar
     const [pickingFor, setPickingFor] = useState<'start' | 'end'>('start')
 
@@ -81,6 +84,7 @@ export default function RentalTimePicker({ onChange }: RentalTimePickerProps) {
                 newEnd.setDate(newEnd.getDate() + 1)
                 setEndDate(newEnd)
             }
+            setPickingFor('end') // Auto switch to end
         } else {
             const newEnd = new Date(date)
             newEnd.setHours(endDate.getHours(), endDate.getMinutes())
@@ -109,10 +113,18 @@ export default function RentalTimePicker({ onChange }: RentalTimePickerProps) {
         }
     }
 
-    const isSelected = (date: Date) => {
-        const target = pickingFor === 'start' ? startDate : endDate
-        return date.toDateString() === target.toDateString()
+    const isInRange = (date: Date) => {
+        const d = new Date(date)
+        d.setHours(0, 0, 0, 0)
+        const start = new Date(startDate)
+        start.setHours(0, 0, 0, 0)
+        const end = new Date(endDate)
+        end.setHours(0, 0, 0, 0)
+        return d > start && d < end
     }
+
+    const isStart = (date: Date) => date.toDateString() === startDate.toDateString()
+    const isEnd = (date: Date) => date.toDateString() === endDate.toDateString()
 
     const isToday = (date: Date) => {
         return date.toDateString() === new Date().toDateString()
@@ -122,6 +134,20 @@ export default function RentalTimePicker({ onChange }: RentalTimePickerProps) {
         const today = new Date()
         today.setHours(0, 0, 0, 0)
         return date < today
+    }
+
+    const isDisabled = (date: Date) => {
+        if (isPast(date)) return true
+        if (!disabledDates) return false
+        return disabledDates.some(range => {
+            const d = new Date(date)
+            d.setHours(0, 0, 0, 0)
+            const from = new Date(range.from)
+            from.setHours(0, 0, 0, 0)
+            const to = new Date(range.to)
+            to.setHours(0, 0, 0, 0)
+            return d >= from && d <= to
+        })
     }
 
     const nextMonth = () => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))
@@ -137,23 +163,18 @@ export default function RentalTimePicker({ onChange }: RentalTimePickerProps) {
                 )}
                 onClick={() => setIsOpen(true)}
             >
-                <div className="flex-1 flex items-center divide-x border-r md:border-r-0 md:mr-0">
-                    <div className="flex-1 px-4 py-2 hover:bg-muted/30 rounded-l-xl transition-colors text-left overflow-hidden">
-                        <div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest leading-tight">Nhận xe</div>
-                        <div className="flex items-center gap-1.5 mt-0.5">
-                            <Clock className="w-3 h-3 text-primary" />
-                            <span className="text-sm font-bold truncate leading-none">{formatDisplayTime(startDate)} - {formatDisplayDate(startDate)}</span>
-                        </div>
-                    </div>
-                    <div className="flex-1 px-4 py-2 hover:bg-muted/30 rounded-r-xl transition-colors text-left overflow-hidden hidden md:block">
-                        <div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest leading-tight">Trả xe</div>
-                        <div className="flex items-center gap-1.5 mt-0.5">
-                            <Clock className="w-3 h-3 text-primary" />
-                            <span className="text-sm font-bold truncate leading-none">{formatDisplayTime(endDate)} - {formatDisplayDate(endDate)}</span>
+                <div className="flex-1 flex items-center px-5 gap-3 h-full overflow-hidden">
+                    <CalendarIcon className="w-5 h-5 text-primary shrink-0" />
+                    <div className="flex flex-col truncate">
+                        <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-tight">Thời gian thuê</span>
+                        <div className="flex items-center gap-2 font-bold text-[14px] truncate leading-tight mt-0.5">
+                            <span>{formatDisplayTime(startDate)}, {formatDisplayDate(startDate)}</span>
+                            <span className="text-muted-foreground font-medium">đến</span>
+                            <span>{formatDisplayTime(endDate)}, {formatDisplayDate(endDate)}</span>
                         </div>
                     </div>
                 </div>
-                <div className="px-3 text-primary shrink-0">
+                <div className="px-4 text-primary shrink-0 border-l h-full flex items-center">
                     <ChevronDown className={cn("w-4 h-4 transition-transform duration-300", isOpen && "rotate-180")} />
                 </div>
             </div>
@@ -180,25 +201,29 @@ export default function RentalTimePicker({ onChange }: RentalTimePickerProps) {
                                 className="relative w-full max-w-[750px] bg-background border rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] p-6 md:p-10 pointer-events-auto max-h-[90vh] overflow-y-auto custom-scrollbar"
                             >
                                 <div className="flex items-center justify-between mb-10">
-                                    <div className="flex p-1.5 bg-muted rounded-2xl">
-                                        <button
-                                            className={cn(
-                                                "px-6 py-2.5 text-sm font-black rounded-xl transition-all",
-                                                pickingFor === 'start' ? "bg-background text-primary shadow-lg" : "text-muted-foreground hover:text-foreground"
-                                            )}
-                                            onClick={() => setPickingFor('start')}
-                                        >
-                                            Bắt đầu thuê
-                                        </button>
-                                        <button
-                                            className={cn(
-                                                "px-6 py-2.5 text-sm font-black rounded-xl transition-all",
-                                                pickingFor === 'end' ? "bg-background text-primary shadow-lg" : "text-muted-foreground hover:text-foreground"
-                                            )}
-                                            onClick={() => setPickingFor('end')}
-                                        >
-                                            Kết thúc thuê
-                                        </button>
+                                    <div className="flex flex-col">
+                                        <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-tight">Đang chọn thời gian</span>
+                                        <div className="flex items-center gap-3 mt-1.5">
+                                            <button
+                                                className={cn(
+                                                    "px-4 py-1.5 rounded-lg text-sm font-bold transition-all border-2",
+                                                    pickingFor === 'start' ? "border-primary bg-primary/5 text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
+                                                )}
+                                                onClick={() => setPickingFor('start')}
+                                            >
+                                                {formatDisplayTime(startDate)}, {formatDisplayDate(startDate)}
+                                            </button>
+                                            <span className="text-muted-foreground text-xs font-bold">đến</span>
+                                            <button
+                                                className={cn(
+                                                    "px-4 py-1.5 rounded-lg text-sm font-bold transition-all border-2",
+                                                    pickingFor === 'end' ? "border-primary bg-primary/5 text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
+                                                )}
+                                                onClick={() => setPickingFor('end')}
+                                            >
+                                                {formatDisplayTime(endDate)}, {formatDisplayDate(endDate)}
+                                            </button>
+                                        </div>
                                     </div>
                                     <button onClick={() => setIsOpen(false)} className="p-3 hover:bg-muted rounded-full transition-colors">
                                         <X className="w-6 h-6 text-muted-foreground" />
@@ -228,17 +253,23 @@ export default function RentalTimePicker({ onChange }: RentalTimePickerProps) {
                                                 <div key={i} className="aspect-square flex items-center justify-center">
                                                     {date ? (
                                                         <button
-                                                            disabled={isPast(date)}
+                                                            disabled={isDisabled(date)}
                                                             onClick={() => handleDateSelect(date)}
                                                             className={cn(
-                                                                "w-full h-full rounded-2xl flex flex-col items-center justify-center text-sm transition-all relative overflow-hidden",
-                                                                isSelected(date) ? "bg-primary text-white font-black shadow-lg shadow-primary/30" : "hover:bg-primary/10 text-foreground font-medium",
-                                                                isPast(date) && "opacity-20 cursor-not-allowed",
-                                                                isToday(date) && !isSelected(date) && "border-2 border-primary/20 text-primary font-bold"
+                                                                "w-full h-full flex flex-col items-center justify-center text-sm transition-all relative",
+                                                                isDisabled(date) && "opacity-20 cursor-not-allowed",
+                                                                !isDisabled(date) && (isStart(date) || isEnd(date)) ? "bg-primary text-white font-black shadow-lg z-10" : "text-foreground font-medium",
+                                                                !isDisabled(date) && isStart(date) && "rounded-l-2xl",
+                                                                !isDisabled(date) && isEnd(date) && "rounded-r-2xl",
+                                                                !isDisabled(date) && isStart(date) && !isEnd(date) && "rounded-r-none",
+                                                                !isDisabled(date) && isEnd(date) && !isStart(date) && "rounded-l-none",
+                                                                !isDisabled(date) && isInRange(date) && "bg-primary/20 text-primary rounded-none",
+                                                                !isDisabled(date) && !isStart(date) && !isEnd(date) && !isInRange(date) && "hover:bg-primary/10 rounded-2xl",
+                                                                isToday(date) && !isStart(date) && !isEnd(date) && !isInRange(date) && "border-2 border-primary/20 text-primary font-bold rounded-2xl"
                                                             )}
                                                         >
                                                             {date.getDate()}
-                                                            {isToday(date) && !isSelected(date) && <span className="absolute bottom-1.5 w-1 h-1 bg-primary rounded-full"></span>}
+                                                            {isToday(date) && !isStart(date) && !isEnd(date) && !isInRange(date) && <span className="absolute bottom-1.5 w-1 h-1 bg-primary rounded-full"></span>}
                                                         </button>
                                                     ) : <div className="w-full h-full" />}
                                                 </div>
