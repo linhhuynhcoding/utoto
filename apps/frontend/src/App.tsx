@@ -21,6 +21,7 @@ import Careers from '@/pages/Careers'
 import HowItWorks from '@/pages/HowItWorks'
 import Delivery from '@/pages/Delivery'
 import Contact from '@/pages/Contact'
+import TripDetail from '@/pages/TripDetail'
 
 function App() {
     return (
@@ -48,6 +49,7 @@ function App() {
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/delivery" element={<Delivery />} />
                     <Route path="/contact" element={<Contact />} />
+                    <Route path="/trip/:id" element={<TripDetail />} />
                 </Routes>
             </BrowserRouter>
         </AppProviders>

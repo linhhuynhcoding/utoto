@@ -1,7 +1,20 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        
-    ],
-    "compounds": []
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Backend",
+      "type": "pwa-node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/apps/backend",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "ts-node",
+        "-r",
+        "tsconfig-paths/register",
+        "src/api/server.ts"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
 }

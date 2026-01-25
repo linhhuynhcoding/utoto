@@ -13,6 +13,8 @@ import { verificationRoutes } from "@/routes/verification.route";
 import path from "path";
 import { createFolder } from "@/utils/helpers";
 import fastifyHelmet from "@fastify/helmet";
+import fastifySSE from "@fastify/sse";
+import { gpsRoutes } from "@/routes/gps.route";
 
 // Serialize BigInt
 // @ts-ignore
@@ -40,6 +42,9 @@ const start = async () => {
         policy: "cross-origin",
       },
     });
+    await fastify.register(fastifySSE, {
+      logLevel: "debug"
+    });    
     await fastify.register(authRoutes, {
       prefix: "/auth",
     });
@@ -66,6 +71,9 @@ const start = async () => {
     });
     await fastify.register(verificationRoutes, {
       prefix: "/verification",
+    });
+    await fastify.register(gpsRoutes, {
+      prefix: "/gps",
     });
     await fastify.listen({
       port: envConfig.PORT,
