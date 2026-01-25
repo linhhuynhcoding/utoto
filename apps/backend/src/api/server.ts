@@ -8,6 +8,7 @@ import { tripRoutes } from "../routes/trip.route";
 import envConfig, { API_URL } from "@/config";
 import mediaRoutes from "@/routes/media.route";
 import staticRoutes from "@/routes/static.route";
+import { verificationRoutes } from "@/routes/verification.route";
 import path from "path";
 import { createFolder } from "@/utils/helpers";
 import fastifyHelmet from "@fastify/helmet";
@@ -27,6 +28,11 @@ const start = async () => {
     fastify.register(cors, {
       origin: [envConfig.CORS_ORIGIN], 
       credentials: true, 
+    });
+    fastify.register(require("@fastify/multipart"), {
+      limits: {
+        fileSize: 5 * 1024 * 1024, // 5MB
+      },
     });
     fastify.register(fastifyHelmet, {
       crossOriginResourcePolicy: {
@@ -53,6 +59,9 @@ const start = async () => {
     });
     await fastify.register(tripRoutes, {
       prefix: "/trip",
+    });
+    await fastify.register(verificationRoutes, {
+      prefix: "/verification",
     });
     await fastify.listen({
       port: envConfig.PORT,
