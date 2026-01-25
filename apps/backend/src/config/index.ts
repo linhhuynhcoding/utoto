@@ -22,6 +22,7 @@ const configSchema = z.object({
   JWT_SECRET: z.string(),
   CORS_ORIGIN: z.string().default("*"),
   KAFKA_BROKERS: z.string().transform((val) => val.split(",")),
+  FPT_AI_API_KEY: z.string(),
   UPLOAD_FOLDER: z.string(),
   CLIENT_URL: z.string(),
   PRODUCTION: z.enum(["true", "false"]).transform((val) => val === "true"),
