@@ -19,17 +19,12 @@ checkEnv();
 const configSchema = z.object({
   PORT: z.coerce.number().default(4000),
   DATABASE_URL: z.string(),
-  // ACCESS_TOKEN_SECRET: z.string(),
-  // ACCESS_TOKEN_EXPIRES_IN: z.string(),
-
-  // REFRESH_TOKEN_SECRET: z.string(),
-  // REFRESH_TOKEN_EXPIRES_IN: z.string(),
+  JWT_SECRET: z.string(),
+  CORS_ORIGIN: z.string().default("*"),
+  KAFKA_BROKERS: z.string().transform((val) => val.split(",")),
+  FPT_AI_API_KEY: z.string(),
   UPLOAD_FOLDER: z.string(),
   CLIENT_URL: z.string(),
-  // GOOGLE_REDIRECT_CLIENT_URL: z.string(),
-  // GOOGLE_CLIENT_ID: z.string(),
-  // GOOGLE_CLIENT_SECRET: z.string(),
-  // GOOGLE_AUTHORIZED_REDIRECT_URI: z.string(),
   PRODUCTION: z.enum(["true", "false"]).transform((val) => val === "true"),
   DOCKER: z.enum(["true", "false"]).transform((val) => val === "true"),
   PRODUCTION_URL: z.string(),
@@ -46,8 +41,6 @@ export const API_URL = envConfig.PRODUCTION
   ? envConfig.PRODUCTION_URL
   : `http://localhost:${envConfig.PORT}`;
 export default envConfig;
-
-console.dir(envConfig)
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
