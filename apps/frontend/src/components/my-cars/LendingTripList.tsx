@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { useAuth } from "@/contexts"
 import { getMyLendingTrips, updateTrip } from "@/services/trip.service"
 import { toast } from "sonner"
-import { Check, X } from "lucide-react"
+import { Check, X, Eye } from "lucide-react"
 
 const STATUS_MAP: Record<string, { label: string, color: string }> = {
     PENDING: { label: "Chờ duyệt", color: "bg-yellow-500 hover:bg-yellow-600" },
@@ -27,6 +28,7 @@ const formatDate = (date: Date | string) => {
 }
 
 export default function LendingTripList() {
+    const navigate = useNavigate()
     const { user } = useAuth()
     const [trips, setTrips] = useState<any[]>([]) // Using any for joined data convenience
     const [loading, setLoading] = useState(false)
@@ -84,7 +86,11 @@ export default function LendingTripList() {
                 const amount = Number(trip.rent_amount || 0);
 
                 return (
-                    <Card key={trip.trip_id} className="overflow-hidden">
+                    <Card
+                        key={trip.trip_id}
+                        className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                        onClick={() => navigate(`/trip/${trip.trip_id}`)}
+                    >
                         <CardContent className="p-0">
                             <div className="flex flex-col sm:flex-row">
                                 <div className="p-4 flex-1">
@@ -125,24 +131,42 @@ export default function LendingTripList() {
                                             </div>
                                         </div>
 
-                                        {trip.status === "PENDING" && (
-                                            <div className="flex gap-2">
-                                                <button
-                                                    onClick={() => handleUpdateStatus(trip.trip_id, "REJECTED")}
-                                                    className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-200"
-                                                >
-                                                    <X className="h-3 w-3" />
-                                                    Từ chối
-                                                </button>
-                                                <button
-                                                    onClick={() => handleUpdateStatus(trip.trip_id, "APPROVED")}
-                                                    className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors shadow-sm"
-                                                >
-                                                    <Check className="h-3 w-3" />
-                                                    Duyệt
-                                                </button>
-                                            </div>
-                                        )}
+                                        <div className="flex gap-2">
+                                            {trip.status === "PENDING" && (
+                                                <>
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation()
+                                                            handleUpdateStatus(trip.trip_id, "REJECTED")
+                                                        }}
+                                                        className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-200"
+                                                    >
+                                                        <X className="h-3 w-3" />
+                                                        Từ chối
+                                                    </button>
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation()
+                                                            handleUpdateStatus(trip.trip_id, "APPROVED")
+                                                        }}
+                                                        className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors shadow-sm"
+                                                    >
+                                                        <Check className="h-3 w-3" />
+                                                        Duyệt
+                                                    </button>
+                                                </>
+                                            )}
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    navigate(`/trip/${trip.trip_id}`)
+                                                }}
+                                                className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors"
+                                            >
+                                                <Eye className="h-3 w-3" />
+                                                Chi tiết
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

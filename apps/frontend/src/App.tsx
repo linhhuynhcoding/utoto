@@ -11,6 +11,7 @@ import MyCars from '@/pages/MyCars'
 import RentCar from '@/pages/RentCar'
 import MyTrips from '@/pages/MyTrips'
 import EditCar from '@/pages/EditCar'
+import TripDetail from '@/pages/TripDetail'
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/mytrips" element={<MyTrips />} />
                     <Route path="/mycars/edit/:id" element={<EditCar />} />
+                    <Route path="/trip/:id" element={<TripDetail />} />
                 </Routes>
             </BrowserRouter>
         </AppProviders>
