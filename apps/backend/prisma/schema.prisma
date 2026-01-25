@@ -186,21 +186,27 @@ model trips {
 }
 
 model users {
-  id                  String     @id @db.VarChar(20)
-  name                String     @db.VarChar(50)
-  email               String     @db.VarChar
-  phone_number        String     @db.VarChar(20)
-  phone_code          String     @db.VarChar(20)
-  dob                 DateTime?  @db.Date
-  address_id          BigInt?
-  avatar              String?    @db.VarChar
-  isVerified          Boolean    @default(false)
-  driver_license_code String?    @db.VarChar
-  driver_license_name String?    @db.VarChar
-  driver_license_dob  String?    @db.VarChar
-  cars                cars[]
-  trips               trips[]
-  locations           locations? @relation(fields: [address_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  id                         String     @id @db.VarChar(20)
+  name                       String     @db.VarChar(50)
+  email                      String     @db.VarChar
+  phone_number               String     @db.VarChar(20)
+  phone_code                 String     @db.VarChar(20)
+  dob                        DateTime?  @db.Date
+  address_id                 BigInt?
+  avatar                     String?    @db.VarChar
+  isVerified                 Boolean    @default(false)
+  driver_license_code        String?    @db.VarChar
+  driver_license_name        String?    @db.VarChar
+  driver_license_dob         String?    @db.VarChar
+  driver_license_class       String?    @db.VarChar
+  driver_license_issue_date  String?    @db.VarChar
+  driver_license_expiry_date String?    @db.VarChar
+  driver_license_image_front String?    @db.VarChar
+  driver_license_image_back  String?    @db.VarChar
+  cars                       cars[]
+  trips                      trips[]
+  locations                  locations? @relation(fields: [address_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model wards {

@@ -4,6 +4,7 @@ import { AppProviders } from '@/contexts'
 import Home from '@/pages/Home'
 import Search from '@/pages/Search'
 import Profile from '@/pages/Profile'
+import VerifyLicense from '@/pages/VerifyLicense'
 import CarDetail from '@/pages/CarDetail'
 import RegisterCar from '@/pages/RegisterCar'
 import Login from '@/pages/Login'
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/account" element={<Profile />} />
+                    <Route path="/verify-license" element={<VerifyLicense />} />
                     <Route path="/mycars" element={<MyCars />} />
                     <Route path="/car/:id" element={<CarDetail />} />
                     <Route path="/rent/:id" element={<RentCar />} />

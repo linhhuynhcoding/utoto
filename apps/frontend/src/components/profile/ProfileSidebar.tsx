@@ -23,6 +23,7 @@ export function ProfileSidebar({ className }: ProfileSidebarProps) {
 
     const menuItems = [
         { icon: User, label: "Tài khoản của tôi", active: currentPath === "/account", href: "/account" },
+        { icon: Key, label: "Xác minh GPLX", active: currentPath === "/verify-license", href: "/verify-license" },
         { icon: User, label: "Quản lý cho thuê", active: currentPath === "/mycars", href: "/mycars" },
         { icon: Heart, label: "Xe yêu thích", active: currentPath === "/myfavs", href: "/myfavs" },
         { icon: MapPin, label: "Chuyến của tôi", active: currentPath === "/mytrips", href: "/mytrips" },
