@@ -1,9 +1,11 @@
 import { Kafka } from "kafkajs";
 import prisma from "@/database";
 
+import envConfig from "@/config";
+
 const kafka = new Kafka({
   clientId: "my-app",
-  brokers: ["localhost:9092"],
+  brokers: envConfig.KAFKA_BROKERS,
 });
 
 const consumer = kafka.consumer({ groupId: "test-group" });

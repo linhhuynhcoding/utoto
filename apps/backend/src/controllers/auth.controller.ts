@@ -3,6 +3,7 @@ import { z } from "zod";
 import prisma from "@/database";
 import { generateId } from "@/utils/id.util";
 import jwt from "jsonwebtoken";
+import envConfig from "@/config";
 
 const GoogleCallbackSchema = z.object({
   email: z.string().email(),
@@ -43,7 +44,7 @@ export const googleCallback = async (
     // Generate JWT token
     const accessToken = jwt.sign(
       { id: user.id, email: user.email },
-      process.env.JWT_SECRET || "fallback_secret",
+      envConfig.JWT_SECRET,
       { expiresIn: "7d" },
     );
 
