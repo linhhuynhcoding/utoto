@@ -1,5 +1,4 @@
 import { FastifyInstance, FastifyPluginOptions } from "fastify";
-import fastifyMultipart from "@fastify/multipart";
 import { UploadImageResType, UploadAvatarResType } from "@utoto/shared";
 
 import { authenticate } from "@/middleware/auth.middleware";
