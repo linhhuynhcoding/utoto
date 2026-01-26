@@ -1,5 +1,4 @@
 import { FastifyInstance } from "fastify";
-import fastifyMultipart from "@fastify/multipart";
 import {
   getProfile,
   getUserById,
@@ -9,13 +8,6 @@ import {
 import { authenticate } from "@/middleware/auth.middleware";
 
 export async function userRoutes(fastify: FastifyInstance) {
-  // Register multipart for file upload
-  fastify.register(fastifyMultipart, {
-    limits: {
-      fileSize: 1024 * 1024 * 5, // 5MB for avatar
-      files: 1,
-    },
-  });
 
   // Get authenticated user's profile (requires authentication)
   fastify.get("/profile", { preHandler: [authenticate] }, getProfile);
