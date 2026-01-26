@@ -4,6 +4,7 @@ import { authRoutes } from "../routes/auth.route";
 import { carRoutes } from "../routes/car.route";
 import { locationRoutes } from "../routes/location.route";
 import { healthRoutes } from "../routes/health.route";
+import { userRoutes } from "../routes/user.route";
 import { tripRoutes } from "../routes/trip.route";
 import envConfig, { API_URL } from "@/config";
 import mediaRoutes from "@/routes/media.route";
@@ -48,10 +49,13 @@ const start = async () => {
     await fastify.register(locationRoutes, {
       prefix: "/location",
     });
-    fastify.register(mediaRoutes, {
+    await fastify.register(userRoutes, {
+      prefix: "/user",
+    });
+    await fastify.register(mediaRoutes, {
       prefix: "/media",
     });
-    fastify.register(staticRoutes, {
+    await fastify.register(staticRoutes, {
       prefix: "/static",
     });
     await fastify.register(healthRoutes, {

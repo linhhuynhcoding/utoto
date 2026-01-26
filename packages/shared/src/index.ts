@@ -14,4 +14,7 @@ export type CreateUser = z.infer<typeof CreateUserSchema>;
 export * from "./dto/car.dto";
 export * from "./dto/location.dto";
 export * from "./dto/media.dto";
+
+
 export * from "./dto/trip.dto";
+
