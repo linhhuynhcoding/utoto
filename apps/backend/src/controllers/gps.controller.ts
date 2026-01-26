@@ -19,6 +19,7 @@ export const gpsSSEHandler = async (
   const interval = setInterval(async () => {
     if (reply.sse.isConnected) {
       console.log('Sending...')
+      const data = 
       await reply.sse.send({ data: {
         "lat": 10.111111 ,
         "lng": 106.1111111 + Math.random()/Math.pow(10, 2) 

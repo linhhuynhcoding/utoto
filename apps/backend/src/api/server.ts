@@ -15,6 +15,7 @@ import { createFolder } from "@/utils/helpers";
 import fastifyHelmet from "@fastify/helmet";
 import fastifySSE from "@fastify/sse";
 import { gpsRoutes } from "@/routes/gps.route";
+import { RedisCache } from "@/redis";
 
 // Serialize BigInt
 // @ts-ignore
@@ -80,6 +81,12 @@ const start = async () => {
       host: envConfig.DOCKER ? "0.0.0.0" : "localhost",
     });
     console.log(`Server đang chạy: ${API_URL}`);
+
+    // trigger connect redis
+    const _ = await RedisCache.getInstance({
+            url: envConfig.REDIS_URL
+          })
+          
   } catch (err) {
     console.log(err);
     fastify.log.error(err);

@@ -1,0 +1,25 @@
+{
+    "name": "gps",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "ts-node -r tsconfig-paths/register src/server.ts",
+        "build": "tsc",
+        "start": "node dist/server.js"
+    },
+    "dependencies": {
+        "@fastify/websocket": "^11.0.2",
+        "chalk": "^4.1.2",
+        "dotenv": "^16.4.7",
+        "fastify": "^5.2.1",
+        "kafkajs": "^2.2.4",
+        "zod": "^3.24.1"
+    },
+    "devDependencies": {
+        "@types/node": "^22.10.10",
+        "@types/ws": "^8.18.1",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "^5.7.3"
+    }
+}

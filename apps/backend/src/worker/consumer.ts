@@ -1,5 +1,8 @@
 import { Kafka } from "kafkajs";
 import prisma from "@/database";
+import { RedisCache } from "@/redis";
+import envConfig from "@/config";
+import { GpsEvent } from "./types";
 
 import envConfig from "@/config";
 
@@ -19,8 +22,20 @@ const run = async () => {
       console.log({
         value: message.value?.toString(),
       });
-      // Example: Do something with Prisma here
-      // await prisma.user.findMany();
+      const event = GpsEvent.parse(message.value?.toString())
+
+      const cache = await RedisCache.getInstance({
+        url: envConfig.REDIS_URL
+      })
+
+      // process later
+      // ...
+
+      cache.saveLocation({
+        licenseNumber: event.licenseNumber,
+        lat: event.lat,
+        lng: event.lng
+      })
     },
   });
 };

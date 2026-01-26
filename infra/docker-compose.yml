@@ -33,6 +33,16 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  redis:
+    image: redis:7.4-alpine # Using a lightweight image
+    restart: always
+    ports:
+      - "6379:6379" # Maps port 6379 on the host to port 6379 in the container
+    volumes:
+      - redis_data:/data # Persists data to a named volume
+    command: ["redis-server", "--appendonly", "yes"] # Ensures data is saved to disk
 
 volumes:
   postgres_data:
+  redis_data:
+    driver: local
