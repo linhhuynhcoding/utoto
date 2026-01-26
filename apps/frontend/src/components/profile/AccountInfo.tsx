@@ -1,11 +1,84 @@
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { Pencil, CheckCircle2, AlertCircle, XCircle, Plus } from "lucide-react"
+import { Pencil, CheckCircle2, AlertCircle, XCircle, Plus, Loader2 } from "lucide-react"
 import { useAuth } from "@/contexts"
+import { useEffect, useState } from "react"
+import { userService } from "@/services/user.service"
+import { UserResponse, UpdateProfile } from "@utoto/shared"
+import toast from "@/hooks/use-toast"
+import { EditProfileDialog } from "./EditProfileDialog"
+import { EditFieldDialog } from "./EditFieldDialog"
 
 export function AccountInfo() {
-    const { user } = useAuth()
+    const { user: authUser } = useAuth()
+    const [userProfile, setUserProfile] = useState<UserResponse | null>(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+    const [isUploadingAvatar, setIsUploadingAvatar] = useState(false)
+    const [editingField, setEditingField] = useState<{
+        fieldName: keyof UpdateProfile
+        fieldLabel: string
+        currentValue: string
+        fieldType?: "text" | "date" | "tel"
+        placeholder?: string
+    } | null>(null)
+
+    useEffect(() => {
+        fetchUserProfile()
+    }, [])
+
+    const fetchUserProfile = async () => {
+        try {
+            setIsLoading(true)
+            const profile = await userService.getProfile()
+            setUserProfile(profile)
+        } catch (error: any) {
+            toast.error("Không thể tải thông tin profile", error?.response?.data?.message)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            toast.error("Ảnh quá lớn", "Kích thước tối đa 5MB")
+            return
+        }
+
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            toast.error("File không hợp lệ", "Vui lòng chọn file ảnh")
+            return
+        }
+
+        try {
+            setIsUploadingAvatar(true)
+            await userService.uploadAvatar(file)
+            toast.success("Cập nhật avatar thành công")
+            await fetchUserProfile()
+        } catch (error: any) {
+            toast.error("Upload avatar thất bại", error?.response?.data?.message || "Vui lòng thử lại")
+        } finally {
+            setIsUploadingAvatar(false)
+            // Reset input
+            e.target.value = ''
+        }
+    }
+
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center py-12">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        )
+    }
+
+    const user = userProfile || authUser
 
     const getUserInitials = () => {
         if (!user?.name) return 'U'
@@ -18,7 +91,12 @@ export function AccountInfo() {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-6 bg-white rounded-lg border shadow-sm">
                 <div className="flex items-center gap-2">
                     <h5 className="text-lg font-bold">Thông tin tài khoản</h5>
-                    <Button variant="ghost" size="icon" className="h-6 w-6">
+                    <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-6 w-6"
+                        onClick={() => setIsEditDialogOpen(true)}
+                    >
                         <Pencil className="h-3.5 w-3.5" />
                     </Button>
                 </div>
@@ -32,15 +110,37 @@ export function AccountInfo() {
             <div className="flex flex-col items-center justify-center p-8 bg-white rounded-lg border shadow-sm text-center">
                 <div className="relative mb-4">
                     <Avatar className="h-24 w-24 border-4 border-white shadow-sm">
-                        <AvatarImage src={user?.avatar} />
+                        <AvatarImage src={user?.avatar || undefined} />
                         <AvatarFallback className="text-2xl">{getUserInitials()}</AvatarFallback>
                     </Avatar>
-                    <Button size="icon" variant="secondary" className="absolute bottom-0 right-0 h-8 w-8 rounded-full shadow-md">
-                        <Pencil className="h-3.5 w-3.5" />
-                    </Button>
+                    <label htmlFor="avatar-upload">
+                        <Button 
+                            size="icon" 
+                            variant="secondary" 
+                            className="absolute bottom-0 right-0 h-8 w-8 rounded-full shadow-md cursor-pointer"
+                            disabled={isUploadingAvatar}
+                            asChild
+                        >
+                            <div>
+                                {isUploadingAvatar ? (
+                                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                ) : (
+                                    <Pencil className="h-3.5 w-3.5" />
+                                )}
+                            </div>
+                        </Button>
+                    </label>
+                    <input
+                        id="avatar-upload"
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleAvatarUpload}
+                        disabled={isUploadingAvatar}
+                    />
                 </div>
                 <h2 className="text-xl font-bold mb-1">{user?.name || 'User'}</h2>
-                <p className="text-sm text-muted-foreground mb-4">Tham gia: {user?.joinedDate || '--/--/----'}</p>
+                <p className="text-sm text-muted-foreground mb-4">Tham gia: {user?.id ? new Date().toLocaleDateString('vi-VN') : '--/--/----'}</p>
                 <div className="flex items-center gap-2 px-4 py-2 bg-yellow-50 text-yellow-700 rounded-full text-sm font-medium">
                     <span>{user?.points || 0} điểm</span>
                 </div>
@@ -49,43 +149,62 @@ export function AccountInfo() {
             {/* Personal Info Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="p-4 bg-white rounded-lg border shadow-sm">
-                    <p className="text-sm text-muted-foreground mb-1">Ngày sinh</p>
-                    <p className="font-medium">{user?.dateOfBirth || '--/--/----'}</p>
+                    <div className="flex items-center justify-between">
+                        <p className="text-sm text-muted-foreground mb-1">Ngày sinh</p>
+                        <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="h-6 w-6"
+                            onClick={() => setEditingField({
+                                fieldName: 'dob',
+                                fieldLabel: 'Ngày sinh',
+                                currentValue: user?.dob || '',
+                                fieldType: 'date'
+                            })}
+                        >
+                            <Pencil className="h-3 w-3" />
+                        </Button>
+                    </div>
+                    <p className="font-medium">{user?.dob ? new Date(user.dob).toLocaleDateString('vi-VN') : '--/--/----'}</p>
                 </div>
                 <div className="p-4 bg-white rounded-lg border shadow-sm">
-                    <p className="text-sm text-muted-foreground mb-1">Giới tính</p>
-                    <p className="font-medium">{user?.gender || 'Chưa cập nhật'}</p>
-                </div>
-            </div>
-
-            {/* Contact Info */}
-            <div className="space-y-4">
-                {/* Phone */}
-                <div className="flex items-center justify-between p-4 bg-white rounded-lg border shadow-sm">
-                    <div>
+                    <div className="flex items-center justify-between">
                         <p className="text-sm text-muted-foreground mb-1 flex items-center gap-2">
                             Số điện thoại
-                            {user?.verified?.phone && (
+                            {user?.isVerified && (
                                 <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 gap-1 font-normal">
                                     <CheckCircle2 className="h-3 w-3" /> Đã xác thực
                                 </Badge>
                             )}
                         </p>
-                        <div className="flex items-center gap-2">
-                            <p className="font-medium">{user?.phone || 'Chưa cập nhật'}</p>
-                            <Button variant="ghost" size="icon" className="h-6 w-6">
-                                <Pencil className="h-3 w-3" />
-                            </Button>
-                        </div>
+                        <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="h-6 w-6"
+                            onClick={() => setEditingField({
+                                fieldName: 'phone_number',
+                                fieldLabel: 'Số điện thoại',
+                                currentValue: user?.phone_number || '',
+                                fieldType: 'tel',
+                                placeholder: 'Nhập số điện thoại'
+                            })}
+                        >
+                            <Pencil className="h-3 w-3" />
+                        </Button>
                     </div>
+                    <p className="font-medium">{user?.phone_number ? `${user.phone_code}${user.phone_number}` : 'Chưa cập nhật'}</p>
                 </div>
+            </div>
 
+            {/* Contact Info */}
+            <div className="space-y-4">
+               
                 {/* Email */}
                 <div className="flex items-center justify-between p-4 bg-white rounded-lg border shadow-sm">
                     <div>
                         <p className="text-sm text-muted-foreground mb-1 flex items-center gap-2">
                             Email
-                            {user?.verified?.email && (
+                            {user?.isVerified && (
                                 <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 gap-1 font-normal">
                                     <CheckCircle2 className="h-3 w-3" /> Đã xác thực
                                 </Badge>
@@ -93,9 +212,6 @@ export function AccountInfo() {
                         </p>
                         <div className="flex items-center gap-2">
                             <p className="font-medium">{user?.email || 'Chưa cập nhật'}</p>
-                            <Button variant="ghost" size="icon" className="h-6 w-6">
-                                <Pencil className="h-3 w-3" />
-                            </Button>
                         </div>
                     </div>
                 </div>
@@ -130,7 +246,7 @@ export function AccountInfo() {
                     <div>
                         <h6 className="font-bold flex items-center gap-2">
                             Giấy phép lái xe
-                            {user?.verified?.driverLicense ? (
+                            {user?.driver_license_code ? (
                                 <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 gap-1 font-normal">
                                     <CheckCircle2 className="h-3 w-3" /> Đã xác thực
                                 </Badge>
@@ -152,18 +268,18 @@ export function AccountInfo() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {user?.verified?.driverLicense ? (
+                        {user?.driver_license_code ? (
                             <div className="col-span-2 bg-green-50 p-4 rounded-lg border border-green-100">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                     <div>
                                         <span className="text-gray-500 block">Họ và tên</span>
-                                        <span className="font-medium text-gray-900">{(user as any).driver_license_name || user.name}</span>
+                                        <span className="font-medium text-gray-900">{user.driver_license_name || user.name}</span>
                                     </div>
                                     <div>
                                         <span className="text-gray-500 block">Số GPLX</span>
                                         <span className="font-medium text-gray-900">
                                             {(() => {
-                                                const code = (user as any).driver_license_code;
+                                                const code = user.driver_license_code;
                                                 if (!code) return '---';
                                                 if (code.length < 6) return code;
                                                 return `${code.slice(0, 3)}xxxx${code.slice(-3)}`;
@@ -171,12 +287,10 @@ export function AccountInfo() {
                                         </span>
                                     </div>
                                     <div>
-                                        <span className="text-gray-500 block">Hạng</span>
-                                        <span className="font-medium text-gray-900">{(user as any).driver_license_class || '---'}</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-gray-500 block">Ngày hết hạn</span>
-                                        <span className="font-medium text-gray-900">{(user as any).driver_license_expiry_date || '---'}</span>
+                                        <span className="text-gray-500 block">Ngày sinh</span>
+                                        <span className="font-medium text-gray-900">
+                                            {user.driver_license_dob ? new Date(user.driver_license_dob).toLocaleDateString('vi-VN') : '---'}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -197,6 +311,28 @@ export function AccountInfo() {
                     </div>
                 </div>
             </div>
+
+            {/* Edit Profile Dialog */}
+            <EditProfileDialog
+                open={isEditDialogOpen}
+                onOpenChange={setIsEditDialogOpen}
+                currentUser={userProfile}
+                onSuccess={fetchUserProfile}
+            />
+
+            {/* Edit Field Dialog */}
+            {editingField && (
+                <EditFieldDialog
+                    open={!!editingField}
+                    onOpenChange={(open) => !open && setEditingField(null)}
+                    fieldName={editingField.fieldName}
+                    fieldLabel={editingField.fieldLabel}
+                    currentValue={editingField.currentValue}
+                    onSuccess={fetchUserProfile}
+                    fieldType={editingField.fieldType}
+                    placeholder={editingField.placeholder}
+                />
+            )}
         </div>
     )
 }
