@@ -26,17 +26,17 @@ export const getCarSettings = async (
       prisma.features.findMany(),
     ]);
 
-    const mappedBrands: CarBrand[] = brands.map((b) => ({
+    const mappedBrands: CarBrand[] = brands.map((b: any) => ({
       id: b.brand_id.toString(),
       name: b.brand_name,
       logo: b.logo,
-      models: b.car_models.map((m) => ({
+      models: b.car_models.map((m: any) => ({
         id: m.model_id.toString(),
         name: m.model_name,
       })),
     }));
 
-    const mappedFeatures: Feature[] = features.map((f) => ({
+    const mappedFeatures: Feature[] = features.map((f: any) => ({
       id: f.id,
       name: f.name,
       logo: f.logo,
@@ -67,18 +67,19 @@ export const createCar = async (
   try {
     const body = CreateCarSchema.parse(request.body);
     // TODO: Get ownerId from auth middleware
-    const ownerId = (request as any).user?.id || "USER_1";
+    const ownerId = (request as any).user?.id;
+    if (!ownerId) {
+      return reply.status(401).send({ success: false, message: "Unauthorized" });
+    }
 
     const car = await carService.createCar(ownerId, body);
     return reply.status(201).send({ success: true, data: car });
   } catch (error) {
     request.log.error(error);
-    return reply
-      .status(400)
-      .send({
-        success: false,
-        message: error instanceof Error ? error.message : "Bad Request",
-      });
+    return reply.status(400).send({
+      success: false,
+      message: error instanceof Error ? error.message : "Bad Request",
+    });
   }
 };
 
@@ -111,12 +112,10 @@ export const updateCar = async (
     return reply.send({ success: true, data: car });
   } catch (error) {
     request.log.error(error);
-    return reply
-      .status(400)
-      .send({
-        success: false,
-        message: error instanceof Error ? error.message : "Bad Request",
-      });
+    return reply.status(400).send({
+      success: false,
+      message: error instanceof Error ? error.message : "Bad Request",
+    });
   }
 };
 
@@ -145,11 +144,24 @@ export const searchCars = async (
     return reply.send({ success: true, ...result });
   } catch (error) {
     request.log.error(error);
+    return reply.status(400).send({
+      success: false,
+      message: error instanceof Error ? error.message : "Bad Request",
+    });
+  }
+};
+
+export const getCarCalendar = async (
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply,
+) => {
+  try {
+    const calendar = await carService.getCarCalendar(request.params.id);
+    return reply.send({ success: true, data: calendar });
+  } catch (error) {
+    request.log.error(error);
     return reply
-      .status(400)
-      .send({
-        success: false,
-        message: error instanceof Error ? error.message : "Bad Request",
-      });
+      .status(500)
+      .send({ success: false, message: "Internal server error" });
   }
 };

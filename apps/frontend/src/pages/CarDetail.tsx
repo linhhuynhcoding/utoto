@@ -1,3 +1,4 @@
+import { useParams, useNavigate } from "react-router-dom"
 import { CarDetailLayout } from "@/components/car-detail/CarDetailLayout"
 import { CarGallery } from "@/components/car-detail/CarGallery"
 import { RentBox } from "@/components/car-detail/RentBox"
@@ -7,44 +8,65 @@ import { CarContentSection } from "@/components/car-detail/CarContentSection"
 import { OwnerInfo } from "@/components/car-detail/OwnerInfo"
 import { ReviewsList } from "@/components/car-detail/ReviewsList"
 import { Separator } from "@/components/ui/separator"
-import { FileText, Map as MapIcon } from "lucide-react"
+import { FileText, Map as MapIcon, Loader2 } from "lucide-react"
+import { useCarDetail } from "@/hooks/useCarDetail"
 
 export default function CarDetail() {
-    // const { id } = useParams()
+    const { id } = useParams()
+    const navigate = useNavigate()
+    const { data: car, isLoading, error } = useCarDetail(id)
 
-    const mockImages = [
-        "https://n1-pstg.mioto.vn/cho_thue_xe_o_to_tu_lai_thue_xe_du_lich_hochiminh/suzuki_xl7_hybrid_2023/p/g/2025/11/22/11/1K22Ngq-QonqrA5p1BapkQ.jpg",
-        "https://n1-pstg.mioto.vn/cho_thue_xe_o_to_tu_lai_thue_xe_du_lich_hochiminh/suzuki_xl7_hybrid_2023/p/g/2025/11/22/11/crkO89zmpy8TohDRIw-aQA.jpg",
-        "https://n1-pstg.mioto.vn/cho_thue_xe_o_to_tu_lai_thue_xe_du_lich_hochiminh/suzuki_xl7_hybrid_2023/p/g/2025/11/22/11/3Qmuad1rr99sk2BbToRFmw.jpg",
-        "https://n1-pstg.mioto.vn/cho_thue_xe_o_to_tu_lai_thue_xe_du_lich_hochiminh/suzuki_xl7_hybrid_2023/p/g/2025/11/22/11/r0K4f2xyNzrotnGOdARQDg.jpg"
-    ]
+    if (isLoading) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh]">
+                <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
+                <p className="text-gray-500">Đang tải thông tin xe...</p>
+            </div>
+        )
+    }
+
+    if (error || !car) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh]">
+                <p className="text-red-500 font-medium">Không tìm thấy thông tin xe hoặc có lỗi xảy ra.</p>
+            </div>
+        )
+    }
 
     return (
         <CarDetailLayout>
-            <CarGallery images={mockImages} />
+            <CarGallery images={car.images} />
 
             <div className="container py-8">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Left Main Content */}
                     <div className="lg:col-span-2 space-y-2">
                         <CarBasicInfo
-                            name="SUZUKI XL7 HYBRID 2023"
-                            rating={5.0}
-                            trips={15}
-                            location="Phường Linh Đông, Quận Thủ Đức"
-                            tags={["Miễn thế chấp", "Giao xe tận nơi"]}
+                            id={car.id}
+                            name={car.name}
+                            rating={5.0} // Mocked for now as not in schema
+                            trips={15} // Mocked for now as not in schema
+                            location={car.location ? `${car.location.street}, ${car.location.ward}, ${car.location.district}, ${car.location.province}` : "Vị trí không xác định"}
+                            tags={[
+                                car.is_self_driving ? "Miễn thế chấp" : "",
+                                "Giao xe tận nơi"
+                            ].filter(Boolean)}
                         />
 
                         <Separator className="my-8" />
 
                         <CarContentSection title="Đặc điểm">
-                            <CarFeatures />
+                            <CarFeatures
+                                seat={car.seat}
+                                transmission={car.transmission}
+                                engineType={car.engine_type}
+                                features={car.features}
+                            />
                         </CarContentSection>
 
                         <CarContentSection title="Mô tả">
                             <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-                                Xe mới sạch sẽ, tiết kiệm xăng. Phù hợp đi gia đình, công tác.
-                                Hỗ trợ giao xe tận nơi khu vực Thủ Đức.
+                                {car.desc || "Không có mô tả cho xe này."}
                             </p>
                         </CarContentSection>
 
@@ -64,12 +86,18 @@ export default function CarDetail() {
                             <div className="aspect-video bg-gray-100 rounded-lg flex flex-col items-center justify-center border text-gray-400">
                                 <MapIcon className="h-8 w-8 mb-2 opacity-50" />
                                 <span>Bản đồ vị trí xe (Placeholder)</span>
-                                <span className="text-sm mt-1">Phường Linh Đông, Quận Thủ Đức, TP. Hồ Chí Minh</span>
+                                <span className="text-sm mt-1">
+                                    {car.location ? `${car.location.street}, ${car.location.ward}, ${car.location.district}, ${car.location.province}` : "Vị trí không xác định"}
+                                </span>
                             </div>
                         </CarContentSection>
 
                         <CarContentSection title="Chủ xe">
-                            <OwnerInfo />
+                            <OwnerInfo
+                                name={car.owner_info?.name || "Chủ xe"}
+                                avatar={car.owner_info?.avatar || ""}
+                                isVerified={car.owner_info?.isVerified}
+                            />
                         </CarContentSection>
 
                         <CarContentSection title="Đánh giá" className="border-b-0">
@@ -80,7 +108,7 @@ export default function CarDetail() {
 
                     {/* Right Sticky Sidebar */}
                     <div className="hidden lg:block">
-                        <RentBox />
+                        <RentBox price={car.price} carId={car.id} />
                     </div>
                 </div>
             </div>
@@ -89,12 +117,14 @@ export default function CarDetail() {
             <div className="lg:hidden fixed bottom-0 left-0 right-0 p-4 bg-white border-t shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-40 flex justify-between items-center">
                 <div>
                     <div className="flex items-end gap-1">
-                        <span className="text-xl font-bold text-primary">967K</span>
+                        <span className="text-xl font-bold text-primary">{(car.price / 1000).toFixed(0)}K</span>
                         <span className="text-sm text-gray-500 mb-1">/ngày</span>
                     </div>
-                    <span className="text-xs line-through text-gray-400">1.007K</span>
                 </div>
-                <button className="bg-primary text-black font-bold px-8 py-3 rounded-lg">
+                <button
+                    className="bg-primary text-black font-bold px-8 py-3 rounded-lg"
+                    onClick={() => navigate(`/rent/${car.id}`)}
+                >
                     CHỌN THUÊ
                 </button>
             </div>

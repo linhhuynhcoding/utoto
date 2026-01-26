@@ -18,16 +18,31 @@ export class CarRepository {
     car_images: true,
     locations: {
       include: {
-        // We might want to join with provinces, districts, wards if needed
-        // but for now let's keep it simple as per DTO
+        provinces: {
+          include: { administrative_units: true },
+        },
+        districts: {
+          include: { administrative_units: true },
+        },
+        wards: {
+          include: { administrative_units: true },
+        },
       },
     },
+    users: true,
   };
 
   private mapToResponse(car: any): CarResponse {
     return {
       id: car.id,
-      owner: car.owner,
+      owner_id: car.owner,
+      owner_info: car.users
+        ? {
+            name: car.users.name,
+            avatar: car.users.avatar,
+            isVerified: car.users.isVerified,
+          }
+        : undefined,
       name: car.name,
       desc: car.desc,
       model_id: car.model_id.toString(),
@@ -46,7 +61,10 @@ export class CarRepository {
       deodorisePrice: Number(car.deodorisePrice || 0),
       washingPrice: Number(car.washingPrice || 0),
       overTimePrice: Number(car.overTimePrice || 0),
-      maxOverTimeHour: car.maxOverTimeHour || 0,
+      maxOverTimeHour: car.maxOverTimeHour,
+      is_self_driving: car.is_self_driving,
+      is_with_driver: car.is_with_driver,
+      is_long_term: car.is_long_term,
       brand: {
         id: car.car_models.brands.brand_id.toString(),
         name: car.car_models.brands.brand_name,
@@ -68,9 +86,12 @@ export class CarRepository {
             lat: car.locations.lat,
             lon: car.locations.lon,
             street: car.locations.street,
-            province: car.locations.province_id.toString(), // Simplified for now
-            district: car.locations.district_id.toString(),
-            ward: car.locations.ward_id.toString(),
+            province: this.formatLocationName(car.locations.provinces),
+            district: this.formatLocationName(car.locations.districts),
+            ward: this.formatLocationName(car.locations.wards),
+            province_id: car.locations.province_id,
+            district_id: car.locations.district_id,
+            ward_id: car.locations.ward_id,
           }
         : null,
     };
@@ -85,9 +106,9 @@ export class CarRepository {
       const location = await prisma.locations.create({
         data: {
           street: address.street,
-          province_id: parseInt(address.province),
-          district_id: parseInt(address.district),
-          ward_id: parseInt(address.ward),
+          province_id: address.province,
+          district_id: address.district,
+          ward_id: address.ward,
         },
       });
       locationId = location.id;
@@ -225,6 +246,22 @@ export class CarRepository {
     if (filters.location_id) {
       where.location_id = BigInt(filters.location_id);
     }
+    if (filters.owner_id) {
+      where.owner = filters.owner_id;
+    }
+
+    if (filters.province || filters.district || filters.ward) {
+      where.locations = {}; // Initialize if not already exists
+      if (filters.province) where.locations.province_id = filters.province;
+      if (filters.district) where.locations.district_id = filters.district;
+      if (filters.ward) where.locations.ward_id = filters.ward;
+    }
+
+    if (filters.type) {
+      if (filters.type === "self-driving") where.is_self_driving = true;
+      if (filters.type === "with-driver") where.is_with_driver = true;
+      if (filters.type === "long-term") where.is_long_term = true;
+    }
 
     if (filters.min_price !== undefined || filters.max_price !== undefined) {
       where.price = {};
@@ -265,5 +302,50 @@ export class CarRepository {
       items: items.map((car) => this.mapToResponse(car)),
       total,
     };
+  }
+
+  async getCalendar(carId: string) {
+    const trips = await prisma.trips.findMany({
+      where: {
+        car_id: carId,
+        status: {
+          notIn: ["CANCELLED", "REJECTED"], // Only show active/completed/pending bookings
+        },
+      },
+      select: {
+        from_date: true,
+        to_date: true,
+        status: true,
+      },
+      orderBy: {
+        from_date: "asc",
+      },
+    });
+
+    return trips;
+  }
+
+  private formatLocationName(entity: any): string {
+    if (!entity) return "Unknown";
+
+    const name = entity.name || "";
+    const fullName = entity.full_name || "";
+    const unitPrefix =
+      entity.administrative_units?.full_name ||
+      entity.administrative_units?.short_name ||
+      "";
+
+    // If fullName already includes the prefix (common in good datasets)
+    // and it's longer than just the numeric name
+    if (fullName && fullName.length > name.length && fullName.includes(name)) {
+      return fullName;
+    }
+
+    // If name is numeric, we MUST add the unit prefix
+    if (/^\d+$/.test(name) && unitPrefix) {
+      return `${unitPrefix} ${name}`;
+    }
+
+    return fullName || name || "Unknown";
   }
 }

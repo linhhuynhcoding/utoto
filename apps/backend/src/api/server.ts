@@ -5,12 +5,20 @@ import { carRoutes } from "../routes/car.route";
 import { locationRoutes } from "../routes/location.route";
 import { healthRoutes } from "../routes/health.route";
 import { userRoutes } from "../routes/user.route";
+import { tripRoutes } from "../routes/trip.route";
 import envConfig, { API_URL } from "@/config";
 import mediaRoutes from "@/routes/media.route";
 import staticRoutes from "@/routes/static.route";
+import { verificationRoutes } from "@/routes/verification.route";
 import path from "path";
 import { createFolder } from "@/utils/helpers";
 import fastifyHelmet from "@fastify/helmet";
+
+// Serialize BigInt
+// @ts-ignore
+BigInt.prototype.toJSON = function () {
+  return this.toString();
+};
 
 const fastify = Fastify({ logger: true });
 
@@ -18,19 +26,22 @@ const fastify = Fastify({ logger: true });
 const start = async () => {
   try {
     createFolder(path.resolve(envConfig.UPLOAD_FOLDER));
-    const whitelist = ["*"];
     fastify.register(cors, {
-      origin: whitelist, // Cho phép tất cả các domain gọi API
-      credentials: true, // Cho phép trình duyệt gửi cookie đến server
+      origin: [envConfig.CORS_ORIGIN], 
+      credentials: true, 
     });
-
-    await fastify.register(authRoutes, {
-      prefix: "/auth",
+    fastify.register(require("@fastify/multipart"), {
+      limits: {
+        fileSize: 5 * 1024 * 1024, // 5MB
+      },
     });
     fastify.register(fastifyHelmet, {
       crossOriginResourcePolicy: {
         policy: "cross-origin",
       },
+    });
+    await fastify.register(authRoutes, {
+      prefix: "/auth",
     });
     await fastify.register(carRoutes, {
       prefix: "/car",
@@ -49,6 +60,12 @@ const start = async () => {
     });
     await fastify.register(healthRoutes, {
       prefix: "/health",
+    });
+    await fastify.register(tripRoutes, {
+      prefix: "/trip",
+    });
+    await fastify.register(verificationRoutes, {
+      prefix: "/verification",
     });
     await fastify.listen({
       port: envConfig.PORT,

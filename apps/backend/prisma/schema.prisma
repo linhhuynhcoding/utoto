@@ -82,6 +82,9 @@ model cars {
   washingPrice                   Decimal?       @default(0) @db.Decimal(12, 2)
   overTimePrice                  Decimal?       @default(0) @db.Decimal(12, 2)
   maxOverTimeHour                Int?           @default(5)
+  is_self_driving                Boolean        @default(true)
+  is_with_driver                 Boolean        @default(false)
+  is_long_term                   Boolean        @default(false)
   car_features                   car_features[]
   car_images                     car_images[]
   locations                      locations?     @relation(fields: [location_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -102,6 +105,7 @@ model districts {
   administrative_units   administrative_units? @relation(fields: [administrative_unit_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   provinces              provinces?            @relation(fields: [province_code], references: [code], onDelete: NoAction, onUpdate: NoAction)
   wards                  wards[]
+  locations              locations[]
 
   @@index([province_code], map: "idx_districts_province")
   @@index([administrative_unit_id], map: "idx_districts_unit")
@@ -123,16 +127,19 @@ model images {
 }
 
 model locations {
-  id            BigInt  @id @default(autoincrement())
+  id            BigInt    @id @default(autoincrement())
   lat           Float?
   lon           Float?
-  ward_id       Int
-  district_id   Int
-  province_id   Int
-  street        String  @db.VarChar(100)
-  short_address String? @db.VarChar(100)
+  ward_id       String    @db.VarChar(20)
+  district_id   String    @db.VarChar(20)
+  province_id   String    @db.VarChar(20)
+  street        String    @db.VarChar(100)
+  short_address String?   @db.VarChar(100)
   cars          cars[]
   users         users[]
+  provinces     provinces @relation(fields: [province_id], references: [code], onDelete: NoAction, onUpdate: NoAction)
+  districts     districts @relation(fields: [district_id], references: [code], onDelete: NoAction, onUpdate: NoAction)
+  wards         wards     @relation(fields: [ward_id], references: [code], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model payments {
@@ -156,6 +163,7 @@ model provinces {
   districts                districts[]
   administrative_regions   administrative_regions? @relation(fields: [administrative_region_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   administrative_units     administrative_units?   @relation(fields: [administrative_unit_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  locations                locations[]
 
   @@index([administrative_region_id], map: "idx_provinces_region")
   @@index([administrative_unit_id], map: "idx_provinces_unit")
@@ -178,21 +186,27 @@ model trips {
 }
 
 model users {
-  id                  String     @id @db.VarChar(20)
-  name                String     @db.VarChar(50)
-  email               String     @db.VarChar
-  phone_number        String     @db.VarChar(20)
-  phone_code          String     @db.VarChar(20)
-  dob                 DateTime?  @db.Date
-  address_id          BigInt?
-  avatar              String?    @db.VarChar
-  isVerified          Boolean    @default(false)
-  driver_license_code String?    @db.VarChar
-  driver_license_name String?    @db.VarChar
-  driver_license_dob  String?    @db.VarChar
-  cars                cars[]
-  trips               trips[]
-  locations           locations? @relation(fields: [address_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  id                         String     @id @db.VarChar(20)
+  name                       String     @db.VarChar(50)
+  email                      String     @db.VarChar
+  phone_number               String     @db.VarChar(20)
+  phone_code                 String     @db.VarChar(20)
+  dob                        DateTime?  @db.Date
+  address_id                 BigInt?
+  avatar                     String?    @db.VarChar
+  isVerified                 Boolean    @default(false)
+  driver_license_code        String?    @db.VarChar
+  driver_license_name        String?    @db.VarChar
+  driver_license_dob         String?    @db.VarChar
+  driver_license_class       String?    @db.VarChar
+  driver_license_issue_date  String?    @db.VarChar
+  driver_license_expiry_date String?    @db.VarChar
+  driver_license_image_front String?    @db.VarChar
+  driver_license_image_back  String?    @db.VarChar
+  cars                       cars[]
+  trips                      trips[]
+  locations                  locations? @relation(fields: [address_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model wards {
@@ -206,6 +220,7 @@ model wards {
   administrative_unit_id Int?
   administrative_units   administrative_units? @relation(fields: [administrative_unit_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   districts              districts?            @relation(fields: [district_code], references: [code], onDelete: NoAction, onUpdate: NoAction)
+  locations              locations[]
 
   @@index([district_code], map: "idx_wards_district")
   @@index([administrative_unit_id], map: "idx_wards_unit")

@@ -20,4 +20,6 @@ if (!configProject.success) {
 
 const envConfig = configProject.data;
 
+console.log(`env: ${envConfig}`)
+
 export default envConfig;

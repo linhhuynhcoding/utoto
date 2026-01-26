@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Upload, ImageIcon, X, Loader2 } from "lucide-react"
-import { uploadImage } from "@/api/media"
+import { uploadImage } from "@/services/media.service"
 
 interface ImageUploadFormProps {
     data: any
@@ -70,7 +70,7 @@ export function ImageUploadForm({ data, updateData }: ImageUploadFormProps) {
                         <button
                             onClick={() => removeImage(idx)}
                             className="absolute right-2 top-2 rounded-full bg-black/50 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100 hover:bg-black/70"
-                        >   
+                        >
                             <X className="h-4 w-4" />
                         </button>
                     </div>

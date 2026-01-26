@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyPluginOptions } from "fastify";
 import fastifyMultipart from "@fastify/multipart";
 import { UploadImageResType, UploadAvatarResType } from "@utoto/shared";
+
 import { authenticate } from "@/middleware/auth.middleware";
 import { uploadImage, uploadAvatar } from "@/controllers/media.controller";
 
@@ -8,13 +9,7 @@ export default async function mediaRoutes(
   fastify: FastifyInstance,
   options: FastifyPluginOptions,
 ) {
-  fastify.register(fastifyMultipart, {
-    limits: {
-      fileSize: 1024 * 1024 * 10, // 10MB
-      files: 1,
-      fields: 1,
-    },
-  });
+
 
 
   fastify.post<{ Reply: UploadImageResType }>(

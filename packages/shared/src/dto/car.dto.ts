@@ -59,6 +59,9 @@ export const CarBaseSchema = z.object({
   washingPrice: z.number().nonnegative().optional().default(0),
   overTimePrice: z.number().nonnegative().optional().default(0),
   maxOverTimeHour: z.number().int().nonnegative().optional().default(5),
+  is_self_driving: z.boolean().optional().default(true),
+  is_with_driver: z.boolean().optional().default(false),
+  is_long_term: z.boolean().optional().default(false),
 });
 
 export const CreateCarSchema = CarBaseSchema.extend({
@@ -80,17 +83,22 @@ export const UpdateCarSchema = CarBaseSchema.partial().extend({
 });
 
 export const CarFilterSchema = z.object({
+  owner_id: z.string().optional(),
   brand_id: z.string().optional(),
   model_id: z.string().optional(),
-  min_price: z.number().optional(),
-  max_price: z.number().optional(),
+  min_price: z.coerce.number().optional(),
+  max_price: z.coerce.number().optional(),
   transmission: TransmissionEnum.optional(),
-  seat: z.number().optional(),
+  seat: z.coerce.number().optional(),
   engine_type: EngineTypeEnum.optional(),
   features: z.array(z.string()).optional(),
   location_id: z.string().optional(),
-  page: z.number().int().positive().optional().default(1),
-  limit: z.number().int().positive().optional().default(10),
+  province: z.string().optional(),
+  district: z.string().optional(),
+  ward: z.string().optional(),
+  type: z.enum(["self-driving", "with-driver", "long-term"]).optional(),
+  page: z.coerce.number().int().positive().optional().default(1),
+  limit: z.coerce.number().int().positive().optional().default(10),
 });
 
 export type CreateCar = z.infer<typeof CreateCarSchema>;
@@ -100,7 +108,14 @@ export type CarFilter = z.infer<typeof CarFilterSchema>;
 // Detailed Car Response
 export const CarResponseSchema = CarBaseSchema.extend({
   id: z.string(),
-  owner: z.string(),
+  owner_id: z.string(),
+  owner_info: z
+    .object({
+      name: z.string(),
+      avatar: z.string().nullable().optional(),
+      isVerified: z.boolean().optional(),
+    })
+    .optional(),
   priceWithPlatformFee: z.number(),
   brand: CarBrandSchema.omit({ models: true }),
   model: CarModelSchema,
@@ -115,8 +130,25 @@ export const CarResponseSchema = CarBaseSchema.extend({
       province: z.string(),
       district: z.string(),
       ward: z.string(),
+      province_id: z.string().optional(),
+      district_id: z.string().optional(),
+      ward_id: z.string().optional(),
     })
     .nullable(),
 });
 
 export type CarResponse = z.infer<typeof CarResponseSchema>;
+
+// Car Calendar
+export const CarCalendarSchema = z.object({
+  from_date: z.coerce.date(),
+  to_date: z.coerce.date(),
+  status: z.string(),
+});
+export type CarCalendar = z.infer<typeof CarCalendarSchema>;
+
+export const CarCalendarResponseSchema = z.object({
+  success: z.boolean(),
+  data: z.array(CarCalendarSchema),
+});
+export type CarCalendarResponse = z.infer<typeof CarCalendarResponseSchema>;

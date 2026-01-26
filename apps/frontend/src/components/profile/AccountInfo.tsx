@@ -152,16 +152,48 @@ export function AccountInfo() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
-                            <div className="text-center text-gray-400">
-                                <p className="text-sm font-medium">Ảnh mặt trước</p>
+                        {user?.verified?.driverLicense ? (
+                            <div className="col-span-2 bg-green-50 p-4 rounded-lg border border-green-100">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <span className="text-gray-500 block">Họ và tên</span>
+                                        <span className="font-medium text-gray-900">{(user as any).driver_license_name || user.name}</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-500 block">Số GPLX</span>
+                                        <span className="font-medium text-gray-900">
+                                            {(() => {
+                                                const code = (user as any).driver_license_code;
+                                                if (!code) return '---';
+                                                if (code.length < 6) return code;
+                                                return `${code.slice(0, 3)}xxxx${code.slice(-3)}`;
+                                            })()}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-500 block">Hạng</span>
+                                        <span className="font-medium text-gray-900">{(user as any).driver_license_class || '---'}</span>
+                                    </div>
+                                    <div>
+                                        <span className="text-gray-500 block">Ngày hết hạn</span>
+                                        <span className="font-medium text-gray-900">{(user as any).driver_license_expiry_date || '---'}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
-                            <div className="text-center text-gray-400">
-                                <p className="text-sm font-medium">Ảnh mặt sau (nếu có)</p>
-                            </div>
-                        </div>
+                        ) : (
+                            <>
+                                <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
+                                    <div className="text-center text-gray-400">
+                                        <p className="text-sm font-medium">Ảnh mặt trước</p>
+                                    </div>
+                                </div>
+                                <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
+                                    <div className="text-center text-gray-400">
+                                        <p className="text-sm font-medium">Ảnh mặt sau (nếu có)</p>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

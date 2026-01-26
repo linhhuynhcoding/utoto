@@ -4,6 +4,7 @@ import { createContext, useContext, ReactNode } from 'react'
 export enum StorageKeys {
     USER = 'user',
     AUTH_TOKEN = 'auth_token',
+    FAVORITES = 'favorites',
     // Add more keys as needed
 }
 

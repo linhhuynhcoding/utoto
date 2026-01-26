@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 import { motion } from "framer-motion"
 import { useAuth } from "@/contexts"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 
 interface ProfileSidebarProps {
     className?: string
@@ -18,14 +18,18 @@ export function ProfileSidebar({ className }: ProfileSidebarProps) {
         navigate('/login')
     }
 
+    const location = useLocation()
+    const currentPath = location.pathname
+
     const menuItems = [
-        { icon: User, label: "Tài khoản của tôi", active: true, href: "/account" },
-        { icon: User, label: "Quản lý cho thuê", active: false, href: "/mycars" },
-        { icon: Heart, label: "Xe yêu thích", active: false, href: "/myfavs" },
-        { icon: MapPin, label: "Chuyến của tôi", active: false, href: "/mytrips" },
-        { icon: Gift, label: "Đơn hàng Thuê xe dài hạn", active: false, href: "/mycstrips" },
-        { icon: Gift, label: "Quà tặng", active: false, href: "/myreward" },
-        { icon: MapPin, label: "Địa chỉ của tôi", active: false, href: "/myaddress" },
+        { icon: User, label: "Tài khoản của tôi", active: currentPath === "/account", href: "/account" },
+        { icon: Key, label: "Xác minh GPLX", active: currentPath === "/verify-license", href: "/verify-license" },
+        { icon: User, label: "Quản lý cho thuê", active: currentPath === "/mycars", href: "/mycars" },
+        { icon: Heart, label: "Xe yêu thích", active: currentPath === "/myfavs", href: "/myfavs" },
+        { icon: MapPin, label: "Chuyến của tôi", active: currentPath === "/mytrips", href: "/mytrips" },
+        { icon: Gift, label: "Đơn hàng Thuê xe dài hạn", active: currentPath === "/mycstrips", href: "/mycstrips" },
+        { icon: Gift, label: "Quà tặng", active: currentPath === "/myreward", href: "/myreward" },
+        { icon: MapPin, label: "Địa chỉ của tôi", active: currentPath === "/myaddress", href: "/myaddress" },
     ]
 
     const securityItems = [

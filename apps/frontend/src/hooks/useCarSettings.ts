@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchCarSettings } from "@/api/carSettings";
+import { fetchCarSettings } from "@/services/carSettings.service";
 
 export const useCarSettings = () => {
   return useQuery({
