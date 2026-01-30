@@ -266,7 +266,7 @@ async function seedCars() {
   await prisma.car_features.deleteMany({});
   await prisma.trips.deleteMany({});
   await prisma.cars.deleteMany({});
-  // We don't delete locations here as they are created per car, 
+  // We don't delete locations here as they are created per car,
   // and deleting cars might leave orphaned locations if not handled by DB.
   // Actually, better to delete locations too to keep DB clean.
   await prisma.locations.deleteMany({});
@@ -353,17 +353,18 @@ async function seedCars() {
     include: { wards: true },
   });
 
-  const brandsWithModels = brands.filter(b => b.car_models.length > 0);
+  const brandsWithModels = brands.filter((b) => b.car_models.length > 0);
 
   console.log("Generating 50 random cars...");
 
   for (let i = 1; i <= 50; i++) {
     // Random brand and model from brands that actually have models
-    const randomBrand = brandsWithModels[Math.floor(Math.random() * brandsWithModels.length)];
+    const randomBrand =
+      brandsWithModels[Math.floor(Math.random() * brandsWithModels.length)];
 
     const randomModel =
       randomBrand.car_models[
-      Math.floor(Math.random() * randomBrand.car_models.length)
+        Math.floor(Math.random() * randomBrand.car_models.length)
       ];
 
     const seat = Math.random() > 0.8 ? 7 : 4;
@@ -376,20 +377,25 @@ async function seedCars() {
     const price = 500000 + Math.floor(Math.random() * 100) * 10000; // 500k - 1.5m
 
     // Random rental types - ensure at least one is true
-    const is_self_driving = Math.random() > 0.3;
-    const is_with_driver = Math.random() > 0.7;
-    const is_long_term = Math.random() > 0.8;
+    // const is_self_driving = Math.random() > 0.3;
+    // const is_with_driver = Math.random() > 0.7;
+    // const is_long_term = Math.random() > 0.8;
+    const is_self_driving = true;
+    const is_with_driver = false;
+    const is_long_term = false;
+
+    const license_number = generateLicenseNumber();
 
     // Pick a random location
     let locationId: bigint | null = null;
     if (availableDistricts.length > 0) {
       const randomDistrict =
         availableDistricts[
-        Math.floor(Math.random() * availableDistricts.length)
+          Math.floor(Math.random() * availableDistricts.length)
         ];
       const randomWard =
         randomDistrict.wards[
-        Math.floor(Math.random() * randomDistrict.wards.length)
+          Math.floor(Math.random() * randomDistrict.wards.length)
         ];
 
       if (randomWard) {
@@ -415,6 +421,7 @@ async function seedCars() {
       },
       create: {
         id: carId,
+        license_number: license_number,
         owner: "USER_1",
         name: `${randomBrand.brand_name} ${randomModel.model_name} 202${Math.floor(Math.random() * 4) + 2}`,
         desc: "Xe chất lượng cao, bảo dưỡng định kỳ, sạch sẽ thoáng mát, phù hợp cho mọi chuyến đi.",
@@ -428,6 +435,7 @@ async function seedCars() {
         is_self_driving: is_self_driving || (!is_with_driver && !is_long_term),
         is_with_driver: is_with_driver,
         is_long_term: is_long_term,
+        yom: 2020 + Math.floor(Math.random() * 4),
       },
     });
 
@@ -439,12 +447,12 @@ async function seedCars() {
         url: randomImage,
         width: 800,
         height: 600,
-      }
+      },
     });
 
     await prisma.car_images.createMany({
       data: [{ car_id: carId, image_url: randomImage }],
-      skipDuplicates: true
+      skipDuplicates: true,
     });
   }
 }
@@ -509,3 +517,17 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+
+const generateLicenseNumber = () => {
+  const apl = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  const diaphuong = Math.floor(Math.random() * 90 + 10)
+    .toString()
+    .padStart(2, "0");
+  const seri = apl[Math.floor(Math.random() * apl.length)];
+  const number = Math.floor(Math.random() * 99999)
+    .toString()
+    .padStart(5, "0");
+
+  return diaphuong + seri + number;
+};

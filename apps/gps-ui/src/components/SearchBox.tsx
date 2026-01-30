@@ -18,7 +18,7 @@ export function SearchBox({ onSearch }: SearchBoxProps) {
     return (
         <form
             onSubmit={handleSubmit}
-            className="absolute top-4 left-4 z-[1000] w-72 bg-white rounded-lg shadow-lg overflow-hidden flex items-center p-2 border border-gray-200"
+            className="z-[1000] w-72 bg-white rounded-lg shadow-lg overflow-hidden flex items-center p-2 border border-gray-200"
         >
             <Search className="w-5 h-5 text-gray-400 ml-1" />
             <input

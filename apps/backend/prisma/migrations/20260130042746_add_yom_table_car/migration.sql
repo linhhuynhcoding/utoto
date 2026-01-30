@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "cars" ADD COLUMN     "yom" INTEGER NOT NULL DEFAULT 2020;

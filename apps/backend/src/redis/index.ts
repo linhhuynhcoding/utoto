@@ -30,7 +30,8 @@ export class RedisCache {
                 
                 console.log("Kết nối đến Redis thành công!")
                 
-                return new RedisCache(redisClient);
+                this.instance = new RedisCache(redisClient);
+                return this.instance
             } catch (error) {
                 console.log("Failed to connect Redis")
             }
@@ -52,10 +53,11 @@ export class RedisCache {
         const key = `${GPS_PREFIX_KEY}${KEY_DELIMITER}${licenseNumber}`;
         try {
             const rawValue = await this.redis.get(key)
+            if (!rawValue) return null
             const value = LocationMessage.parse(JSON.parse(rawValue!))
             return value
         } catch (error) {
-            console.log("Failed to save location from cache!")
+            console.log("Failed to get location from cache!", error)
         }
         return null
     }

@@ -1,3 +1,4 @@
+import { RedisCache } from "@/redis";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
@@ -9,6 +10,14 @@ export const gpsSSEHandler = async (
      // Keep connection alive (prevents automatic close)
   reply.sse.keepAlive()
 
+  const {l} = request.query as any
+  if (l == "") {
+    await reply.status(400).send({
+        success: false,
+        message: "Biển số xe không hợp lệ",
+      });
+  }
+
   // Send initial message
   await reply.sse.send({ data: 'Connected' })
 
@@ -19,11 +28,13 @@ export const gpsSSEHandler = async (
   const interval = setInterval(async () => {
     if (reply.sse.isConnected) {
       console.log('Sending...')
-      const data = 
-      await reply.sse.send({ data: {
-        "lat": 10.111111 ,
-        "lng": 106.1111111 + Math.random()/Math.pow(10, 2) 
-      }, event: "gps" })
+      const cache = await RedisCache.getInstance()
+      const data = await cache.getLocation(l)
+      if (!data) {
+        await reply.sse.send({ data: "Chưa có thông tin GPS", event: "gps_not_found" })
+      } else{
+        await reply.sse.send({ data: data, event: "gps" })
+      }
       // await reply.sse.send({ data: {
       //   "lat": 10.111111 + Math.random()/Math.pow(10, 7) * (Math.round(Math.random()*10) % 2 == 0 ? -1 : 1),
       //   "lng": 106.1111111 + Math.random()/Math.pow(10, 7) * (Math.round(Math.random()*10) % 2 == 0 ? -1 : 1)

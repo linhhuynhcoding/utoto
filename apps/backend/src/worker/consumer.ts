@@ -2,7 +2,7 @@ import { Kafka } from "kafkajs";
 import prisma from "@/database";
 import { RedisCache } from "@/redis";
 import envConfig from "@/config";
-import { GpsEvent } from "./types";
+import { GpsEventSchema } from "@utoto/shared";
 
 import envConfig from "@/config";
 
@@ -20,9 +20,11 @@ const run = async () => {
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
       console.log({
-        value: message.value?.toString(),
+        value: message.value,
       });
-      const event = GpsEvent.parse(message.value?.toString())
+      const raw = JSON.parse(message.value!.toString());
+
+      const event = GpsEventSchema.parse(raw)
 
       const cache = await RedisCache.getInstance({
         url: envConfig.REDIS_URL
@@ -30,11 +32,15 @@ const run = async () => {
 
       // process later
       // ...
+      if (!event.licenseNumber || !event.last_position) {
+        console.warn("Invalid GPS data received:", event);
+        return;
+      };
 
       cache.saveLocation({
-        licenseNumber: event.licenseNumber,
-        lat: event.lat,
-        lng: event.lng
+        licenseNumber: event.licenseNumber!,
+        lat: event.last_position[0],
+        lng: event.last_position[1]
       })
     },
   });

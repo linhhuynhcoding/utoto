@@ -25,56 +25,49 @@ const createCarIcon = (licenseNumber: string) => {
     return L.divIcon({
         className: 'custom-car-marker',
         html: `
-            <div style="position: relative; width: 50px; height: 80px; display: flex; flex-direction: column; align-items: center;">
+            <div style="position: relative; width: 60px; height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                 <div style="
                     background: rgba(0, 0, 0, 0.8);
                     color: white;
-                    padding: 4px 8px;
+                    padding: 2px 4px;
                     border-radius: 4px;
                     font-size: 11px;
                     font-weight: bold;
                     white-space: nowrap;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-                    margin-bottom: 4px;
                     font-family: monospace;
+                    position: absolute;
+                    bottom: 45px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 10;
                 ">${licenseNumber}</div>
                 <img 
                     src="${carIconUrl}" 
                     style="
-                        width: 40px;
-                        height: 60px;
+                        width: 20px;
+                        height: 30px;
                         object-fit: contain;
                         filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
                     "
                     alt="car"
                 />
             </div>
         `,
-        iconSize: [50, 80],
-        iconAnchor: [25, 70],
+        iconSize: [60, 60],
+        iconAnchor: [30, 30],
     })
 }
 
-// Create waypoint icon
-const waypointIcon = L.divIcon({
-    className: 'custom-waypoint-marker',
-    html: `
-        <div style="
-            width: 8px;
-            height: 8px;
-            background: #94a3b8;
-            border: 2px solid white;
-            border-radius: 50%;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        "></div>
-    `,
-    iconSize: [8, 8],
-    iconAnchor: [4, 4],
-})
 
 export default function TripMap({ licenseNumber, carName, locations }: TripMapProps) {
+    console.log("TripMap locations: ", locations);
     const currentPosition = locations?.[locations.length - 1] ?? mockRoute[mockRoute.length - 1]
-    const center: L.LatLngExpression = [currentPosition.lat, currentPosition.lng]
+    const center: [number, number] = [currentPosition.lat, currentPosition.lng] as [number, number]
 
     return (
         <Card className="overflow-hidden">
@@ -107,18 +100,10 @@ export default function TripMap({ licenseNumber, carName, locations }: TripMapPr
                             dashArray="10, 10"
                         />
 
-                        {/* Waypoint markers (all except last) */}
-                        {/* {mockRoute.slice(0, -1).map((point, index) => (
-                            <Marker
-                                key={index}
-                                position={[point.lat, point.lng]}
-                                icon={waypointIcon}
-                            />
-                        ))} */}
 
                         {/* Current position marker (last point) */}
                         <Marker
-                            position={[currentPosition.lat, currentPosition.lng]}
+                            position={[currentPosition.lat, currentPosition.lng] as [number, number]}
                             icon={createCarIcon(licenseNumber)}
                         >
                             <Popup>
@@ -150,7 +135,7 @@ export default function TripMap({ licenseNumber, carName, locations }: TripMapPr
     )
 }
 
-function RecenterMap({ center }: { center: L.LatLngExpression }) {
+function RecenterMap({ center }: { center: [number, number] }) {
     const map = useMap();
 
     useEffect(() => {

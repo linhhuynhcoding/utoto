@@ -1,20 +1,27 @@
 import prisma from "@/database";
 import { Prisma } from "@/prisma/client";
 import { CreateTrip, TripFilter, UpdateTrip } from "@utoto/shared";
+import { CarMapper } from "@/utils/car.mapper";
+import { CarRepository } from "./car.repository";
 
 export class TripRepository {
   async findById(id: string) {
-    return prisma.trips.findUnique({
+    const trip = await prisma.trips.findUnique({
       where: { trip_id: id },
       include: {
         cars: {
-          include: {
-            car_images: true,
-          },
-        }, // Join details if needed
+          include: CarRepository.includeAll,
+        },
         users: true,
       },
     });
+
+    if (!trip) return null;
+
+    return {
+      ...trip,
+      cars: trip.cars ? CarMapper.mapToResponse(trip.cars) : null,
+    };
   }
 
   async create(data: CreateTrip & { trip_id: string; status: string }) {
@@ -87,15 +94,21 @@ export class TripRepository {
         orderBy: { from_date: "desc" },
         include: {
           cars: {
-            include: {
-              car_images: true,
-            },
+            include: CarRepository.includeAll,
           },
           users: true,
         },
       }),
     ]);
 
-    return { trips, total, page, limit };
+    return {
+      trips: trips.map((trip) => ({
+        ...trip,
+        cars: trip.cars ? CarMapper.mapToResponse(trip.cars) : null,
+      })),
+      total,
+      page,
+      limit,
+    };
   }
 }

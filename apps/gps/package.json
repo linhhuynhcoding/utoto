@@ -8,6 +8,7 @@
         "start": "node dist/server.js"
     },
     "dependencies": {
+        "@utoto/shared": "workspace:*",
         "@fastify/websocket": "^11.0.2",
         "chalk": "^4.1.2",
         "dotenv": "^16.4.7",

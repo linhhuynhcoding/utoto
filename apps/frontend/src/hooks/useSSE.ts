@@ -34,7 +34,9 @@ export const useSSE = (url: string, handlers: EventHandler[]) => {
 
       // Create new EventSource object
       // EventSource: built-in browser API for managing SSE connections
-      const eventSource = new EventSource(url, {});
+      const eventSource = new EventSource(url, {
+        withCredentials: true
+      });
       eventSourceRef.current = eventSource;
 
       // Event handler for successful connection
@@ -51,7 +53,7 @@ export const useSSE = (url: string, handlers: EventHandler[]) => {
         try {
           // event.data: actual data sent by server (string format)
           // JSON.parse: convert string to JavaScript object
-          console.log("Received data: ", event)
+          console.log("Received data connected: ", event)
           const parsedData = JSON.parse(event.data);
           setData(parsedData); // Store parsed data in state
         } catch (parseError) {

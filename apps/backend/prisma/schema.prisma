@@ -66,10 +66,12 @@ model cars {
   id                             String         @id @db.VarChar(20)
   owner                          String         @db.VarChar(20)
   name                           String         @db.VarChar(100)
+  license_number                 String         @unique @db.VarChar(20)
   desc                           String
   model_id                       BigInt
   transmission                   String         @db.VarChar(10)
   seat                           Int
+  yom                            Int            @default(2020)
   engine_type                    String         @db.VarChar(10)
   price                          Decimal        @db.Decimal(12, 2)
   priceWithPlatformFee           Decimal        @db.Decimal(12, 2)

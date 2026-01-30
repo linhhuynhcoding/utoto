@@ -8,6 +8,7 @@ import { BasicInfoForm } from "@/components/register-car/BasicInfoForm"
 import { RentalConfigForm } from "@/components/register-car/RentalConfigForm"
 import { ImageUploadForm } from "@/components/register-car/ImageUploadForm"
 import { useRegisterCar } from "@/hooks/useCars"
+import { ListChevronsDownUp } from "lucide-react"
 
 export default function RegisterCar() {
     const navigate = useNavigate()
@@ -54,7 +55,7 @@ export default function RegisterCar() {
         } else {
             // Prepare payload
             const payload = {
-                name: formData.licensePlate, // Using license plate as name
+                license_number: formData.licensePlate,
                 desc: formData.description,
                 model_id: formData.model_id,
                 transmission: formData.transmission as "MANUAL" | "AUTOMATIC",

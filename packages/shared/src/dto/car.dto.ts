@@ -40,6 +40,8 @@ export type CarSettingsResponse = z.infer<typeof CarSettingsResponseSchema>;
 
 export const CarBaseSchema = z.object({
   name: z.string().min(1).max(100),
+  license_number: z.string().min(1).max(20),
+  yom: z.number(),
   desc: z.string(),
   model_id: z.string(), // BigInt as string for JSON
   transmission: TransmissionEnum,
@@ -75,6 +77,7 @@ export const CreateCarSchema = CarBaseSchema.extend({
       street: z.string(),
     })
     .optional(),
+  name: z.string().optional(),
 });
 
 export const UpdateCarSchema = CarBaseSchema.partial().extend({
@@ -97,6 +100,7 @@ export const CarFilterSchema = z.object({
   district: z.string().optional(),
   ward: z.string().optional(),
   type: z.enum(["self-driving", "with-driver", "long-term"]).optional(),
+  license_number: z.string().optional(),
   page: z.coerce.number().int().positive().optional().default(1),
   limit: z.coerce.number().int().positive().optional().default(10),
 });

@@ -29,8 +29,9 @@ const fastify = Fastify({ logger: true });
 const start = async () => {
   try {
     createFolder(path.resolve(envConfig.UPLOAD_FOLDER));
+    const whitelist = [envConfig.CLIENT_URL, "http://localhost:5174"];
     fastify.register(cors, {
-      origin: [envConfig.CORS_ORIGIN], 
+      origin: [envConfig.CORS_ORIGIN, ...whitelist], 
       credentials: true, 
     });
     fastify.register(require("@fastify/multipart"), {
@@ -44,8 +45,8 @@ const start = async () => {
       },
     });
     await fastify.register(fastifySSE, {
-      logLevel: "debug"
-    });    
+      logLevel: "debug",
+    });
     await fastify.register(authRoutes, {
       prefix: "/auth",
     });
@@ -84,9 +85,8 @@ const start = async () => {
 
     // trigger connect redis
     const _ = await RedisCache.getInstance({
-            url: envConfig.REDIS_URL
-          })
-          
+      url: envConfig.REDIS_URL,
+    });
   } catch (err) {
     console.log(err);
     fastify.log.error(err);

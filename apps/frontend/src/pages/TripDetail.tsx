@@ -11,6 +11,7 @@ import TripMap from "@/components/my-cars/TripMap"
 import { toast } from "sonner"
 import envConfig from "@/config"
 import { useSSE } from "@/hooks/useSSE"
+import { GpsEventSchema } from "@utoto/shared"
 
 const STATUS_MAP: Record<string, { label: string, color: string }> = {
     PENDING: { label: "Chờ duyệt", color: "bg-yellow-500 hover:bg-yellow-600" },
@@ -48,14 +49,18 @@ export default function TripDetail() {
     const [loading, setLoading] = useState(true)
     const [locations, setLocations] = useState<{ lat: number; lng: number }[]>([])
 
-    const { } = useSSE(`${envConfig.API_URL}/gps/sse`, [
+    // TODO: Add token auth header
+    useSSE(`${envConfig.API_URL}/gps/sse?l=${trip?.cars?.license_number}`, [
         {
             event: "gps",
             handler: (event) => {
-                try {   
+                try {
                     const parsedData = JSON.parse(event.data);
                     console.log("Received data: ", parsedData)
-                    setLocations((prev) => [...prev.slice(-1000), { lat: parsedData.lat, lng: parsedData.lng }])
+                    if (parsedData) {
+                        setLocations((prev) => [...prev.slice(-10000), { lat: parsedData.lat, lng: parsedData.lng }])
+
+                    }
                 } catch (parseError) {
                     console.error('Error parsing SSE data:', parseError);
                 }
