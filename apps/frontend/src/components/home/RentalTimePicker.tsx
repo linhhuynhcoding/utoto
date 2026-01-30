@@ -39,12 +39,17 @@ export default function RentalTimePicker({ onChange, disabledDates, initialStart
     const [pickingFor, setPickingFor] = useState<'start' | 'end'>('start')
 
     // Notify parent on change
+    const onChangeRef = useRef(onChange)
     useEffect(() => {
-        onChange?.({
+        onChangeRef.current = onChange
+    }, [onChange])
+
+    useEffect(() => {
+        onChangeRef.current?.({
             startDate: startDate.toISOString().slice(0, 16),
             endDate: endDate.toISOString().slice(0, 16)
         })
-    }, [startDate, endDate, onChange])
+    }, [startDate, endDate])
 
     const formatDisplayDate = (d: Date) => {
         return d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })

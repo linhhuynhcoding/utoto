@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { useCarDetail } from "@/hooks/useCarDetail"
 import { Button } from "@/components/ui/button"
 import { addDays } from "date-fns"
-import { Loader2, ChevronLeft, ShieldCheck, MapPin, Clock } from "lucide-react"
+import { Loader2, ChevronLeft, ShieldCheck, MapPin, Clock, AlertCircle } from "lucide-react"
 import { createTrip } from "@/services/trip.service"
 import { getCarCalendar } from "@/services/car.service"
 import { useAuth } from "@/contexts/AuthContext"
@@ -11,6 +11,14 @@ import { toast } from "sonner"
 import { Separator } from "@/components/ui/separator"
 import RentalTimePicker from "@/components/home/RentalTimePicker"
 import { CarCalendar } from "@utoto/shared"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog"
 
 export default function RentCar() {
     const { id } = useParams()
@@ -24,6 +32,7 @@ export default function RentCar() {
     const [endDate, setEndDate] = useState(addDays(new Date(), 1))
 
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [licenseAlertOpen, setLicenseAlertOpen] = useState(false)
 
     useEffect(() => {
         const fetchCalendar = async () => {
@@ -58,6 +67,11 @@ export default function RentCar() {
         if (!user) {
             toast.error("Vui lòng đăng nhập để thực hiện đặt xe")
             navigate("/login")
+            return
+        }
+
+        if (!user.verified?.driverLicense) {
+            setLicenseAlertOpen(true)
             return
         }
 
@@ -185,13 +199,29 @@ export default function RentCar() {
                                     </div>
                                     <p className="text-sm text-gray-500">{user?.email}</p>
                                 </div>
-                                <div className="flex items-start gap-3 p-4 border border-green-100 bg-green-50 rounded-lg text-green-800 text-sm">
-                                    <ShieldCheck className="h-5 w-5 flex-shrink-0" />
-                                    <div>
-                                        <p className="font-bold">GPLX đã được xác thực</p>
-                                        <p>Bạn đã đủ điều kiện để thuê xe này.</p>
+                                {user?.verified?.driverLicense ? (
+                                    <div className="flex items-start gap-3 p-4 border border-green-100 bg-green-50 rounded-lg text-green-800 text-sm">
+                                        <ShieldCheck className="h-5 w-5 flex-shrink-0" />
+                                        <div>
+                                            <p className="font-bold">GPLX đã được xác thực</p>
+                                            <p>Bạn đã đủ điều kiện để thuê xe này.</p>
+                                        </div>
                                     </div>
-                                </div>
+                                ) : (
+                                    <div className="flex items-start gap-3 p-4 border border-yellow-100 bg-yellow-50 rounded-lg text-yellow-800 text-sm">
+                                        <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                                        <div>
+                                            <p className="font-bold">Chưa xác thực GPLX</p>
+                                            <Button 
+                                                variant="link" 
+                                                className="p-0 h-auto text-yellow-800 underline"
+                                                onClick={() => setLicenseAlertOpen(true)}
+                                            >
+                                                Cập nhật ngay
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -242,6 +272,26 @@ export default function RentCar() {
                     </div>
                 </div>
             </div>
+
+
+            <Dialog open={licenseAlertOpen} onOpenChange={setLicenseAlertOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Yêu cầu xác minh GPLX</DialogTitle>
+                        <DialogDescription>
+                            Bạn cần xác minh Giấy phép lái xe trước khi thực hiện đặt xe. Việc này giúp đảm bảo an toàn và tin cậy cho cộng đồng.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setLicenseAlertOpen(false)}>
+                            Để sau
+                        </Button>
+                        <Button onClick={() => navigate("/verify-license")}>
+                            Cập nhật ngay
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     )
 }

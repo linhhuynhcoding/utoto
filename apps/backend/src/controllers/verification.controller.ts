@@ -30,6 +30,25 @@ export const verifyDrivingLicense = async (
   try {
     const extractedData = await fptService.extractDrivingLicense(filePath);
 
+    // Parse date from DD/MM/YYYY to Date object
+    let dobDate: Date | undefined;
+    if (extractedData.dob) {
+      console.log("Raw DOB:", extractedData.dob);
+      const parts = extractedData.dob.split('/');
+      if (parts.length === 3) {
+          const day = parseInt(parts[0].trim(), 10);
+          const month = parseInt(parts[1].trim(), 10);
+          const year = parseInt(parts[2].trim(), 10);
+          
+          if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
+             // Create date using numeric constructor (Local time usually, but safer than string)
+             // Using UTC to avoid timezone shifts shifting the date back
+             dobDate = new Date(Date.UTC(year, month - 1, day));
+             console.log("Constructed Date (UTC):", dobDate);
+          }
+      }
+    }
+    
     // Update user in DB
     const updatedUser = await prisma.users.update({
       where: { id: userId },
@@ -40,9 +59,8 @@ export const verifyDrivingLicense = async (
         driver_license_class: extractedData.class,
         driver_license_issue_date: extractedData.date,
         driver_license_expiry_date: extractedData.doe,
-        // Save extracted raw data or verify flag?
-        // For now just these fields.
-        // We might want to verify if name matches user name?
+        // Sync dob to user profile if available
+        ...(dobDate && !isNaN(dobDate.getTime()) ? { dob: dobDate } : {}),
       },
     });
 
