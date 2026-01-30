@@ -52,7 +52,7 @@ export default function HeroSection() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                 >
                     <h1 className="text-4xl font-black tracking-tighter lg:text-6xl mb-4 text-white drop-shadow-2xl leading-[1.1]">
-                        Mioto - Cùng Bạn <br className="hidden md:block" />
+                        Utoto - Cùng Bạn <br className="hidden md:block" />
                         <span className="text-primary italic relative">
                             Trên Mọi Hành Trình
                         </span>
