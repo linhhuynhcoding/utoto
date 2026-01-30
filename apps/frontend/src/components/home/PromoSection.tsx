@@ -11,7 +11,7 @@ export default function PromoSection() {
         <div className="py-16 bg-secondary/30">
             <div className="container">
                 <h2 className="text-3xl font-bold mb-2">Chương Trình Khuyến Mãi</h2>
-                <h5 className="text-muted-foreground mb-8">Nhận nhiều ưu đãi hấp dẫn từ Mioto</h5>
+                <h5 className="text-muted-foreground mb-8">Nhận nhiều ưu đãi hấp dẫn từ Utoto</h5>
 
                 <div className="flex gap-6 overflow-x-auto pb-6 snap-x">
                     {promos.map((src, i) => (
