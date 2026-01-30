@@ -17,24 +17,24 @@ interface BasicInfoFormProps {
 }
 
 const FEATURE_ICONS: Record<string, any> = {
-    "map": Map,
-    "bluetooth": Bluetooth,
-    "camera_360": Camera,
-    "dash_cam": Video,
-    "reverse_cam": EyeOff,
-    "sidebar_cam": Sidebar,
-    "tire_sensor": Disc,
-    "collision_sensor": Activity,
-    "speed_warning": Gauge,
-    "sunroof": Sun,
-    "gps": Navigation,
-    "head_up": Layers,
-    "spare_tire": LifeBuoy,
-    "dvd": MonitorPlay,
-    "trunk_lid": Truck,
-    "etc": CreditCard,
-    "airbag": ShieldCheck,
-    "usb": Usb,
+    "mp": Map,              // Bản đồ
+    "bt": Bluetooth,        // Bluetooth
+    "p360c": Camera,        // Camera 360
+    "pc": Video,            // Camera cập lề
+    "dc": Video,            // Camera hành trình
+    "sc": EyeOff,           // Camera lùi
+    "tpms": Disc,           // Cảm biến lốp
+    "is": Activity,         // Cảm biến va chạm
+    "hd": Gauge,            // Cảnh báo tốc độ
+    "sr": Sun,              // Cửa sổ trời
+    "gp": Navigation,       // Định vị GPS
+    "bs": Sidebar,          // Ghế trẻ em (using Sidebar as generic seat/side icon for now, or maybe User)
+    "us": Usb,              // Khe cắm USB
+    "st": LifeBuoy,         // Lốp dự phòng
+    "dvd": MonitorPlay,     // Màn hình DVD
+    "bn": Truck,            // Nắp thùng xe bán tải
+    "ep": CreditCard,       // ETC
+    "ab": ShieldCheck,      // Túi khí an toàn
 }
 
 export function BasicInfoForm({ data, updateData }: BasicInfoFormProps) {

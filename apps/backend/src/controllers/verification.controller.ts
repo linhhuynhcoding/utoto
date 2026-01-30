@@ -33,10 +33,22 @@ export const verifyDrivingLicense = async (
     // Parse date from DD/MM/YYYY to Date object
     let dobDate: Date | undefined;
     if (extractedData.dob) {
-      const [day, month, year] = extractedData.dob.split('/');
-      dobDate = new Date(`${year}-${month}-${day}`);
+      console.log("Raw DOB:", extractedData.dob);
+      const parts = extractedData.dob.split('/');
+      if (parts.length === 3) {
+          const day = parseInt(parts[0].trim(), 10);
+          const month = parseInt(parts[1].trim(), 10);
+          const year = parseInt(parts[2].trim(), 10);
+          
+          if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
+             // Create date using numeric constructor (Local time usually, but safer than string)
+             // Using UTC to avoid timezone shifts shifting the date back
+             dobDate = new Date(Date.UTC(year, month - 1, day));
+             console.log("Constructed Date (UTC):", dobDate);
+          }
+      }
     }
-
+    
     // Update user in DB
     const updatedUser = await prisma.users.update({
       where: { id: userId },
