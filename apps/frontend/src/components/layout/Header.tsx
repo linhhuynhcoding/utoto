@@ -2,14 +2,25 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import { Bell, MessageCircle, Menu, LogOut, Heart, Gift } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "@/contexts"
 
+import logo from "@/assets/logo_utoto.jpg"
+
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [isScrolled, setIsScrolled] = useState(false)
     const { user, isAuthenticated, logout } = useAuth()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 0)
+        }
+        window.addEventListener("scroll", handleScroll)
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
 
     const handleLogout = () => {
         logout()
@@ -22,17 +33,22 @@ export default function Header() {
     }
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${isScrolled ? "bg-white/95 border-b shadow-sm backdrop-blur" : "bg-white border-b"
+            }`}>
             <div className="container flex h-16 items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <a href="/" className="flex items-center space-x-2">
-                        <div className="text-2xl font-black text-primary tracking-tighter hidden md:block">
+                    <Link to="/" className="flex items-center space-x-2 group">
+                        <div className="relative h-9 w-9 overflow-hidden rounded-lg bg-white flex items-center justify-center">
+                            <img
+                                src={logo}
+                                alt="Utoto Logo"
+                                className="h-full w-full object-cover mix-blend-multiply scale-110"
+                            />
+                        </div>
+                        <span className="text-2xl md:text-3xl font-[1000] text-[#55d07c] tracking-tighter">
                             UTOTO
-                        </div>
-                        <div className="text-2xl font-black text-primary tracking-tighter md:hidden">
-                            U
-                        </div>
-                    </a>
+                        </span>
+                    </Link>
                 </div>
 
                 <nav className="hidden md:flex items-center gap-6">
