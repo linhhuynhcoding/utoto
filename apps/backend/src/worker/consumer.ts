@@ -1,7 +1,6 @@
 import { Kafka } from "kafkajs";
 import prisma from "@/database";
 import { RedisCache } from "@/redis";
-import envConfig from "@/config";
 import { GpsEventSchema } from "@utoto/shared";
 
 import envConfig from "@/config";

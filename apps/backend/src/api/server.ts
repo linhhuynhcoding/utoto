@@ -16,6 +16,7 @@ import fastifyHelmet from "@fastify/helmet";
 import fastifySSE from "@fastify/sse";
 import { gpsRoutes } from "@/routes/gps.route";
 import { RedisCache } from "@/redis";
+import { ZodError } from "zod";
 
 // Serialize BigInt
 // @ts-ignore
@@ -27,12 +28,39 @@ const fastify = Fastify({ logger: true });
 
 // Run the server!
 const start = async () => {
+  console.log([envConfig.CORS_ORIGIN, "http://localhost:5174"]);
   try {
     createFolder(path.resolve(envConfig.UPLOAD_FOLDER));
-    const whitelist = [envConfig.CLIENT_URL, "http://localhost:5174"];
+
+    fastify.setErrorHandler((error, request, reply) => {
+      if (error instanceof ZodError) {
+        const firstError = error.errors[0];
+        const message = `${firstError.path.join(".")}: ${firstError.message}`;
+        return reply.status(400).send({
+          success: false,
+          message,
+          errors: error.errors.map((err) => ({
+            path: err.path.join("."),
+            message: err.message,
+          })),
+        });
+      }
+
+      request.log.error(error);
+      const err = error as any;
+      return reply.status(err.statusCode || 500).send({
+        success: false,
+        message: err.message || "Internal server error",
+      });
+    });
+
     fastify.register(cors, {
-      origin: [envConfig.CORS_ORIGIN, ...whitelist], 
-      credentials: true, 
+      origin: [
+        envConfig.CORS_ORIGIN,
+        envConfig.CLIENT_URL,
+        "http://localhost:5174",
+      ],
+      credentials: true,
     });
     fastify.register(require("@fastify/multipart"), {
       limits: {
