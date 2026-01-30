@@ -16,6 +16,11 @@ import About from '@/pages/About'
 import Help from '@/pages/Help'
 import Terms from '@/pages/Terms'
 import Privacy from '@/pages/Privacy'
+import Blog from '@/pages/Blog'
+import Careers from '@/pages/Careers'
+import HowItWorks from '@/pages/HowItWorks'
+import Delivery from '@/pages/Delivery'
+import Contact from '@/pages/Contact'
 
 function App() {
     return (
@@ -38,6 +43,11 @@ function App() {
                     <Route path="/help" element={<Help />} />
                     <Route path="/terms" element={<Terms />} />
                     <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/careers" element={<Careers />} />
+                    <Route path="/how-it-works" element={<HowItWorks />} />
+                    <Route path="/delivery" element={<Delivery />} />
+                    <Route path="/contact" element={<Contact />} />
                 </Routes>
             </BrowserRouter>
         </AppProviders>
