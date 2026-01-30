@@ -30,6 +30,13 @@ export const verifyDrivingLicense = async (
   try {
     const extractedData = await fptService.extractDrivingLicense(filePath);
 
+    // Parse date from DD/MM/YYYY to Date object
+    let dobDate: Date | undefined;
+    if (extractedData.dob) {
+      const [day, month, year] = extractedData.dob.split('/');
+      dobDate = new Date(`${year}-${month}-${day}`);
+    }
+
     // Update user in DB
     const updatedUser = await prisma.users.update({
       where: { id: userId },
@@ -40,9 +47,8 @@ export const verifyDrivingLicense = async (
         driver_license_class: extractedData.class,
         driver_license_issue_date: extractedData.date,
         driver_license_expiry_date: extractedData.doe,
-        // Save extracted raw data or verify flag?
-        // For now just these fields.
-        // We might want to verify if name matches user name?
+        // Sync dob to user profile if available
+        ...(dobDate && !isNaN(dobDate.getTime()) ? { dob: dobDate } : {}),
       },
     });
 
