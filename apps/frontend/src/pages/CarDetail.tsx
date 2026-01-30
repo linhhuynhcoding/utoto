@@ -15,7 +15,7 @@ export default function CarDetail() {
     const { id } = useParams()
     const navigate = useNavigate()
     const { data: car, isLoading, error } = useCarDetail(id)
-
+    
     if (isLoading) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh]">
@@ -32,6 +32,17 @@ export default function CarDetail() {
             </div>
         )
     }
+
+    // Lấy key 
+    const googleMapsApiKey = import.meta.env.VITE_API_GG_KEY
+    
+    // Ghép chuỗi địa chỉ từ object car.location
+    const addressString = car.location 
+        ? `${car.location.street}, ${car.location.ward}, ${car.location.district}, ${car.location.province}` 
+        : ""
+    
+   
+    const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${googleMapsApiKey}&q=${encodeURIComponent(addressString)}`
 
     return (
         <CarDetailLayout>
@@ -82,13 +93,31 @@ export default function CarDetail() {
                             </div>
                         </CarContentSection>
 
+
+                            
                         <CarContentSection title="Vị trí xe">
-                            <div className="aspect-video bg-gray-100 rounded-lg flex flex-col items-center justify-center border text-gray-400">
-                                <MapIcon className="h-8 w-8 mb-2 opacity-50" />
-                                <span>Bản đồ vị trí xe (Placeholder)</span>
-                                <span className="text-sm mt-1">
-                                    {car.location ? `${car.location.street}, ${car.location.ward}, ${car.location.district}, ${car.location.province}` : "Vị trí không xác định"}
-                                </span>
+                            <div className="aspect-video bg-gray-100 rounded-lg border border-gray-200 overflow-hidden relative">
+                                {car.location ? (
+                                    <iframe
+                                        title="Bản đồ vị trí xe"
+                                        width="100%"
+                                        height="100%"
+                                        style={{ border: 0 }}
+                                        loading="lazy"
+                                        allowFullScreen
+                                        referrerPolicy="no-referrer-when-downgrade"
+                                        src={mapUrl}
+                                    />
+                                ) : (
+                                    /* Fallback: Hiển thị khi không có dữ liệu vị trí */
+                                    <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                                        <MapIcon className="h-8 w-8 mb-2 opacity-50" />
+                                        <span>Vị trí không xác định</span>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="mt-2 text-sm text-gray-600 flex flex-r" >
+                                {addressString || "Không có dữ liệu vị trí xe."}
                             </div>
                         </CarContentSection>
 
