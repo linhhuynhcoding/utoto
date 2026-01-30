@@ -10,7 +10,9 @@ import { useAuth } from "@/contexts/AuthContext"
 import { toast } from "sonner"
 import { Separator } from "@/components/ui/separator"
 import RentalTimePicker from "@/components/home/RentalTimePicker"
-import { CarCalendar } from "@utoto/shared"
+import { CarCalendar, PaymentResponse } from "@utoto/shared"
+import { PaymentDialog } from "@/components/payment/PaymentDialog"
+import { useCreatePayment } from "@/hooks/usePayment"
 import {
     Dialog,
     DialogContent,
@@ -33,6 +35,10 @@ export default function RentCar() {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [licenseAlertOpen, setLicenseAlertOpen] = useState(false)
+    const [paymentDialogOpen, setPaymentDialogOpen] = useState(false)
+    const [currentPayment, setCurrentPayment] = useState<PaymentResponse | null>(null)
+
+    const createPaymentMutation = useCreatePayment()
 
     useEffect(() => {
         const fetchCalendar = async () => {
@@ -82,6 +88,7 @@ export default function RentCar() {
 
         setIsSubmitting(true)
         try {
+            // Step 1: Create trip
             const response = await createTrip({
                 renter_id: user.id,
                 car_id: id!,
@@ -92,8 +99,26 @@ export default function RentCar() {
             })
 
             if (response.success) {
-                toast.success("Đặt xe thành công! Chủ xe sẽ sớm liên hệ với bạn.")
-                navigate("/account") // Go to trips page (mocked as profile for now)
+                const tripId = response.data.trip_id
+                toast.success("Đặt xe thành công!")
+
+                // Step 2: Create payment
+                try {
+                    const payment = await createPaymentMutation.mutateAsync({
+                        trip_id: tripId,
+                    })
+
+                    // Step 3: Open payment dialog
+                    setCurrentPayment(payment)
+                    setPaymentDialogOpen(true)
+                } catch (paymentErr: any) {
+                    toast.error("Không thể tạo thanh toán", {
+                        description: paymentErr.message || "Vui lòng thử lại",
+                    })
+                    // Even if payment creation fails, trip is created
+                    // User can go to their trips page
+                    navigate("/account")
+                }
             }
         } catch (err: any) {
             toast.error(err.message || "Có lỗi xảy ra khi đặt xe")
@@ -292,6 +317,28 @@ export default function RentCar() {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
+
+            {/* Payment Dialog */}
+            <PaymentDialog
+                open={paymentDialogOpen}
+                onOpenChange={setPaymentDialogOpen}
+                payment={currentPayment}
+                onSuccess={() => {
+                    toast.success("Chuyến đi đã được xác nhận!");
+                    navigate("/account"); // Go to trips page
+                }}
+                onExpired={() => {
+                    toast.error("Thanh toán đã hết hạn", {
+                        description: "Vui lòng thử lại hoặc liên hệ hỗ trợ",
+                    });
+                }}
+                onCancel={() => {
+                    toast.warning("Đã hủy thanh toán", {
+                        description: "Chuyến đi vẫn được tạo, bạn có thể thanh toán sau",
+                    });
+                    navigate("/account");
+                }}
+            />
         </div>
     )
 }

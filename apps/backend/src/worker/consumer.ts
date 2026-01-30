@@ -1,7 +1,7 @@
 import { Kafka } from "kafkajs";
 import prisma from "@/database";
-
 import envConfig from "@/config";
+import { startPaymentChecker } from "./payment-checker";
 
 const kafka = new Kafka({
   clientId: "my-app",
@@ -23,6 +23,10 @@ const run = async () => {
       // await prisma.user.findMany();
     },
   });
+
+  // Start payment checker worker
+  console.log("[Worker] Starting Payment Checker...");
+  startPaymentChecker();
 };
 
 run().catch(console.error);
