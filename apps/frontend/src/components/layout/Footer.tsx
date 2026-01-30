@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { Facebook, Instagram, Twitter } from "lucide-react"
 
 export default function Footer() {
     return (
@@ -27,16 +28,20 @@ export default function Footer() {
                             <li><Link to="/help" className="hover:text-primary transition-colors">Trung tâm hỗ trợ</Link></li>
                             <li><Link to="/terms" className="hover:text-primary transition-colors">Quy định chung</Link></li>
                             <li><Link to="/privacy" className="hover:text-primary transition-colors">Chính sách bảo mật</Link></li>
-                            <li><Link to="/contact" className="hover:text-primary transition-colors">Liên hệ</Link></li>
                         </ul>
                     </div>
                     <div>
                         <h3 className="font-bold text-lg mb-4">Kết nối với chúng tôi</h3>
                         <div className="flex gap-4">
-                            {/* Social icons placeholder */}
-                            <div className="h-8 w-8 bg-muted rounded-full hover:bg-primary/20 cursor-pointer transition-colors"></div>
-                            <div className="h-8 w-8 bg-muted rounded-full hover:bg-primary/20 cursor-pointer transition-colors"></div>
-                            <div className="h-8 w-8 bg-muted rounded-full hover:bg-primary/20 cursor-pointer transition-colors"></div>
+                            <a href="https://facebook.com" target="_blank" rel="noreferrer" className="h-10 w-10 bg-background flex items-center justify-center rounded-full hover:bg-primary/20 text-muted-foreground hover:text-primary transition-all shadow-sm">
+                                <Facebook size={20} />
+                            </a>
+                            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="h-10 w-10 bg-background flex items-center justify-center rounded-full hover:bg-primary/20 text-muted-foreground hover:text-primary transition-all shadow-sm">
+                                <Instagram size={20} />
+                            </a>
+                            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="h-10 w-10 bg-background flex items-center justify-center rounded-full hover:bg-primary/20 text-muted-foreground hover:text-primary transition-all shadow-sm">
+                                <Twitter size={20} />
+                            </a>
                         </div>
                     </div>
                 </div>
