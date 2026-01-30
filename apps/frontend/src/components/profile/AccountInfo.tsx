@@ -5,7 +5,7 @@ import { Pencil, CheckCircle2, AlertCircle, XCircle, Plus, Loader2 } from "lucid
 import { useAuth } from "@/contexts"
 import { useEffect, useState } from "react"
 import { userService } from "@/services/user.service"
-import { UserResponse, UpdateProfile } from "@utoto/shared"
+import { UserResponse, UpdateProfile, TripStats } from "@utoto/shared"
 import toast from "@/hooks/use-toast"
 import { EditProfileDialog } from "./EditProfileDialog"
 import { EditFieldDialog } from "./EditFieldDialog"
@@ -13,6 +13,7 @@ import { EditFieldDialog } from "./EditFieldDialog"
 export function AccountInfo() {
     const { user: authUser } = useAuth()
     const [userProfile, setUserProfile] = useState<UserResponse | null>(null)
+    const [tripStats, setTripStats] = useState<TripStats | null>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
     const [isUploadingAvatar, setIsUploadingAvatar] = useState(false)
@@ -26,6 +27,7 @@ export function AccountInfo() {
 
     useEffect(() => {
         fetchUserProfile()
+        fetchTripStats()
     }, [])
 
     const fetchUserProfile = async () => {
@@ -37,6 +39,15 @@ export function AccountInfo() {
             toast.error("Không thể tải thông tin profile", error?.response?.data?.message)
         } finally {
             setIsLoading(false)
+        }
+    }
+
+    const fetchTripStats = async () => {
+        try {
+            const stats = await userService.getTripStats()
+            setTripStats(stats)
+        } catch (error: any) {
+            console.error('Failed to fetch trip stats:', error)
         }
     }
 
@@ -100,9 +111,34 @@ export function AccountInfo() {
                         <Pencil className="h-3.5 w-3.5" />
                     </Button>
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 rounded-full text-sm font-medium">
-                    <CheckCircle2 className="h-4 w-4" />
-                    <span>0 chuyến</span>
+                <div className="flex items-center gap-2 flex-wrap">
+                    {/* Total trips */}
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">
+                        <span className="font-semibold">{tripStats?.totalTrips || 0}</span>
+                        <span>tổng</span>
+                    </div>
+                    {/* Completed trips */}
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-700 rounded-full text-xs font-medium">
+                        <CheckCircle2 className="h-3.5 w-3.5" />
+                        <span className="font-semibold">{tripStats?.completedTrips || 0}</span>
+                        <span>hoàn thành</span>
+                    </div>
+                    {/* Ongoing trips */}
+                    {(tripStats?.ongoingTrips || 0) > 0 && (
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 text-orange-700 rounded-full text-xs font-medium">
+                            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                            <span className="font-semibold">{tripStats?.ongoingTrips}</span>
+                            <span>đang diễn ra</span>
+                        </div>
+                    )}
+                    {/* Cancelled trips */}
+                    {(tripStats?.cancelledTrips || 0) > 0 && (
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-700 rounded-full text-xs font-medium">
+                            <XCircle className="h-3.5 w-3.5" />
+                            <span className="font-semibold">{tripStats?.cancelledTrips}</span>
+                            <span>đã hủy</span>
+                        </div>
+                    )}
                 </div>
             </div>
 

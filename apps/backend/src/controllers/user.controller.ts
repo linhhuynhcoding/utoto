@@ -163,3 +163,37 @@ export const uploadAndUpdateAvatar = async (
     });
   }
 };
+
+/**
+ * GET /user/trips/stats
+ * Get trip statistics for authenticated user
+ * Trả về tổng số trips đã thuê và phân loại theo status
+ */
+export const getTripStats = async (
+  request: FastifyRequest,
+  reply: FastifyReply,
+) => {
+  try {
+    const userId = (request as any).user?.id;
+    if (!userId) {
+      return reply.status(401).send({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    const stats = await userService.getUserTripStats(userId);
+    return reply.send({
+      success: true,
+      data: stats,
+    });
+  } catch (error) {
+    request.log.error(error);
+    const message =
+      error instanceof Error ? error.message : "Failed to get trip statistics";
+    return reply.status(400).send({
+      success: false,
+      message,
+    });
+  }
+};

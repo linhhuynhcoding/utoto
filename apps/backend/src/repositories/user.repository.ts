@@ -118,4 +118,44 @@ export class UserRepository {
     });
     return count > 0;
   }
+
+  /**
+   * Get trip statistics for a user (as renter)
+   */
+  async getTripStats(userId: string) {
+    const [total, completed, ongoing, cancelled] = await Promise.all([
+      // Total trips
+      prisma.trips.count({
+        where: { renter_id: userId },
+      }),
+      // Completed trips
+      prisma.trips.count({
+        where: { 
+          renter_id: userId,
+          status: 'COMPLETED'
+        },
+      }),
+      // Ongoing trips (in progress)
+      prisma.trips.count({
+        where: { 
+          renter_id: userId,
+          status: { in: ['PENDING', 'ONGOING', 'IN_PROGRESS'] }
+        },
+      }),
+      // Cancelled trips
+      prisma.trips.count({
+        where: { 
+          renter_id: userId,
+          status: { in: ['CANCELLED', 'REJECTED'] }
+        },
+      }),
+    ]);
+
+    return {
+      totalTrips: total,
+      completedTrips: completed,
+      ongoingTrips: ongoing,
+      cancelledTrips: cancelled,
+    };
+  }
 }
