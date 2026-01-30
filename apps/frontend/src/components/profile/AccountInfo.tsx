@@ -6,7 +6,7 @@ import { useAuth } from "@/contexts"
 import { useEffect, useState } from "react"
 import { userService } from "@/services/user.service"
 import { UserResponse, UpdateProfile } from "@utoto/shared"
-import toast from "@/hooks/use-toast"
+import { toast } from "sonner"
 import { EditProfileDialog } from "./EditProfileDialog"
 import { EditFieldDialog } from "./EditFieldDialog"
 
@@ -34,7 +34,7 @@ export function AccountInfo() {
             const profile = await userService.getProfile()
             setUserProfile(profile)
         } catch (error: any) {
-            toast.error("Không thể tải thông tin profile", error?.response?.data?.message)
+            toast.error("Không thể tải thông tin profile", { description: error?.response?.data?.message })
         } finally {
             setIsLoading(false)
         }
@@ -46,13 +46,13 @@ export function AccountInfo() {
 
         // Validate file size (max 5MB)
         if (file.size > 5 * 1024 * 1024) {
-            toast.error("Ảnh quá lớn", "Kích thước tối đa 5MB")
+            toast.error("Ảnh quá lớn", { description: "Kích thước tối đa 5MB" })
             return
         }
 
         // Validate file type
         if (!file.type.startsWith('image/')) {
-            toast.error("File không hợp lệ", "Vui lòng chọn file ảnh")
+            toast.error("File không hợp lệ", { description: "Vui lòng chọn file ảnh" })
             return
         }
 
@@ -62,7 +62,7 @@ export function AccountInfo() {
             toast.success("Cập nhật avatar thành công")
             await fetchUserProfile()
         } catch (error: any) {
-            toast.error("Upload avatar thất bại", error?.response?.data?.message || "Vui lòng thử lại")
+            toast.error("Upload avatar thất bại", { description: error?.response?.data?.message || "Vui lòng thử lại" })
         } finally {
             setIsUploadingAvatar(false)
             // Reset input
@@ -91,9 +91,9 @@ export function AccountInfo() {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-6 bg-white rounded-lg border shadow-sm">
                 <div className="flex items-center gap-2">
                     <h5 className="text-lg font-bold">Thông tin tài khoản</h5>
-                    <Button 
-                        variant="ghost" 
-                        size="icon" 
+                    <Button
+                        variant="ghost"
+                        size="icon"
                         className="h-6 w-6"
                         onClick={() => setIsEditDialogOpen(true)}
                     >
@@ -114,9 +114,9 @@ export function AccountInfo() {
                         <AvatarFallback className="text-2xl">{getUserInitials()}</AvatarFallback>
                     </Avatar>
                     <label htmlFor="avatar-upload">
-                        <Button 
-                            size="icon" 
-                            variant="secondary" 
+                        <Button
+                            size="icon"
+                            variant="secondary"
                             className="absolute bottom-0 right-0 h-8 w-8 rounded-full shadow-md cursor-pointer"
                             disabled={isUploadingAvatar}
                             asChild
@@ -151,9 +151,9 @@ export function AccountInfo() {
                 <div className="p-4 bg-white rounded-lg border shadow-sm">
                     <div className="flex items-center justify-between">
                         <p className="text-sm text-muted-foreground mb-1">Ngày sinh</p>
-                        <Button 
-                            variant="ghost" 
-                            size="icon" 
+                        <Button
+                            variant="ghost"
+                            size="icon"
                             className="h-6 w-6"
                             onClick={() => setEditingField({
                                 fieldName: 'dob',
@@ -177,9 +177,9 @@ export function AccountInfo() {
                                 </Badge>
                             )}
                         </p>
-                        <Button 
-                            variant="ghost" 
-                            size="icon" 
+                        <Button
+                            variant="ghost"
+                            size="icon"
                             className="h-6 w-6"
                             onClick={() => setEditingField({
                                 fieldName: 'phone_number',
@@ -198,7 +198,7 @@ export function AccountInfo() {
 
             {/* Contact Info */}
             <div className="space-y-4">
-               
+
                 {/* Email */}
                 <div className="flex items-center justify-between p-4 bg-white rounded-lg border shadow-sm">
                     <div>

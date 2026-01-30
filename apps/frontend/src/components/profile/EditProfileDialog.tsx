@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label"
 import { useState, useEffect } from "react"
 import { UserResponse, UpdateProfile } from "@utoto/shared"
 import { userService } from "@/services/user.service"
-import toast from "@/hooks/use-toast"
+import { toast } from "sonner"
 import { Loader2 } from "lucide-react"
 
 interface EditProfileDialogProps {
@@ -35,19 +35,12 @@ export function EditProfileDialog({ open, onOpenChange, currentUser, onSuccess }
         }
     }, [currentUser, open])
 
-    // Check if any field has changed
-    const hasChanges = 
-        formData.name !== (currentUser?.name || "") ||
-        formData.dob !== (currentUser?.dob || "") ||
-        formData.phone_number !== (currentUser?.phone_number || "") ||
-        formData.phone_code !== (currentUser?.phone_code || "+84")
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
         // Prepare data (only send changed fields)
         const updateData: UpdateProfile = {}
-        
+
         if (formData.name && formData.name !== currentUser?.name) {
             updateData.name = formData.name
         }
@@ -74,7 +67,7 @@ export function EditProfileDialog({ open, onOpenChange, currentUser, onSuccess }
             onSuccess()
             onOpenChange(false)
         } catch (error: any) {
-            toast.error("Cập nhật thất bại", error?.response?.data?.message || "Vui lòng thử lại")
+            toast.error("Cập nhật thất bại", { description: error?.response?.data?.message || "Vui lòng thử lại" })
         } finally {
             setIsSubmitting(false)
         }
@@ -111,7 +104,7 @@ export function EditProfileDialog({ open, onOpenChange, currentUser, onSuccess }
                             value={formData.dob ? new Date(formData.dob).toISOString().split('T')[0] : ''}
                             onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
                         />
-                        
+
                     </div>
 
                     <div className="space-y-2">

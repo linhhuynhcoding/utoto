@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
 import axios from 'axios'
-import toast from '@/hooks/use-toast'
+import { toast } from 'sonner'
 import { useAuth } from '@/contexts'
 
 interface GoogleDecodedToken {
@@ -47,7 +47,7 @@ export default function Login() {
     }
 
     const handleError = () => {
-        toast.error('Login failed', 'Unable to sign in with Google')
+        toast.error('Login failed', { description: 'Unable to sign in with Google' })
     }
 
     return (

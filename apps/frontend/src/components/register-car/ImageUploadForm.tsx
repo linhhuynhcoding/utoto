@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Upload, ImageIcon, X, Loader2 } from "lucide-react"
+import { toast } from "sonner"
 import { uploadImage } from "@/services/media.service"
 
 interface ImageUploadFormProps {
@@ -20,9 +21,11 @@ export function ImageUploadForm({ data, updateData }: ImageUploadFormProps) {
                 const updatedImages = [...images, imageUrl]
                 setImages(updatedImages)
                 updateData({ ...data, images: updatedImages })
-            } catch (error) {
+            } catch (error: any) {
                 console.error("Upload failed", error)
-                // In a real app, maybe show a toast notification here
+                toast.error("Upload ảnh thất bại", {
+                    description: error?.response?.data?.message || error.message || "Vui lòng thử lại sau"
+                })
             } finally {
                 setUploading(false)
             }

@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label"
 import { useState, useEffect } from "react"
 import { UpdateProfile } from "@utoto/shared"
 import { userService } from "@/services/user.service"
-import toast from "@/hooks/use-toast"
+import { toast } from "sonner"
 import { Loader2 } from "lucide-react"
 
 interface EditFieldDialogProps {
@@ -44,7 +44,7 @@ export function EditFieldDialog({
     }, [open, currentValue, fieldType])
 
     // Check if value has changed
-    const hasChanges = fieldType === "date" 
+    const hasChanges = fieldType === "date"
         ? value !== (currentValue ? new Date(currentValue).toISOString().split('T')[0] : "")
         : value !== (currentValue || "")
 
@@ -66,7 +66,7 @@ export function EditFieldDialog({
             onSuccess()
             onOpenChange(false)
         } catch (error: any) {
-            toast.error("Cập nhật thất bại", error?.response?.data?.message || "Vui lòng thử lại")
+            toast.error("Cập nhật thất bại", { description: error?.response?.data?.message || "Vui lòng thử lại" })
         } finally {
             setIsSubmitting(false)
         }
@@ -100,8 +100,8 @@ export function EditFieldDialog({
                         >
                             Hủy
                         </Button>
-                        <Button 
-                            type="submit" 
+                        <Button
+                            type="submit"
                             disabled={isSubmitting || !hasChanges}
                             className={hasChanges ? "bg-primary hover:bg-primary/90" : ""}
                         >

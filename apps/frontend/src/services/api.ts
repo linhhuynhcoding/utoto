@@ -4,9 +4,12 @@ import { StorageKeys } from "@/contexts/StorageContext";
 
 const api = axios.create({
   baseURL: envConfig.API_URL,
-  withCredentials: true,
+  withCredentials: true,  
   headers: {
     "Content-Type": "application/json",
+    Accept: "*",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Credentials": true,
   },
 });
 

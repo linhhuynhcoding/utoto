@@ -15,7 +15,8 @@ export default function MyCarList() {
     useEffect(() => {
         const fetchCars = async () => {
             // Fallback to USER_1 for dev testing if not logged in
-            const userId = user?.id || "USER_1";
+            const userId = user?.id;
+            if (!userId) return;
             setLoading(true)
             try {
                 const res = await getMyCars(userId)

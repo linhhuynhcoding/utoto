@@ -73,7 +73,7 @@ export default function RenterTripList() {
             {trips.map((trip) => {
                 const car = trip.cars;
                 const carName = car?.name || "Xe không xác định";
-                const carImage = car?.car_images?.[0]?.image_url || "";
+                const carImage = car?.images?.[0] || "";
                 const ownerName = car?.users?.name || "Chủ xe";
                 const ownerAvatar = car?.users?.avatar || "";
                 const amount = Number(trip.rent_amount || 0);

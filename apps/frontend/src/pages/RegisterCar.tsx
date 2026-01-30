@@ -8,7 +8,7 @@ import { BasicInfoForm } from "@/components/register-car/BasicInfoForm"
 import { RentalConfigForm } from "@/components/register-car/RentalConfigForm"
 import { ImageUploadForm } from "@/components/register-car/ImageUploadForm"
 import { useRegisterCar } from "@/hooks/useCars"
-import { ListChevronsDownUp } from "lucide-react"
+import { toast } from "sonner"
 
 export default function RegisterCar() {
     const navigate = useNavigate()
@@ -57,6 +57,7 @@ export default function RegisterCar() {
             const payload = {
                 license_number: formData.licensePlate,
                 desc: formData.description,
+                yom: Number(formData.year),
                 model_id: formData.model_id,
                 transmission: formData.transmission as "MANUAL" | "AUTOMATIC",
                 seat: parseInt(String(formData.seats)),
@@ -82,12 +83,15 @@ export default function RegisterCar() {
 
             mutate(payload as any, {
                 onSuccess: () => {
-                    alert("Đăng ký xe thành công!")
+                    toast.success("Đăng ký xe thành công!")
                     navigate("/")
                 },
-                onError: (error) => {
-                    console.error(error)
-                    alert(`Đăng ký thất bại: ${error.message}`)
+                onError: (error: any) => {
+                    console.error("Registration error:", error)
+                    const errorMessage = error?.response?.data?.message || error.message || "Đã có lỗi xảy ra"
+                    toast.error("Đăng ký thất bại", {
+                        description: errorMessage
+                    })
                 }
             })
         }
