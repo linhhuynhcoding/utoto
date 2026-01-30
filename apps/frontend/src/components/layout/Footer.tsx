@@ -11,7 +11,6 @@ export default function Footer() {
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <li><Link to="/how-it-works" className="hover:text-primary transition-colors">Cách thức hoạt động</Link></li>
                             <li><Link to="/delivery" className="hover:text-primary transition-colors">Giao nhận xe</Link></li>
-                            <li><Link to="/search" className="hover:text-primary transition-colors">Dòng xe</Link></li>
                         </ul>
                     </div>
                     <div>
