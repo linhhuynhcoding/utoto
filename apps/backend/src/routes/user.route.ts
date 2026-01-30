@@ -4,6 +4,7 @@ import {
   getUserById,
   updateProfile,
   uploadAndUpdateAvatar,
+  getTripStats,
 } from "@/controllers/user.controller";
 import { authenticate } from "@/middleware/auth.middleware";
 
@@ -21,6 +22,9 @@ export async function userRoutes(fastify: FastifyInstance) {
     { preHandler: [authenticate] },
     uploadAndUpdateAvatar,
   );
+
+  // Get trip statistics (requires authentication)
+  fastify.get("/trips/stats", { preHandler: [authenticate] }, getTripStats);
 
   // Get public user info by ID (no authentication required)
   fastify.get<{ Params: { id: string } }>("/:id", getUserById);

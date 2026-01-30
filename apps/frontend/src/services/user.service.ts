@@ -1,5 +1,5 @@
 import api from "./api";
-import { UserResponse, UpdateProfile, PublicUserInfo } from "@utoto/shared";
+import { UserResponse, UpdateProfile, PublicUserInfo, TripStats } from "@utoto/shared";
 
 interface ApiResponse<T> {
   success: boolean;
@@ -48,6 +48,14 @@ class UserService {
         },
       }
     );
+    return response.data;
+  }
+
+  /**
+   * GET /user/trips/stats - Get trip statistics
+   */
+  async getTripStats(): Promise<TripStats> {
+    const response = await api.get<any, ApiResponse<TripStats>>("/user/trips/stats");
     return response.data;
   }
 }

@@ -47,6 +47,15 @@ export const UpdateProfileSchema = z.object({
 });
 export type UpdateProfile = z.infer<typeof UpdateProfileSchema>;
 
+// Trip statistics schema
+export const TripStatsSchema = z.object({
+  totalTrips: z.number(),
+  completedTrips: z.number(),
+  ongoingTrips: z.number(),
+  cancelledTrips: z.number(),
+});
+export type TripStats = z.infer<typeof TripStatsSchema>;
+
 // Update driver license schema
 export const UpdateDriverLicenseSchema = z.object({
   driver_license_code: z.string().min(1).max(50),
