@@ -38,3 +38,7 @@ dev: ## Start dev server (API + Worker + Web)
 
 clean: ## Stop database and clean up
 	$(PNPM) db:down
+
+start: db-up dev ## Start full app (Database + Dev servers)
+
+down: clean ## Stop full app (Database)
