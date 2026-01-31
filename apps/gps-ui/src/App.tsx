@@ -7,7 +7,7 @@ import { useGpsStore } from '@/stores/useGpsStore';
 import { GpsEvent } from '@utoto/shared';
 
 function App() {
-    const { points, selectedCar, setSelectedCar, addCar, cars, movements, toggleMovement, routes, movePosition } = useGpsStore();
+    const { points, selectedCar, setSelectedCar, addCar, cars, movements, prevMovements, toggleMovement, routes, movePosition, speeds, distances, behaviors } = useGpsStore();
     const [isConnected, setIsConnected] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const wsRef = useRef<WebSocket | null>(null);
@@ -66,6 +66,7 @@ function App() {
     }, [connectWebSocket]);
 
     useEffect(() => {
+        const randomInterval = Math.floor(Math.random() * 50) + 50
         const interval = setInterval(() => {
             Object.keys(movements).forEach(licenseNumber => {
                 // if (movements[licenseNumber] && routes[licenseNumber]?.next_target === routes[licenseNumber]?.points.length - 1) {
@@ -74,10 +75,32 @@ function App() {
                 //     return;
                 // }
                 if (movements[licenseNumber]) {
-                    movePosition(licenseNumber);
+                    movePosition(licenseNumber, randomInterval);
+                }
+
+                const isMoving = movements[licenseNumber];
+                const wasMoving = prevMovements[licenseNumber];
+
+                if (wasMoving && !isMoving) {
+                    // Movement just stopped
+                    wsRef.current?.send(JSON.stringify({
+                        type: 'update_position',
+                        data: {
+                            id: Date.now().toString(),
+                            licenseNumber: licenseNumber,
+                            carId: cars[licenseNumber]?.id,
+                            timestamp: Date.now(),
+                            last_position: points[licenseNumber],
+                            lat: points[licenseNumber][0],
+                            lng: points[licenseNumber][1],
+                            speed: 0,
+                            total_distance: distances[licenseNumber] || 0,
+                            state: "stopped",
+                        } as GpsEvent
+                    }));
                 }
             });
-        }, 200);
+        }, randomInterval);
 
         return () => clearInterval(interval);
     }, [movements, movePosition]);
@@ -91,9 +114,28 @@ function App() {
                 data: {
                     id: Date.now().toString(),
                     licenseNumber: licenseNumber,
+                    carId: cars[licenseNumber]?.id,
                     timestamp: Date.now(),
                     last_position: points[licenseNumber],
-                    speed: 0,
+                    lat: points[licenseNumber][0],
+                    lng: points[licenseNumber][1],
+                    speed: speeds[licenseNumber] / 10 || 0, // HACK: scale down speed
+                    behavior: speeds[licenseNumber] > 80 ? "SPEEDING" : "NORMAL",
+                    // Database Persistence
+                    // - **Shared Package**: Added `carId`, `lat`, and `lng` to `GpsEventSchema`.
+                    // - **Backend Schema**: Added `gps_events` model to Prisma to store historical data related to `cars`.
+                    // - **Frontend Integration**: Updated `App.tsx` to pass `carId` and explicit coordinates in WebSocket updates.
+                    // - **Worker Updates**: Modified `consumer.ts` to insert each received GPS event into the `gps_events` table while maintaining the real-time Redis cache.
+
+                    // ## Verification
+
+                    // ### Database Recording
+                    // When the simulation is running, each update is now persisted to the `gps_events` table. You can verify this by checking the database:
+                    // ```sql
+                    // SELECT * FROM gps_events ORDER BY created_at DESC LIMIT 10;
+                    // ```
+                    distance: 0, // Current step distance not explicitly stored but could be added if needed
+                    total_distance: distances[licenseNumber] || 0,
                     last_time_running: movements[licenseNumber] ? Date.now() : 0,
                     last_time_stopped: movements[licenseNumber] ? 0 : Date.now(),
                     state: movements[licenseNumber] ? "running" : "stopped",
@@ -170,8 +212,22 @@ function App() {
                                     >
                                         <div className="flex items-center gap-2">
                                             <div className="flex flex-col">
-                                                <span className="text-sm font-bold text-gray-800">{car.license_number}</span>
+                                                <div className="flex items-center gap-1.5">
+                                                    <span className="text-sm font-bold text-gray-800">{car.license_number}</span>
+                                                    {behaviors[car.license_number] === "SPEEDING" && (
+                                                        <span className="flex items-center gap-0.5 text-[9px] font-bold text-white bg-red-500 px-1 rounded animate-pulse">
+                                                            <AlertCircle className="w-2.5 h-2.5" />
+                                                            SPEEDING
+                                                        </span>
+                                                    )}
+                                                </div>
                                                 <span className="text-[10px] text-gray-500">{car.name}</span>
+                                                {points[car.license_number] && (
+                                                    <div className="flex items-center gap-2 mt-0.5">
+                                                        <span className="text-[9px] font-medium text-gray-400">{(speeds[car.license_number] || 0).toFixed(1)} km/h</span>
+                                                        <span className="text-[9px] font-medium text-gray-400">{(distances[car.license_number] || 0).toFixed(2)} km</span>
+                                                    </div>
+                                                )}
                                             </div>
                                             <button
                                                 onClick={(e) => {

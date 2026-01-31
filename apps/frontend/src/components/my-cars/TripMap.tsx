@@ -3,12 +3,20 @@ import L from "leaflet"
 import { Card, CardContent } from "@/components/ui/card"
 import "leaflet/dist/leaflet.css"
 import carIconUrl from "@/assets/car_topview.png"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 interface TripMapProps {
     licenseNumber: string
     carName: string
     locations?: { lat: number; lng: number }[]
+}
+
+interface TripUpdateDetail {
+    licenseNumber: string
+    lat: number
+    lng: number
+    speed: number
+    distance: number
 }
 
 // Mock GPS coordinates (simulating a route in Ho Chi Minh City)
@@ -21,7 +29,7 @@ const mockRoute = [
 ]
 
 // Create custom car icon with license plate
-const createCarIcon = (licenseNumber: string) => {
+const createCarIcon = (label: string) => {
     return L.divIcon({
         className: 'custom-car-marker',
         html: `
@@ -41,7 +49,7 @@ const createCarIcon = (licenseNumber: string) => {
                     left: 50%;
                     transform: translateX(-50%);
                     z-index: 10;
-                ">${licenseNumber}</div>
+                ">${label}</div>
                 <img 
                     src="${carIconUrl}" 
                     style="
@@ -66,7 +74,40 @@ const createCarIcon = (licenseNumber: string) => {
 
 export default function TripMap({ licenseNumber, carName, locations }: TripMapProps) {
     console.log("TripMap locations: ", locations);
-    const currentPosition = locations?.[locations.length - 1] ?? mockRoute[mockRoute.length - 1]
+    const [route, setRoute] = useState<{ lat: number; lng: number }[]>(locations ?? mockRoute)
+    const [currentPosition, setCurrentPosition] = useState(
+        locations?.[locations.length - 1] ?? mockRoute[mockRoute.length - 1]
+    )
+    const [speed, setSpeed] = useState(0)
+    const [isOverspeed, setIsOverspeed] = useState(false)
+    const [distance, setDistance] = useState(0)
+    const SPEED_LIMIT = 80 // km/h
+
+    useEffect(() => {
+        if (locations && locations.length > 0) {
+            setRoute(locations)
+            setCurrentPosition(locations[locations.length - 1])
+        }
+    }, [locations])
+
+    useEffect(() => {
+        const handleTripUpdate = (event: Event) => {
+            console.log("TripMap received event:", event);
+            const customEvent = event as CustomEvent<TripUpdateDetail>
+            if (customEvent.detail.licenseNumber.toUpperCase() === licenseNumber.toUpperCase()) {
+                const { lat, lng, speed, distance } = customEvent.detail
+                const newPos = { lat, lng }
+                setCurrentPosition(newPos)
+                setRoute(prev => [...prev, newPos])
+                setSpeed(speed)
+                setDistance(distance)
+                setIsOverspeed(speed > SPEED_LIMIT)
+            }
+        }
+        window.addEventListener('trip-update', handleTripUpdate)
+        return () => window.removeEventListener('trip-update', handleTripUpdate)
+    }, [licenseNumber])
+
     const center: [number, number] = [currentPosition.lat, currentPosition.lng] as [number, number]
 
     return (
@@ -92,7 +133,7 @@ export default function TripMap({ licenseNumber, carName, locations }: TripMapPr
 
                         {/* Route path */}
                         <Polyline
-                            positions={(locations ?? mockRoute).map(p => [p.lat, p.lng] as [number, number])}
+                            positions={route.map(p => [p.lat, p.lng] as [number, number])}
                             color="#3b82f6"
                             weight={3}
                             opacity={0.7}
@@ -104,7 +145,7 @@ export default function TripMap({ licenseNumber, carName, locations }: TripMapPr
                         {/* Current position marker (last point) */}
                         <Marker
                             position={[currentPosition.lat, currentPosition.lng] as [number, number]}
-                            icon={createCarIcon(licenseNumber)}
+                            icon={createCarIcon(`${carName} - ${licenseNumber}`)}
                         >
                             <Popup>
                                 <div className="text-center">
@@ -118,6 +159,13 @@ export default function TripMap({ licenseNumber, carName, locations }: TripMapPr
                     </MapContainer>
 
                     {/* Overlay indicators */}
+                    {isOverspeed && (
+                        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded-full shadow-lg z-[1000] animate-pulse flex items-center gap-2 border-2 border-white">
+                            <span className="text-xl">⚠️</span>
+                            <span className="font-bold whitespace-nowrap">CẢNH BÁO: QUÁ TỐC ĐỘ ({speed} km/h)</span>
+                        </div>
+                    )}
+
                     <div className="absolute top-4 left-4 bg-white px-3 py-2 rounded-lg shadow-md border z-[1000]">
                         <div className="flex items-center gap-2">
                             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -128,6 +176,18 @@ export default function TripMap({ licenseNumber, carName, locations }: TripMapPr
                         <p className="text-xs text-gray-500">Vị trí hiện tại</p>
                         <p className="text-sm font-bold">{carName}</p>
                         <p className="text-xs text-gray-600 font-mono">{licenseNumber}</p>
+                        <div className="mt-1 pt-1 border-t border-gray-100 space-y-1">
+                            <div className="flex justify-between items-center gap-4">
+                                <span className="text-xs text-gray-500">Tốc độ</span>
+                                <span className={`text-sm font-mono font-bold ${isOverspeed ? 'text-red-600' : 'text-blue-600'}`}>
+                                    {speed} km/h
+                                </span>
+                            </div>
+                            <div className="flex justify-between items-center gap-4">
+                                <span className="text-xs text-gray-500">Quãng đường</span>
+                                <span className="text-sm font-mono font-bold text-gray-700">{distance} km</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </CardContent>

@@ -114,50 +114,31 @@ export default function EditControlFC({ geojson, setGeojson, selectedCar, handle
     const ref = React.useRef<L.FeatureGroup | null>(null);
     const editControlRef = React.useRef<EditControl | null>(null);
 
-    React.useEffect(() => {
-        if (ref.current?.getLayers().length === 0 && geojson) {
-            L.geoJSON(geojson).eachLayer((layer) => {
-                if (
-                    layer instanceof L.Polyline ||
-                    layer instanceof L.Polygon ||
-                    layer instanceof L.Marker
-                ) {
-                    if (layer?.feature?.properties.radius && ref.current) {
-                        new L.Circle(layer.feature.geometry.coordinates.slice().reverse(), {
-                            radius: layer.feature?.properties.radius,
-                        }).addTo(ref.current);
-                    } else {
-                        ref.current?.addLayer(layer);
-                    }
-                }
-            });
-        }
-    }, [geojson]);
-
-    const handleChange = () => {
-        // if (!selectedCar) {
-        //     toast.error('Chọn xe trước');
-        //     return;
-        // }
-        const geo = ref.current?.toGeoJSON();
-        console.log(geo);
-        // if (geo?.type === 'FeatureCollection') {
-        //     setGeojson(geo);
-        // }
-    };
+    // React.useEffect(() => {
+    //     if (ref.current?.getLayers().length === 0 && geojson) {
+    //         L.geoJSON(geojson).eachLayer((layer) => {
+    //             if (
+    //                 layer instanceof L.Polyline ||
+    //                 layer instanceof L.Polygon ||
+    //                 layer instanceof L.Marker
+    //             ) {
+    //                 if (layer?.feature?.properties.radius && ref.current) {
+    //                     new L.Circle(layer.feature.geometry.coordinates.slice().reverse(), {
+    //                         radius: layer.feature?.properties.radius,
+    //                     }).addTo(ref.current);
+    //                 } else {
+    //                     ref.current?.addLayer(layer);
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }, [geojson]);
 
     const handleCreate = (v: any) => {
-        // if (!selectedCar) {
-        //     toast.error('Chọn xe trước');
-        //     return;
-        // }
         const geo = ref.current?.toGeoJSON();
         console.log(geo);
         console.log(v.layer.toGeoJSON());
         handleAddNewRoute(v.layer.toGeoJSON().geometry.coordinates.map((coord: any) => [coord[1], coord[0]]));
-        // if (geo?.type === 'FeatureCollection') {
-        //     setGeojson(geo);
-        // }
     };
     const handleEdit = (v: any) => {
         // if (!selectedCar) {

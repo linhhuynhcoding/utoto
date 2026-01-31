@@ -1,0 +1,381 @@
+
+> frontend@0.0.0 dev /home/linh/uth/utoto/apps/frontend
+> vite
+
+
+  VITE v4.5.14  ready in 600 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+
+warn - The class `duration-[10s]` is ambiguous and matches multiple utilities.
+warn - If this is content and not a class, replace it with `duration-&lsqb;10s&rsqb;` to silence this warning.
+12:22:27 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:22:28 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:22:28 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:22:28 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:22:31 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:24:12 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:24:14 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:24:16 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:24:19 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:24:21 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:25:27 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:25:30 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:25:32 AM [vite] hmr update /src/components/my-cars/TripMap.tsx, /src/index.css
+12:26:43 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:26:54 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:26:54 AM [vite] Internal server error: /home/linh/uth/utoto/apps/frontend/src/pages/TripDetail.tsx: Unexpected token (69:69)
+
+  67 |                                 lng: parsedData.lng,
+  68 |                                 speed: parsedData.speed ?? 0,
+> 69 |                                 distance: parsedData.total_distance. ?? 0
+     |                                                                      ^
+  70 |                             }
+  71 |                         }))
+  72 |                     }
+  Plugin: vite:react-babel
+  File: /home/linh/uth/utoto/apps/frontend/src/pages/TripDetail.tsx:69:69
+  67 |                                  lng: parsedData.lng,
+  68 |                                  speed: parsedData.speed ?? 0,
+  69 |                                  distance: parsedData.total_distance. ?? 0
+     |                                                                       ^
+  70 |                              }
+  71 |                          }))
+      at constructor (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptParserMixin.unexpected (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:6644:16)
+      at TypeScriptParserMixin.parseIdentifierName (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12277:12)
+      at TypeScriptParserMixin.parseIdentifier (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12255:23)
+      at TypeScriptParserMixin.parseMember (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11212:28)
+      at TypeScriptParserMixin.parseSubscript (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11188:21)
+      at TypeScriptParserMixin.parseSubscript (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9329:18)
+      at TypeScriptParserMixin.parseSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11158:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11149:17)
+      at TypeScriptParserMixin.parseUpdate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12567:17)
+      at TypeScriptParserMixin.parseObjectProperty (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12024:83)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12052:100)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9797:18)
+      at TypeScriptParserMixin.parsePropertyDefinition (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11989:17)
+      at TypeScriptParserMixin.parseObjectLike (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11904:21)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11403:23)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12567:17)
+      at TypeScriptParserMixin.parseObjectProperty (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12024:83)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12052:100)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9797:18)
+      at TypeScriptParserMixin.parsePropertyDefinition (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11989:17)
+      at TypeScriptParserMixin.parseObjectLike (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11904:21)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11403:23)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11145:23)
+12:26:56 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:26:58 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:27:03 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:27:05 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:27:05 AM [vite] Internal server error: /home/linh/uth/utoto/apps/frontend/src/pages/TripDetail.tsx: Unexpected token (69:47)
+
+  67 |                                 lng: parsedData.lng,
+  68 |                                 speed: parsedData.speed ?? 0,
+> 69 |                                 distance: Math.(parsedData.total_distance) ?? 0
+     |                                                ^
+  70 |                             }
+  71 |                         }))
+  72 |                     }
+  Plugin: vite:react-babel
+  File: /home/linh/uth/utoto/apps/frontend/src/pages/TripDetail.tsx:69:47
+  67 |                                  lng: parsedData.lng,
+  68 |                                  speed: parsedData.speed ?? 0,
+  69 |                                  distance: Math.(parsedData.total_distance) ?? 0
+     |                                                 ^
+  70 |                              }
+  71 |                          }))
+      at constructor (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptParserMixin.unexpected (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:6644:16)
+      at TypeScriptParserMixin.parseIdentifierName (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12277:12)
+      at TypeScriptParserMixin.parseIdentifier (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12255:23)
+      at TypeScriptParserMixin.parseMember (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11212:28)
+      at TypeScriptParserMixin.parseSubscript (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11188:21)
+      at TypeScriptParserMixin.parseSubscript (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9329:18)
+      at TypeScriptParserMixin.parseSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11158:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11149:17)
+      at TypeScriptParserMixin.parseUpdate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12567:17)
+      at TypeScriptParserMixin.parseObjectProperty (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12024:83)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12052:100)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9797:18)
+      at TypeScriptParserMixin.parsePropertyDefinition (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11989:17)
+      at TypeScriptParserMixin.parseObjectLike (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11904:21)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11403:23)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12567:17)
+      at TypeScriptParserMixin.parseObjectProperty (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12024:83)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12052:100)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9797:18)
+      at TypeScriptParserMixin.parsePropertyDefinition (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11989:17)
+      at TypeScriptParserMixin.parseObjectLike (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11904:21)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11403:23)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11145:23)
+12:27:10 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:27:12 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:27:36 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:27:36 AM [vite] Internal server error: /home/linh/uth/utoto/apps/frontend/src/pages/TripDetail.tsx: Unexpected token (69:69)
+
+  67 |                                 lng: parsedData.lng,
+  68 |                                 speed: parsedData.speed ?? 0,
+> 69 |                                 distance: parsedData.total_distance, ) ?? 0
+     |                                                                      ^
+  70 |                             }
+  71 |                         }))
+  72 |                     }
+  Plugin: vite:react-babel
+  File: /home/linh/uth/utoto/apps/frontend/src/pages/TripDetail.tsx:69:69
+  67 |                                  lng: parsedData.lng,
+  68 |                                  speed: parsedData.speed ?? 0,
+  69 |                                  distance: parsedData.total_distance, ) ?? 0
+     |                                                                       ^
+  70 |                              }
+  71 |                          }))
+      at constructor (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptParserMixin.unexpected (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:6644:16)
+      at TypeScriptParserMixin.parsePropertyName (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12098:18)
+      at TypeScriptParserMixin.parsePropertyDefinition (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11963:10)
+      at TypeScriptParserMixin.parseObjectLike (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11904:21)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11403:23)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12567:17)
+      at TypeScriptParserMixin.parseObjectProperty (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12024:83)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12052:100)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9797:18)
+      at TypeScriptParserMixin.parsePropertyDefinition (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11989:17)
+      at TypeScriptParserMixin.parseObjectLike (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11904:21)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11403:23)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12567:17)
+      at TypeScriptParserMixin.parseExprListItem (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12249:18)
+      at TypeScriptParserMixin.parseExprList (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12224:22)
+      at TypeScriptParserMixin.parseNew (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11819:25)
+      at TypeScriptParserMixin.parseNewOrNewTarget (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11814:17)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11412:21)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11110:23)
+12:27:42 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:27:42 AM [vite] Internal server error: /home/linh/uth/utoto/apps/frontend/src/pages/TripDetail.tsx: Unexpected token (69:69)
+
+  67 |                                 lng: parsedData.lng,
+  68 |                                 speed: parsedData.speed ?? 0,
+> 69 |                                 distance: parsedData.total_distance. ?? 0
+     |                                                                      ^
+  70 |                             }
+  71 |                         }))
+  72 |                     }
+  Plugin: vite:react-babel
+  File: /home/linh/uth/utoto/apps/frontend/src/pages/TripDetail.tsx:69:69
+  67 |                                  lng: parsedData.lng,
+  68 |                                  speed: parsedData.speed ?? 0,
+  69 |                                  distance: parsedData.total_distance. ?? 0
+     |                                                                       ^
+  70 |                              }
+  71 |                          }))
+      at constructor (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptParserMixin.unexpected (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:6644:16)
+      at TypeScriptParserMixin.parseIdentifierName (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12277:12)
+      at TypeScriptParserMixin.parseIdentifier (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12255:23)
+      at TypeScriptParserMixin.parseMember (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11212:28)
+      at TypeScriptParserMixin.parseSubscript (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11188:21)
+      at TypeScriptParserMixin.parseSubscript (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9329:18)
+      at TypeScriptParserMixin.parseSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11158:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11149:17)
+      at TypeScriptParserMixin.parseUpdate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12567:17)
+      at TypeScriptParserMixin.parseObjectProperty (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12024:83)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12052:100)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9797:18)
+      at TypeScriptParserMixin.parsePropertyDefinition (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11989:17)
+      at TypeScriptParserMixin.parseObjectLike (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11904:21)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11403:23)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12567:17)
+      at TypeScriptParserMixin.parseObjectProperty (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12024:83)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12052:100)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9797:18)
+      at TypeScriptParserMixin.parsePropertyDefinition (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11989:17)
+      at TypeScriptParserMixin.parseObjectLike (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11904:21)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11403:23)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11145:23)
+12:27:44 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:27:46 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:27:51 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:27:54 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:27:55 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:27:58 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:28:01 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:28:01 AM [vite] Internal server error: /home/linh/uth/utoto/apps/frontend/src/pages/TripDetail.tsx: Unexpected token (68:44)
+
+  66 |                                 lat: parsedData.lat,
+  67 |                                 lng: parsedData.lng,
+> 68 |                                 speed: math.(parsedData.speed) ?? 0,
+     |                                             ^
+  69 |                                 distance: Number(parsedData.total_distance).toFixed(2) ?? 0
+  70 |                             }
+  71 |                         }))
+  Plugin: vite:react-babel
+  File: /home/linh/uth/utoto/apps/frontend/src/pages/TripDetail.tsx:68:44
+  66 |                                  lat: parsedData.lat,
+  67 |                                  lng: parsedData.lng,
+  68 |                                  speed: math.(parsedData.speed) ?? 0,
+     |                                              ^
+  69 |                                  distance: Number(parsedData.total_distance).toFixed(2) ?? 0
+  70 |                              }
+      at constructor (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptParserMixin.unexpected (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:6644:16)
+      at TypeScriptParserMixin.parseIdentifierName (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12277:12)
+      at TypeScriptParserMixin.parseIdentifier (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12255:23)
+      at TypeScriptParserMixin.parseMember (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11212:28)
+      at TypeScriptParserMixin.parseSubscript (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11188:21)
+      at TypeScriptParserMixin.parseSubscript (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9329:18)
+      at TypeScriptParserMixin.parseSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11158:19)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11149:17)
+      at TypeScriptParserMixin.parseUpdate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12567:17)
+      at TypeScriptParserMixin.parseObjectProperty (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12024:83)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12052:100)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9797:18)
+      at TypeScriptParserMixin.parsePropertyDefinition (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11989:17)
+      at TypeScriptParserMixin.parseObjectLike (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11904:21)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11403:23)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11145:23)
+      at TypeScriptParserMixin.parseUpdate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11130:21)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11110:23)
+      at TypeScriptParserMixin.parseMaybeUnary (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9890:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10963:61)
+      at TypeScriptParserMixin.parseExprOps (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10968:23)
+      at TypeScriptParserMixin.parseMaybeConditional (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10945:23)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10895:21)
+      at TypeScriptParserMixin.parseMaybeAssign (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9839:20)
+      at /home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:39
+      at TypeScriptParserMixin.allowInAnd (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12500:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:10864:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12567:17)
+      at TypeScriptParserMixin.parseObjectProperty (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12024:83)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:12052:100)
+      at TypeScriptParserMixin.parseObjPropValue (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:9797:18)
+      at TypeScriptParserMixin.parsePropertyDefinition (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11989:17)
+      at TypeScriptParserMixin.parseObjectLike (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11904:21)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11403:23)
+      at TypeScriptParserMixin.parseExprAtom (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:4793:20)
+      at TypeScriptParserMixin.parseExprSubscripts (/home/linh/uth/utoto/node_modules/.pnpm/@babel+parser@7.28.5/node_modules/@babel/parser/lib/index.js:11145:23)
+12:28:05 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:28:10 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:28:11 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css
+12:28:15 AM [vite] hmr update /src/pages/TripDetail.tsx, /src/index.css

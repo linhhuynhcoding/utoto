@@ -2,9 +2,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useNavigate } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
-import axios from 'axios'
 import { toast } from 'sonner'
 import { useAuth } from '@/contexts'
+import { loginWithGoogle } from '@/services/auth.service'
 
 interface GoogleDecodedToken {
     email: string;
@@ -21,7 +21,7 @@ export default function Login() {
             const token = credentialResponse.credential;
             const decoded = jwtDecode<GoogleDecodedToken>(token);
 
-            const loginPromise = axios.post('http://localhost:4000/auth/google/callback', {
+            const loginPromise = loginWithGoogle({
                 email: decoded.email,
                 name: decoded.name,
                 avatar: decoded.picture
@@ -35,10 +35,23 @@ export default function Login() {
 
             const response = await loginPromise;
 
-            if (response.data.success) {
+            if (response.success) {
                 // Use AuthContext to store user info
-                const { user, accessToken } = response.data.data;
-                login(user, accessToken);
+                const { user, accessToken } = response.data;
+                login({
+                    email: user.email,
+                    name: user.name,
+                    avatar: user.avatar ?? "",
+                    id: user.id,
+                    verified: {
+                        phone: user.isVerified,
+                        email: true,
+                        driverLicense: !!user.driver_license_code,
+                    },
+                    dateOfBirth: user.dob ?? undefined,
+                    phone: user.phone_number ?? undefined,
+
+                }, accessToken);
                 navigate('/')
             }
         } catch (error) {
@@ -98,4 +111,3 @@ export default function Login() {
         </div>
     )
 }
-

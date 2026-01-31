@@ -4,6 +4,7 @@ import prisma from "@/database";
 import { generateId } from "@/utils/id.util";
 import jwt from "jsonwebtoken";
 import envConfig from "@/config";
+import { UserResponse } from "@utoto/shared";
 
 const GoogleCallbackSchema = z.object({
   email: z.string().email(),
@@ -48,10 +49,25 @@ export const googleCallback = async (
       { expiresIn: "7d" },
     );
 
+    const userDto: UserResponse = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone_number: user.phone_number,
+      phone_code: user.phone_code,
+      dob: user.dob ? user.dob.toISOString() : null,
+      avatar: user.avatar,
+      isVerified: user.isVerified || !!user.driver_license_code,
+      driver_license_code: user.driver_license_code,
+      driver_license_name: user.driver_license_name,
+      driver_license_dob: user.driver_license_dob,
+      address: null,
+    };
+
     return reply.status(200).send({
       success: true,
       data: {
-        user,
+        user: userDto,
         accessToken,
       },
     });

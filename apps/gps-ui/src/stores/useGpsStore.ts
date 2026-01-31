@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { GpsPoint, Route } from "@utoto/shared";
+import L from "leaflet";
 
 interface GpsState {
   routes: Record<string, Route>;
@@ -7,6 +8,10 @@ interface GpsState {
   cars: Record<string, any>; // Car metadata
   selectedCar: string | null;
   movements: Record<string, boolean>; // True if car is moving
+  prevMovements: Record<string, boolean>; // Previous movement state
+  speeds: Record<string, number>; // Current speed in km/h
+  distances: Record<string, number>; // Total distance in km
+  behaviors: Record<string, string>; // Behavior labels (NORMAL, SPEEDING, etc.)
   setRoute: (licenseNumber: string, points: GpsPoint[]) => void;
   // addPoint: (point: GpsPoint) => void;
   addCar: (car: any) => void;
@@ -14,7 +19,7 @@ interface GpsState {
   clearRoutes: () => void;
   toggleMovement: (licenseNumber: string) => void;
   moveToNextTarget: (licenseNumber: string) => void;
-  movePosition: (licenseNumber: string) => void;
+  movePosition: (licenseNumber: string, intervalMs: number) => void;
 }
 
 export const useGpsStore = create<GpsState>((set) => ({
@@ -23,6 +28,10 @@ export const useGpsStore = create<GpsState>((set) => ({
   cars: {},
   selectedCar: null,
   movements: {},
+  prevMovements: {},
+  speeds: {},
+  distances: {},
+  behaviors: {},
 
   setRoute: (licenseNumber, points) =>
     set((state) => {
@@ -40,9 +49,25 @@ export const useGpsStore = create<GpsState>((set) => ({
           ...state.movements,
           [licenseNumber]: false,
         },
+        prevMovements: {
+          ...state.prevMovements,
+          [licenseNumber]: false,
+        },
         points: {
           ...state.points,
           [licenseNumber]: points[0],
+        },
+        speeds: {
+          ...state.speeds,
+          [licenseNumber]: 0,
+        },
+        distances: {
+          ...state.distances,
+          [licenseNumber]: 0,
+        },
+        behaviors: {
+          ...state.behaviors,
+          [licenseNumber]: "NORMAL",
         },
       };
       console.log(`New routes: `, { res });
@@ -78,10 +103,21 @@ export const useGpsStore = create<GpsState>((set) => ({
   setSelectedCar: (licenseNumber) => set({ selectedCar: licenseNumber }),
 
   clearRoutes: () =>
-    set({ routes: {}, points: {}, cars: {}, selectedCar: null, movements: {} }),
+    set({
+      routes: {},
+      points: {},
+      cars: {},
+      selectedCar: null,
+      movements: {},
+      prevMovements: {},
+    }),
 
   toggleMovement: (licenseNumber) =>
     set((state) => ({
+      prevMovements: {
+        ...state.prevMovements,
+        [licenseNumber]: state.movements[licenseNumber],
+      },
       movements: {
         ...state.movements,
         [licenseNumber]: !state.movements[licenseNumber],
@@ -110,7 +146,7 @@ export const useGpsStore = create<GpsState>((set) => ({
       };
     }),
 
-  movePosition: (licenseNumber) =>
+  movePosition: (licenseNumber, intervalMs) =>
     set((state) => {
       const route = state.routes[licenseNumber];
       if (!route || route.points.length === 0) return state;
@@ -118,6 +154,10 @@ export const useGpsStore = create<GpsState>((set) => ({
       if (route.next_target >= route.points.length) {
         return {
           ...state,
+          prevMovements: {
+            ...state.prevMovements,
+            [licenseNumber]: true,
+          },
           movements: {
             ...state.movements,
             [licenseNumber]: false,
@@ -152,6 +192,14 @@ export const useGpsStore = create<GpsState>((set) => ({
       const step = (target_point[0] - previous_point[0]) / 100;
       let next_pos = calcNextPosition(route.cur_pos, target_point, step);
 
+      // Calculate distance moved using Leaflet's distanceTo (returns meters)
+      const p1 = L.latLng(route.cur_pos[0], route.cur_pos[1]);
+      const p2 = L.latLng(next_pos[0], next_pos[1]);
+      const distanceMoved = p1.distanceTo(p2) / 1000; // convert to km
+
+      const newDistance = (state.distances[licenseNumber] || 0) + distanceMoved;
+      const speed = (distanceMoved / (intervalMs / 1000)) * 3600; // km/h (dynamic interval)
+
       return {
         routes: {
           ...state.routes,
@@ -163,6 +211,18 @@ export const useGpsStore = create<GpsState>((set) => ({
         points: {
           ...state.points,
           [licenseNumber]: next_pos,
+        },
+        speeds: {
+          ...state.speeds,
+          [licenseNumber]: speed,
+        },
+        distances: {
+          ...state.distances,
+          [licenseNumber]: newDistance,
+        },
+        behaviors: {
+          ...state.behaviors,
+          [licenseNumber]: speed > 80 ? "SPEEDING" : "NORMAL",
         },
       };
     }),
@@ -180,10 +240,9 @@ function calcLinearEquation(
   return { a, b };
 }
 
-function calcNextPosition(p1: GpsPoint, p2: GpsPoint, step: number): GpsPoint {
-  const { a, b } = calcLinearEquation(p1, p2);
-  let [x1, y1] = p1;
-  let [x2, y2] = p2;
+function calcNextPosition(p1: GpsPoint, _p2: GpsPoint, step: number): GpsPoint {
+  const { a, b } = calcLinearEquation(p1, _p2);
+  let [x1] = p1;
   let next_x = x1 + step;
   let next_y = a * next_x + b;
   return [next_x, next_y];

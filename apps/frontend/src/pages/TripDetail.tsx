@@ -60,6 +60,15 @@ export default function TripDetail() {
                     if (parsedData) {
                         setLocations((prev) => [...prev.slice(-10000), { lat: parsedData.lat, lng: parsedData.lng }])
 
+                        window.dispatchEvent(new CustomEvent('trip-update', {
+                            detail: {
+                                licenseNumber: parsedData.license_number ?? trip?.cars?.license_number,
+                                lat: parsedData.lat,
+                                lng: parsedData.lng,
+                                speed: Math.round(parsedData.speed) ?? 0,
+                                distance: Number(parsedData.total_distance).toFixed(2) ?? 0
+                            }
+                        }))
                     }
                 } catch (parseError) {
                     console.error('Error parsing SSE data:', parseError);
@@ -146,7 +155,8 @@ export default function TripDetail() {
                     {/* Left Column - Main Info */}
                     <div className="lg:col-span-2 space-y-6">
                         {/* GPS Map */}
-                        <TripMap licenseNumber={carName.toUpperCase()} carName={carName} locations={locations} />
+                        {/* <TripMap licenseNumber={carName.toUpperCase()} carName={carName} locations={locations} /> */}
+                        <TripMap licenseNumber={licenseNumber.toUpperCase()} carName={carName.toUpperCase()} locations={locations} />
 
                         {/* Car Info */}
                         <Card>

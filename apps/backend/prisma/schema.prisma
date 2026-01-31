@@ -93,6 +93,7 @@ model cars {
   car_models                     car_models     @relation(fields: [model_id], references: [model_id], onDelete: NoAction, onUpdate: NoAction)
   users                          users          @relation(fields: [owner], references: [id], onDelete: NoAction, onUpdate: NoAction)
   trips                          trips[]
+  gps_events                     gps_events[]
 }
 
 model districts {
@@ -188,7 +189,6 @@ model trips {
 }
 
 model users {
-
   id                         String     @id @db.VarChar(20)
   name                       String     @db.VarChar(50)
   email                      String     @db.VarChar
@@ -226,4 +226,23 @@ model wards {
 
   @@index([district_code], map: "idx_wards_district")
   @@index([administrative_unit_id], map: "idx_wards_unit")
+}
+
+model gps_events {
+  id             String   @id @default(uuid())
+  car_id         String   @db.VarChar(20)
+  license_number String   @db.VarChar(20)
+  lat            Float
+  lng            Float
+  speed          Float?
+  distance       Float?
+  total_distance Float?
+  state          String?  @db.VarChar(20)
+  behavior       String?  @db.VarChar(20)
+  timestamp      DateTime @default(now()) @db.Timestamp(6)
+  created_at     DateTime @default(now()) @db.Timestamp(6)
+  cars           cars     @relation(fields: [car_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([car_id])
+  @@index([timestamp])
 }
