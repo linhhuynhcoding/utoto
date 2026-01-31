@@ -28,6 +28,11 @@ const configSchema = z.object({
   PRODUCTION: z.enum(["true", "false"]).transform((val) => val === "true"),
   DOCKER: z.enum(["true", "false"]).transform((val) => val === "true"),
   PRODUCTION_URL: z.string(),
+  // SePay Configuration
+  SEPAY_API_KEY: z.string(),
+  SEPAY_BASE_URL: z.string().default("https://my.sepay.vn/userapi"),
+  SEPAY_ACCOUNT_NUMBER: z.string(),
+  SEPAY_BANK_NAME: z.string().default("MB Bank"),
 });
 
 const configServer = configSchema.safeParse(process.env);

@@ -16,4 +16,5 @@ export * from "./dto/location.dto";
 export * from "./dto/media.dto";
 export * from "./dto/user.dto";
 export * from "./dto/trip.dto";
+export * from "./dto/payment.dto";
 

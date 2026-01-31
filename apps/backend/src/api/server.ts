@@ -6,6 +6,7 @@ import { locationRoutes } from "../routes/location.route";
 import { healthRoutes } from "../routes/health.route";
 import { userRoutes } from "../routes/user.route";
 import { tripRoutes } from "../routes/trip.route";
+import { paymentRoutes } from "../routes/payment.route";
 import envConfig, { API_URL } from "@/config";
 import mediaRoutes from "@/routes/media.route";
 import staticRoutes from "@/routes/static.route";
@@ -63,6 +64,9 @@ const start = async () => {
     });
     await fastify.register(tripRoutes, {
       prefix: "/trip",
+    });
+    await fastify.register(paymentRoutes, {
+      prefix: "/payment",
     });
     await fastify.register(verificationRoutes, {
       prefix: "/verification",
