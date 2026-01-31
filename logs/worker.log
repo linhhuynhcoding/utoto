@@ -55397,3 +55397,39 @@ event {
   lat: 10.777198,
   lng: 106.672326
 }
+event {
+  id: '1769823029350',
+  licenseNumber: '60a12345',
+  carId: 'r12dafQuV1opAOD7fLWp',
+  state: 'stopped',
+  last_position: [ 10.777198, 106.672326 ],
+  timestamp: 1769823029350,
+  speed: 0,
+  total_distance: 3.9110456388272357,
+  lat: 10.777198,
+  lng: 106.672326
+}
+event {
+  id: '1769823089339',
+  licenseNumber: '60a12345',
+  carId: 'r12dafQuV1opAOD7fLWp',
+  state: 'stopped',
+  last_position: [ 10.777198, 106.672326 ],
+  timestamp: 1769823089339,
+  speed: 0,
+  total_distance: 3.9110456388272357,
+  lat: 10.777198,
+  lng: 106.672326
+}
+event {
+  id: '1769823149345',
+  licenseNumber: '60a12345',
+  carId: 'r12dafQuV1opAOD7fLWp',
+  state: 'stopped',
+  last_position: [ 10.777198, 106.672326 ],
+  timestamp: 1769823149345,
+  speed: 0,
+  total_distance: 3.9110456388272357,
+  lat: 10.777198,
+  lng: 106.672326
+}

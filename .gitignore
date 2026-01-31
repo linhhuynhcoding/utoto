@@ -6,3 +6,4 @@ dist/
 apps/backend/dist/
 packages/shared/dist/
 package-lock.jsondist/
+logs/*

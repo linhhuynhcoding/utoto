@@ -70264,3 +70264,51 @@ Received GPS data: {
   }
 }
 Published GPS event for 60a12345 to topic test-topic
+Received GPS data: {
+  type: 'update_position',
+  data: {
+    id: '1769823029350',
+    licenseNumber: '60a12345',
+    carId: 'r12dafQuV1opAOD7fLWp',
+    timestamp: 1769823029350,
+    last_position: [ 10.777198, 106.672326 ],
+    lat: 10.777198,
+    lng: 106.672326,
+    speed: 0,
+    total_distance: 3.9110456388272357,
+    state: 'stopped'
+  }
+}
+Published GPS event for 60a12345 to topic test-topic
+Received GPS data: {
+  type: 'update_position',
+  data: {
+    id: '1769823089339',
+    licenseNumber: '60a12345',
+    carId: 'r12dafQuV1opAOD7fLWp',
+    timestamp: 1769823089339,
+    last_position: [ 10.777198, 106.672326 ],
+    lat: 10.777198,
+    lng: 106.672326,
+    speed: 0,
+    total_distance: 3.9110456388272357,
+    state: 'stopped'
+  }
+}
+Published GPS event for 60a12345 to topic test-topic
+Received GPS data: {
+  type: 'update_position',
+  data: {
+    id: '1769823149345',
+    licenseNumber: '60a12345',
+    carId: 'r12dafQuV1opAOD7fLWp',
+    timestamp: 1769823149345,
+    last_position: [ 10.777198, 106.672326 ],
+    lat: 10.777198,
+    lng: 106.672326,
+    speed: 0,
+    total_distance: 3.9110456388272357,
+    state: 'stopped'
+  }
+}
+Published GPS event for 60a12345 to topic test-topic
